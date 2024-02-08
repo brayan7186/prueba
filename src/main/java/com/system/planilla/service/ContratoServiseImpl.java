@@ -39,12 +39,12 @@ public class ContratoServiseImpl implements ContratoService{
 					 ContratoResponse contratoResponse = new ContratoResponse();
 					 contratoResponse.setCodContrato(contrato.getCodContrato());
 					 contratoResponse.setModContrato(contrato.getModContrato());
-					 contratoResponse.setFechaInicio(UtilFecha.convertDateToString(contrato.getFechaInicio()));
-					 contratoResponse.setFechaFin(UtilFecha.convertDateToString ( contrato.getFechaFin()));
+					 contratoResponse.setFechaInicio(UtilFecha.convertDateToStringFormat(contrato.getFechaInicio(), "") );
+					 contratoResponse.setFechaFin(UtilFecha.convertDateToStringFormat ( contrato.getFechaFin(), "dd/mm/yyyy"));
 					 contratoResponse.setBonificacion(contrato.getBonificacion());
 					 contratoResponse.setNombreCompletoTrabajador(contrato.getTrabajador().getNombre() + "  "+  contrato.getTrabajador().getApePaterno()+  "  "+ contrato.getTrabajador().getApeMaterno());
 					 
-					 contratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDecimal(contrato.getSueldoBruto())  );
+					 contratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto())  );
 					   return contratoResponse;
 				 }).collect(Collectors.toList());
 		
