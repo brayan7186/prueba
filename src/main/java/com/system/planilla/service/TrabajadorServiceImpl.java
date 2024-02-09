@@ -16,7 +16,6 @@ import com.system.planilla.repository.TrabajadorRepository;
 
 
 @Service
-
 public class TrabajadorServiceImpl  implements TrabajadorService{
 
 	
