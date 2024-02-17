@@ -3,6 +3,9 @@ package com.system.planilla.controller.dto.response;
 
 
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ContratoResponse {
@@ -14,10 +17,12 @@ public class ContratoResponse {
 	private String modContrato;
 	
 	@JsonProperty( "fechaI")
-	private String fechaInicio;
+	 @JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate fechaInicio;
 	
 	@JsonProperty( "fechaF")
-	private String fechaFin;
+	 @JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate fechaFin;
 	
 	@JsonProperty( "sueldoBruto")
 	private String sueldoBruto;
@@ -44,19 +49,21 @@ public class ContratoResponse {
 		this.modContrato = modContrato;
 	}
 
-	public String getFechaInicio() {
+	
+
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(String fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public String getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(String fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 

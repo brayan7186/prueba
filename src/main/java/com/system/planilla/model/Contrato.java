@@ -1,6 +1,6 @@
 package com.system.planilla.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "TB_CONTRATO")
@@ -24,10 +25,10 @@ public class Contrato {
 	private String modContrato;
 	
 	@Column(name = "fechaInicio")
-	private Date fechaInicio;
+	private LocalDate fechaInicio;
 	
 	@Column(name = "fechaFin")
-	private Date fechaFin;
+	private LocalDate fechaFin;
 	
 	@Column(name = "sueldoBruto")
 	private Double sueldoBruto;
@@ -42,13 +43,18 @@ public class Contrato {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
+	}
+	public void setFechaInicio(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public LocalDate getFechaFin() {
+		return fechaFin;
+	}
+	public void setFechaFin(LocalDate fechaFin) {
+		this.fechaFin = fechaFin;
+	}
 	public Integer getCodContrato() {
 		return codContrato;
 	}
@@ -61,18 +67,7 @@ public class Contrato {
 	public void setModContrato(String modContrato) {
 		this.modContrato = modContrato;
 	}
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-	public Date getFechaFin() {
-		return fechaFin;
-	}
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
-	}
+	
 	public Double getSueldoBruto() {
 		return sueldoBruto;
 	}

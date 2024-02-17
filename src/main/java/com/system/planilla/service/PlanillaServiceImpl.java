@@ -21,6 +21,7 @@ import com.system.planilla.repository.PlanillaRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import util.Constante;
 
 @Service
 
@@ -51,9 +52,9 @@ public class PlanillaServiceImpl implements PlanillaService {
 		return listadoPlanillaResponse;
 	}
 
-	 double salarioNeto =  0;
-	  double sumaSalariosNetos = 0;
-	 
+	double salarioNeto = 0;
+	double sumaSalariosNetos = 0;
+
 	@Override
 	public Integer registrarPlanilla(PlanillaRequest planillaRequest) {
 
@@ -62,58 +63,89 @@ public class PlanillaServiceImpl implements PlanillaService {
 		planilla.setAnio(planillaRequest.getAnio());
 		planilla.setDescripcion(planillaRequest.getDescripcion());
 		planilla.setMes(planillaRequest.getMes());
-		//planilla.setMontoTotal(planillaRequest.getMontoTotal());
+		// planilla.setMontoTotal(planillaRequest.getMontoTotal());
+		
 
 		Integer codigoPlanillaBD = planillaRepository.save(planilla).getCodPlanilla();
 
 		for (DetallePlanillaRequest detRequest : planillaRequest.getDetalle()) {
 
-			
 			DetallePlanilla detallePlanilla = new DetallePlanilla();
 
 			detallePlanilla.setSueldoBruto(detRequest.getSueldoBruto());
-			detallePlanilla.setAfp(detRequest.getAfp());
-			detallePlanilla.setOnp(detRequest.getOnp());
-			detallePlanilla.setImpuestoRenta(detRequest.getImpuestoRenta());
-			detallePlanilla.setCodTrabajador(detRequest.getCodTrabajador());
+			detallePlanilla.setBonoAlimeto(detRequest.getBonoAlimeto());
+			detallePlanilla.setBonoInternet(detRequest.getBonoInternet());
+			detallePlanilla.setBonoMovilidad(detRequest.getBonoMovilidad());
+			detallePlanilla.setDiaNoLaborado(detRequest.getDiaNoLaborado());
+			detallePlanilla.setCantidadHoraTardanza(detRequest.getCantidadHoraTardanza());;
+			detallePlanilla.setDescuentoAfp(descuentoAfp(detRequest));
+			detallePlanilla.setDescuentoAfpSeguro(descuentoAfpSeguro(detRequest));
+			detallePlanilla.setDescuentoDia(descuentoPorDia(detRequest));
+			detallePlanilla.setDescuentoImpRenta(descuentoImpuestoRenta(detRequest));
+			
+			
+			 detallePlanilla.setDescuentoHora(descuentoPorHora(detRequest));
 			detallePlanilla.setCodPlanilla(codigoPlanillaBD);
+			detallePlanilla.setCodTrabajador(detRequest.getCodTrabajador());
+         
+			detallePlanilla.setSalarioNeto((detRequest.getSueldoBruto() - descuentoTotal(detRequest)) + bonificacionTotal(detRequest));
 
-			     detallePlanilla.setSalarioNeto(  detRequest.getSueldoBruto() - detRequest.getAfp() - detRequest.getOnp()
-					- detRequest.getImpuestoRenta());
+			salarioNeto = detallePlanilla.getSalarioNeto();
+			System.out.println(salarioNeto);
+			sumaSalariosNetos += salarioNeto;
+			planilla.setMontoTotal(sumaSalariosNetos);
 
-			  
-			    
-			    		   salarioNeto =  detallePlanilla.getSalarioNeto();
-
-			    		  sumaSalariosNetos += salarioNeto;
-			    		    planilla.setMontoTotal( sumaSalariosNetos);
-			     
-			    		  
-			    		    
-			           detallePlaniaRepository.save(detallePlanilla);  
+			detallePlaniaRepository.save(detallePlanilla);
 
 		}
-		
-	
-		
 
 		return codigoPlanillaBD;
 
 	}
+
+	public double descuentoAfp(DetallePlanillaRequest detalle) {
+
+		return Constante.AFP * detalle.getSueldoBruto();
+	}
+
+	public double descuentoAfpSeguro(DetallePlanillaRequest detalle) {
+
+		return Constante.AFP_SEGURURO * detalle.getSueldoBruto();
+
+	}
+
+	public double descuentoImpuestoRenta(DetallePlanillaRequest detalle) {
+
+		return Constante.IMP_RENTA * detalle.getSueldoBruto();
+
+	}
+
+	public double descuentoPorDia(DetallePlanillaRequest detalle) {
+
+		return Constante.DESCUENTO_DIA * detalle.getDiaNoLaborado();
+	}
 	
+	public double descuentoPorHora(DetallePlanillaRequest detalle) {
+		return Constante.DESCUENTO_HORA * detalle.getCantidadHoraTardanza();
+	}
+
+	public double totaldescuentoLey(DetallePlanillaRequest detalle) {
+		return descuentoAfp(detalle) + descuentoAfpSeguro(detalle)  
+				+ descuentoImpuestoRenta(detalle);
+	}
+
+	public  double totaldescuentoPoliticaEmpresa( DetallePlanillaRequest detalle) {
+		  return descuentoPorDia(detalle) + descuentoPorHora(detalle);
+	  }
 	
+	public double bonificacionTotal(DetallePlanillaRequest detalle) {
+		return detalle.getBonoAlimeto() + detalle.getBonoInternet() + detalle.getBonoMovilidad();
+	}
 	
   
-	/*
-	 * for (int i = 0; i < planillaRequest.getDetalle().size(); i++) {
-	 * 
-	 * DetallePlanilla detallePlanilla = new DetallePlanilla();
-	 * 
-	 * detallePlanilla.setSalario(planillaRequest.getDetalle().get(i).getSalario());
-	 * detallePlanilla.setPlanilla(new Planilla(codigoPlanillaBD));
-	 * detallePlanilla.setTrabajador(new
-	 * Trabajador(planillaRequest.getDetalle().get(i).getCodTrabajador()));
-	 * 
-	 * detallePlaniaRepository.save(detallePlanilla); }
-	 */
+
+	public double descuentoTotal(DetallePlanillaRequest detalle) {
+
+		return totaldescuentoLey(detalle) + totaldescuentoPoliticaEmpresa(detalle) ;
+	}
 }
