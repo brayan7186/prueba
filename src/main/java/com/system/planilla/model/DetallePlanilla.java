@@ -34,10 +34,37 @@ public class DetallePlanilla {
 	 @Column(name = "salarioNeto")
 	 private  Double salarioNeto;
 	 
-	/*@ManyToOne
-	@JoinColumn(name = "codPlanilla", referencedColumnName = "codPlanilla")
-	private Planilla   planilla;*/
-	
+	 
+	 @Column(name = "bonoInternet")
+	 private  Double bonoInternet;
+	 
+	 @Column(name = "bonoMovilidad")
+	 private  Double bonoMovilidad;
+	 
+	 
+	 @Column(name = "descuentoAfp")
+	 private  Double descuentoAfp;
+	 
+	 
+	 @Column(name = "descuentoAfpSeguro")
+	 private  Double descuentoAfpSeguro;
+	 
+	 @Column(name = "descuentoImpRenta")
+	 private  Double descuentoImpRenta;
+	 
+	 
+	 
+	 @Column(name = "descuentoDia")
+	 private  Double descuentoDia;
+	 
+	 @Column(name = "descuentoHora")
+	 private  Double descuentoHora;
+	 
+	 
+	 @Column(name = "cantidadHoraTardanza")
+	 private  Double cantidadHoraTardanza;
+	 
+	 
 	private Integer codPlanilla;
 	
 	/*@ManyToOne

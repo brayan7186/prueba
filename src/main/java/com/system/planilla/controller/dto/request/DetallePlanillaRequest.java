@@ -21,13 +21,22 @@ public class DetallePlanillaRequest {
 	@JsonProperty("diaNoLaborado")
 	 private  Double diaNoLaborado;
 	 
+	 @Column(name = "cantidadHoraTardanza")
+	 private  Double cantidadHoraTardanza;
+	 
+	
 	 @JsonProperty( "bonoAlimento")
 	 private  Double bonoAlimeto;
 	 
-
+	 @Column(name = "bonoInternet")
+	 private  Double bonoInternet;
+	 
+	 @Column(name = "bonoMovilidad")
+	 private  Double bonoMovilidad;
+	 
 	
-	@JsonProperty("codTrabajador")
-	private Integer   codTrabajador;
+	 @JsonProperty("codTrabajador")
+	 private Integer   codTrabajador;
 
 	
 
