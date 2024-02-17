@@ -21,6 +21,7 @@ import com.system.planilla.repository.PlanillaRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import util.Constante;
 
 @Service
 
@@ -51,9 +52,9 @@ public class PlanillaServiceImpl implements PlanillaService {
 		return listadoPlanillaResponse;
 	}
 
-	 double salarioNeto =  0;
-	  double sumaSalariosNetos = 0;
-	 
+	double salarioNeto = 0;
+	double sumaSalariosNetos = 0;
+
 	@Override
 	public Integer registrarPlanilla(PlanillaRequest planillaRequest) {
 
@@ -62,48 +63,55 @@ public class PlanillaServiceImpl implements PlanillaService {
 		planilla.setAnio(planillaRequest.getAnio());
 		planilla.setDescripcion(planillaRequest.getDescripcion());
 		planilla.setMes(planillaRequest.getMes());
-		//planilla.setMontoTotal(planillaRequest.getMontoTotal());
+		// planilla.setMontoTotal(planillaRequest.getMontoTotal());
 
 		Integer codigoPlanillaBD = planillaRepository.save(planilla).getCodPlanilla();
 
 		for (DetallePlanillaRequest detRequest : planillaRequest.getDetalle()) {
 
-			
 			DetallePlanilla detallePlanilla = new DetallePlanilla();
 
 			detallePlanilla.setSueldoBruto(detRequest.getSueldoBruto());
-			detallePlanilla.setAfp(detRequest.getAfp());
-			detallePlanilla.setOnp(detRequest.getOnp());
-			detallePlanilla.setImpuestoRenta(detRequest.getImpuestoRenta());
-			detallePlanilla.setCodTrabajador(detRequest.getCodTrabajador());
+			detallePlanilla.setBonoAlimeto(detRequest.getBonoAlimeto());
+			detallePlanilla.setDiaNoLaborado(detRequest.getDiaNoLaborado());
 			detallePlanilla.setCodPlanilla(codigoPlanillaBD);
+			
+			detallePlanilla.setSalarioNeto((detRequest.getSueldoBruto() + detRequest.getBonoAlimeto())
+            - Constante.AFP * detRequest.getSueldoBruto()
+            - Constante.AFP_SEGURURO * detRequest.getSueldoBruto()
+            - Constante.IMP_RENTA * detRequest.getSueldoBruto()
+            - (Constante.DESCUENTO_DIA * detRequest.getDiaNoLaborado()));
 
-			     detallePlanilla.setSalarioNeto(  detRequest.getSueldoBruto() - detRequest.getAfp() - detRequest.getOnp()
-					- detRequest.getImpuestoRenta());
 
-			  
-			    
-			    		   salarioNeto =  detallePlanilla.getSalarioNeto();
+			
+			salarioNeto = detallePlanilla.getSalarioNeto();
+			System.out.println(salarioNeto
+					);
+			sumaSalariosNetos += salarioNeto;
+			planilla.setMontoTotal(sumaSalariosNetos);
 
-			    		  sumaSalariosNetos += salarioNeto;
-			    		    planilla.setMontoTotal( sumaSalariosNetos);
-			     
-			    		  
-			    		    
-			           detallePlaniaRepository.save(detallePlanilla);  
+			detallePlaniaRepository.save(detallePlanilla);
 
 		}
-		
-	
-		
 
 		return codigoPlanillaBD;
 
 	}
+
+	
+    
+	public double descuento(DetallePlanillaRequest detalle){	 
+		
+		return Constante.AFP  * detalle.getSueldoBruto() - Constante.AFP_SEGURURO * detalle.getSueldoBruto() 
+			- Constante.IMP_RENTA * detalle.getSueldoBruto() - Constante.DESCUENTO_DIA * detalle.getDiaNoLaborado();
+		
+	}
+	
+	    
+	    	
 	
 	
 	
-  
 	/*
 	 * for (int i = 0; i < planillaRequest.getDetalle().size(); i++) {
 	 * 
