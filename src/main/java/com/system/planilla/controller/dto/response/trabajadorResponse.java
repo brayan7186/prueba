@@ -2,18 +2,24 @@ package com.system.planilla.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class trabajadorResponse {
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+public class TrabajadorResponse {
 
 	
-	@JsonProperty("codigo")
+	@JsonProperty("codTrabajador")
 	 private Integer codTrabajador;
 	
 	
-	@JsonProperty("apellidoM")
+	@JsonProperty("apeMaterno")
 	 private  String apeMaterno;
 	
 	
-	@JsonProperty("apellidoP")
+	@JsonProperty("apePaterno")
 	 private String apePaterno;
 	
 	
@@ -53,127 +59,7 @@ public class trabajadorResponse {
 	 private  String nombre;
 
 
-	public Integer getCodTrabajador() {
-		return codTrabajador;
-	}
 
-
-	public void setCodTrabajador(Integer codTrabajador) {
-		this.codTrabajador = codTrabajador;
-	}
-
-
-	public String getApeMaterno() {
-		return apeMaterno;
-	}
-
-
-	public void setApeMaterno(String apeMaterno) {
-		this.apeMaterno = apeMaterno;
-	}
-
-
-	public String getApePaterno() {
-		return apePaterno;
-	}
-
-
-	public void setApePaterno(String apePaterno) {
-		this.apePaterno = apePaterno;
-	}
-
-
-	public String getCelular() {
-		return celular;
-	}
-
-
-	public void setCelular(String celular) {
-		this.celular = celular;
-	}
-
-
-	public String getDescripcionArea() {
-		return descripcionArea;
-	}
-
-
-	public void setDescripcionArea(String descripcionArea) {
-		this.descripcionArea = descripcionArea;
-	}
-
-
-	public String getDescripcionCargo() {
-		return descripcionCargo;
-	}
-
-
-	public void setDescripcionCargo(String descripcionCargo) {
-		this.descripcionCargo = descripcionCargo;
-	}
-
-
-	public String getDescripcionEstadoCivil() {
-		return descripcionEstadoCivil;
-	}
-
-
-	public void setDescripcionEstadoCivil(String descripcionEstadoCivil) {
-		this.descripcionEstadoCivil = descripcionEstadoCivil;
-	}
-
-
-	public String getCorreo() {
-		return correo;
-	}
-
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-
-	public String getDni() {
-		return dni;
-	}
-
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-
-
-	public Integer getEdad() {
-		return edad;
-	}
-
-
-	public void setEdad(Integer edad) {
-		this.edad = edad;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	
 	 
 	 
 	 

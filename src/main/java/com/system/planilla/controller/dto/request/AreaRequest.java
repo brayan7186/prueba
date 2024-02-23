@@ -11,10 +11,10 @@ public class AreaRequest implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("codigo")
+	@JsonProperty("codArea")
 	private Integer codArea;
 	
-	@JsonProperty("nombre")
+	@JsonProperty("descripcion")
 	private String descripcion;
 
 	

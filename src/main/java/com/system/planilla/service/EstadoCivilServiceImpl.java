@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.system.planilla.controller.dto.response.EstadoCivilResponse;
-import com.system.planilla.model.EstadoCivil;
 import com.system.planilla.repository.EstadoCivlRepository;
 
 @Service

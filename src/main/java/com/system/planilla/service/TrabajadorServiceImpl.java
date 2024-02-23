@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.system.planilla.controller.dto.request.trabajadorRequest;
-import com.system.planilla.controller.dto.response.trabajadorResponse;
+import com.system.planilla.controller.dto.request.TrabajadorRequest;
+import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.model.Area;
 import com.system.planilla.model.Cargo;
 import com.system.planilla.model.EstadoCivil;
@@ -23,14 +23,14 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	 TrabajadorRepository trabajadorRepository;
 	
 	@Override
-	public List<trabajadorResponse> listarTrabajador() {
-		  List<trabajadorResponse> listadoTrabajadorResponse;
+	public List<TrabajadorResponse> listarTrabajador() {
+		  List<TrabajadorResponse> listadoTrabajadorResponse;
 			 
 			 
 		  listadoTrabajadorResponse  = trabajadorRepository.findAll()
 					 .stream()
 					 .map(trabajador -> {
-						 trabajadorResponse trabajadorResponse = new trabajadorResponse();
+						 TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
 						
 					 
 					
@@ -55,7 +55,7 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 
 	 
 	@Override
-	public 	Integer registrarTrabajador(trabajadorRequest trabajadorRequest) {
+	public 	Integer registrarTrabajador(TrabajadorRequest trabajadorRequest) {
 		
 		
 		Trabajador trabajador = new Trabajador();

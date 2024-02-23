@@ -3,33 +3,18 @@ package com.system.planilla.controller.dto.response;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+@Setter
+@Getter
 public class AreaResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("codigo")
+	@JsonProperty("codAre")
 	private Integer codArea;
 	
-	@JsonProperty("nombre")
+	@JsonProperty("descripcion")
 	private String descripcion;
-
-	public Integer getCodArea() {
-		return codArea;
-	}
-
-	public void setCodArea(Integer codArea) {
-		this.codArea = codArea;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	
-	
-	
 
 }

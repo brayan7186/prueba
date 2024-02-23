@@ -2,13 +2,12 @@ package com.system.planilla.service;
 
 import java.util.List;
 
-import com.system.planilla.controller.dto.request.trabajadorRequest;
-import com.system.planilla.controller.dto.response.trabajadorResponse;
-import com.system.planilla.model.Trabajador;
+import com.system.planilla.controller.dto.request.TrabajadorRequest;
+import com.system.planilla.controller.dto.response.TrabajadorResponse;
 
 public interface TrabajadorService {
 
-	public abstract List<trabajadorResponse> listarTrabajador();
+	public abstract List<TrabajadorResponse> listarTrabajador();
 	
-	public abstract Integer registrarTrabajador(trabajadorRequest trabajadorRequest);
+	public abstract Integer registrarTrabajador(TrabajadorRequest trabajadorRequest);
 }

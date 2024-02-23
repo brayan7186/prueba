@@ -7,8 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "PLANILLA")
+@Getter
+@Setter
 public class Planilla {
 
 	
@@ -40,57 +45,5 @@ public class Planilla {
 		
 		this.codPlanilla = codPlanilla2;
 	}
-	
-	
-	
-	
-	
-	
-	
-	public Integer getCodPlanilla() {
-		return codPlanilla;
-	}
-
-	public void setCodPlanilla(Integer codPlanilla) {
-		this.codPlanilla = codPlanilla;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public Integer getAnio() {
-		return anio;
-	}
-
-	public void setAnio(Integer anio) {
-		this.anio = anio;
-	}
-
-	public String getMes() {
-		return mes;
-	}
-
-	public void setMes(String mes) {
-		this.mes = mes;
-	}
-
-	public Double getMontoTotal() {
-		return montoTotal;
-	}
-
-	public void setMontoTotal(Double montoTotal) {
-		this.montoTotal = montoTotal;
-	}
-
-	
-	
-	
-	
-	
-	
+		
 }

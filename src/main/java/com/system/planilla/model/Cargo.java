@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
@@ -13,51 +16,23 @@ import lombok.Setter;
 @Table(name = "TB_CARGO")
 @Getter
 @Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Cargo {
 
 	
 	@Id
 	@Column(name = "codCargo")
+	@NonNull
 	private Integer codCargo;
+	
 	
 	@Column(name = "descripcion" , length = 50)
 	private String descripcion;
 
 	
 	
-	
-	 public Cargo() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	
-	
-	public Cargo(Integer codCargo2) {
-		
-		this.codCargo = codCargo2 ;
-	}
 
-	@Override
-	public String toString() {
-		return "Cargo [codCargo=" + codCargo + ", descripcion=" + descripcion + "]";
-	}
-
-	public Integer getCodCargo() {
-		return codCargo;
-	}
-
-	public void setCodCargo(Integer codCargo) {
-		this.codCargo = codCargo;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
 	
 	
 }

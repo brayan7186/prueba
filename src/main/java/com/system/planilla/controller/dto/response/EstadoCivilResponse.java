@@ -2,29 +2,19 @@ package com.system.planilla.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class EstadoCivilResponse {
 
-	 @JsonProperty("codigo")
+	 @JsonProperty("codEstCivil")
 	  private int codEstCivil;
 	 
-	 @JsonProperty("nombre")
+	 @JsonProperty("descripcion")
 	  private  String descripcion;
 
-	public int getCodEstCivil() {
-		return codEstCivil;
-	}
-
-	public void setCodEstCivil(int codEstCivil) {
-		this.codEstCivil = codEstCivil;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	 
+	
 	 
 }

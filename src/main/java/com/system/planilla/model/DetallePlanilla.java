@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.Data;
-@Data
+
+@Getter
+@Setter
 @Entity
 @Table(name = "DETALLE_PLANILLA")
 public class DetallePlanilla {
@@ -64,20 +66,11 @@ public class DetallePlanilla {
 	 @Column(name = "cantidadHoraTardanza")
 	 private  Double cantidadHoraTardanza;
 	 
-	 
+	 @Column(name = "codPlanilla")
 	private Integer codPlanilla;
 	
-	/*@ManyToOne
-	@JoinColumn(name = "codTrabajador", referencedColumnName = "codTrabajador")
-	private Trabajador   trabajador;*/
-	
+	 @Column( name = "codTrabajador")
 	private Integer codTrabajador;
-	
-	
-	
-	public DetallePlanilla(){
-		
-	}
 	
 	
 	

@@ -4,12 +4,17 @@ package com.system.planilla.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PlanillaResponse {
 
-	@JsonProperty("codigo")
+	@JsonProperty("codPlanilla")
 	private Integer codPlanilla;
 	
-	@JsonProperty("nombre")
+	@JsonProperty("descripcion")
 	private  String descripcion;
 		    
 	@JsonProperty("año")
@@ -21,45 +26,6 @@ public class PlanillaResponse {
 	@JsonProperty("montoTotal")
 	private Double montoTotal;
 
-	public Integer getCodPlanilla() {
-		return codPlanilla;
-	}
-
-	public void setCodPlanilla(Integer codPlanilla) {
-		this.codPlanilla = codPlanilla;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public Integer getAnio() {
-		return anio;
-	}
-
-	public void setAnio(Integer anio) {
-		this.anio = anio;
-	}
-
-	public String getMes() {
-		return mes;
-	}
-
-	public void setMes(String mes) {
-		this.mes = mes;
-	}
-
-	public Double getMontoTotal() {
-		return montoTotal;
-	}
-
-	public void setMontoTotal(Double montoTotal) {
-		this.montoTotal = montoTotal;
-	}
 	
 	
 }

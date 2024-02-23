@@ -12,7 +12,7 @@ import lombok.Setter;
 public class DetallePlanillaResponse {
 
 	
-	@JsonProperty("codigo")
+	@JsonProperty("codDetallePlanilla")
 	private Integer   codDetallePlanilla;
 	
 	@JsonProperty("salario")
@@ -21,7 +21,7 @@ public class DetallePlanillaResponse {
 	@JsonProperty("codPlanilla")
 	private Integer   codPlanilla;
 	
-	@JsonProperty("trabajador")
+	@JsonProperty("codTrabajador")
 	private Integer   codTrabajador;
 
 

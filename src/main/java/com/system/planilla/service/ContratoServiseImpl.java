@@ -1,17 +1,12 @@
 package com.system.planilla.service;
 
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.system.planilla.controller.dto.request.ContratoRequest;
 import com.system.planilla.controller.dto.response.ContratoResponse;
 import com.system.planilla.model.Contrato;
@@ -24,7 +19,6 @@ import util.UtilLimitarDecimal;
 public class ContratoServiseImpl implements ContratoService{
 
 	
-	private static final Logger log =  LogManager.getLogger(ContratoServiseImpl.class.getName());
 	
 	@Autowired 
 	ContratoRepository contratoRepository;

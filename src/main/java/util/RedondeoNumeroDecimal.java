@@ -5,6 +5,13 @@ import java.math.RoundingMode;
 public class RedondeoNumeroDecimal {
 
 	 
+	
+	
+	 private RedondeoNumeroDecimal() {
+		 
+	 }
+	
+	
 	 public static  double roundNumbersDecimal( double sueldoBruto) {
 		 
 		 double redondeo;
@@ -13,7 +20,7 @@ public class RedondeoNumeroDecimal {
 	        String numeroComoCadena = Double.toString(sueldoBruto);
 	        char ultimoDigitoChar = numeroComoCadena.charAt(numeroComoCadena.length() - 1);
 
-	        System.out.println("El último dígito de " + sueldoBruto + " es: " + ultimoDigitoChar);
+	      
 	        int ultimoDigito = Character.getNumericValue(ultimoDigitoChar);
 
 	        if (ultimoDigito >= 5) {
@@ -26,7 +33,7 @@ public class RedondeoNumeroDecimal {
 	            
 	            redondeo = Double.parseDouble(formattedNum);
 				
-	            System.out.println(redondeo);
+	          
 				
 	        } else  {
 	          

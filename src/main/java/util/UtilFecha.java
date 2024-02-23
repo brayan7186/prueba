@@ -14,8 +14,7 @@ public class UtilFecha {
 
 	public static String convertDateToStringFormat(Date date, String format) {
 		DateFormat dateFormat = new SimpleDateFormat(format);
-		String dateToStr = dateFormat.format(date);
-		return dateToStr;
+		return  dateFormat.format(date);
 	}
 
 
@@ -24,19 +23,16 @@ public class UtilFecha {
 		public static LocalDate parseFechaBaseDatos(String fechaString) {
 		    // Define el formato del String de fecha
 		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		    // Parsea el String a LocalDate
-		    LocalDate fecha = LocalDate.parse(fechaString, formatter);
 		    // Devuelve la fecha parseada
-		    return fecha;
+		    return  LocalDate.parse(fechaString, formatter);
 		}
 		
 	public static String formatoFechaBaseDatos(LocalDate fecha) {
 	    // Define el formato deseado
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    // Formatea la fecha usando el formateador
-	    String fechaFormateada = fecha.format(formatter);
+	   
 	    // Devuelve la fecha formateada como String
-	    return fechaFormateada;
+	    return   fecha.format(formatter);
 	}
 
 	

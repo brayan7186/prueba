@@ -1,10 +1,11 @@
 package com.system.planilla.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.planilla.controller.dto.request.ContratoRequest;
 import com.system.planilla.controller.dto.response.ContratoResponse;
-import com.system.planilla.model.Contrato;
 import com.system.planilla.service.ContratoService;
 
 @RestController
@@ -24,26 +24,29 @@ import com.system.planilla.service.ContratoService;
 public class ContratoController {
 
 	
+	 private static final Logger logger = LoggerFactory.getLogger(ContratoController.class);
+
+
 	@Autowired 
 	ContratoService contratoService;
 	
 	//http://localhost:8080/planilla/listadoContrato
-			@RequestMapping(value = "/listadoContrato" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<List<ContratoResponse>> listado(){
-				List<ContratoResponse> listaContratoResponse = new ArrayList<ContratoResponse>();
-				
-				listaContratoResponse = contratoService.listarContrato();
-				
-				listaContratoResponse.forEach(a -> System.out.println(a));
-				
-				return new ResponseEntity<List<ContratoResponse>>(listaContratoResponse, HttpStatus.OK);
-}
+		
+			// http://localhost:8080/planilla/listadoContrato
+			@RequestMapping(value = "/listadoContrato", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<List<ContratoResponse>> listado() {
+			    List<ContratoResponse> listaContratoResponse = contratoService.listarContrato();
+			    
+			    
+			    listaContratoResponse.forEach(a -> logger.info(a.toString()));
+			    return new ResponseEntity<>(listaContratoResponse, HttpStatus.OK);
+			}
 
 			
 			
 			//crear
 			@RequestMapping(value = "/crearContrato" , method = RequestMethod.POST, produces =  MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<?> registrarContrato(@RequestBody  ContratoRequest contratoRequest  ){
+			public ResponseEntity<Map<String, String>> registrarContrato(@RequestBody  ContratoRequest contratoRequest  ){
 				
 				
 				HashMap<String, String>	response = new HashMap<>();
@@ -57,7 +60,7 @@ public class ContratoController {
 					   response.put("respuesta", "registro  incorrecto"); 
 				   }
 				 
-				 return new ResponseEntity<Map<String, String>>(response,HttpStatus.CREATED);
+				 return new ResponseEntity<>(response,HttpStatus.CREATED);
 				
 			}
 }

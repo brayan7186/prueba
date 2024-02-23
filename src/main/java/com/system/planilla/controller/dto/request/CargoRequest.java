@@ -11,10 +11,10 @@ public class CargoRequest {
 
 	private static final long serialVersionUID = 1L;
 	
-  @JsonProperty("codigo")
+  @JsonProperty("codCargo")
   private Integer codCargo ; 
 	
-  @JsonProperty("nombre")
+  @JsonProperty("descripcion")
   private String descripcion ;
 
   

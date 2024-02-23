@@ -3,29 +3,28 @@ package com.system.planilla.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.system.planilla.controller.dto.request.DetallePlanillaRequest;
 import com.system.planilla.controller.dto.request.PlanillaRequest;
 import com.system.planilla.controller.dto.response.PlanillaResponse;
-import com.system.planilla.model.Area;
-import com.system.planilla.model.Cargo;
 import com.system.planilla.model.DetallePlanilla;
-import com.system.planilla.model.EstadoCivil;
 import com.system.planilla.model.Planilla;
-import com.system.planilla.model.Trabajador;
 import com.system.planilla.repository.DetallePlaniaRepository;
 import com.system.planilla.repository.PlanillaRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import util.Constante;
 
 @Service
 
 public class PlanillaServiceImpl implements PlanillaService {
+
+	
+	 private static final Logger logger = LoggerFactory.getLogger(PlanillaServiceImpl.class);
 
 	@Autowired
 	PlanillaRepository planillaRepository;
@@ -52,7 +51,7 @@ public class PlanillaServiceImpl implements PlanillaService {
 		return listadoPlanillaResponse;
 	}
 
-	double salarioNeto = 0;
+   double salarioNeto = 0;
 	double sumaSalariosNetos = 0;
 
 	@Override
@@ -63,7 +62,6 @@ public class PlanillaServiceImpl implements PlanillaService {
 		planilla.setAnio(planillaRequest.getAnio());
 		planilla.setDescripcion(planillaRequest.getDescripcion());
 		planilla.setMes(planillaRequest.getMes());
-		// planilla.setMontoTotal(planillaRequest.getMontoTotal());
 		
 
 		Integer codigoPlanillaBD = planillaRepository.save(planilla).getCodPlanilla();
@@ -77,7 +75,7 @@ public class PlanillaServiceImpl implements PlanillaService {
 			detallePlanilla.setBonoInternet(detRequest.getBonoInternet());
 			detallePlanilla.setBonoMovilidad(detRequest.getBonoMovilidad());
 			detallePlanilla.setDiaNoLaborado(detRequest.getDiaNoLaborado());
-			detallePlanilla.setCantidadHoraTardanza(detRequest.getCantidadHoraTardanza());;
+			detallePlanilla.setCantidadHoraTardanza(detRequest.getCantidadHoraTardanza());
 			detallePlanilla.setDescuentoAfp(descuentoAfp(detRequest));
 			detallePlanilla.setDescuentoAfpSeguro(descuentoAfpSeguro(detRequest));
 			detallePlanilla.setDescuentoDia(descuentoPorDia(detRequest));
@@ -91,7 +89,8 @@ public class PlanillaServiceImpl implements PlanillaService {
 			detallePlanilla.setSalarioNeto((detRequest.getSueldoBruto() - descuentoTotal(detRequest)) + bonificacionTotal(detRequest));
 
 			salarioNeto = detallePlanilla.getSalarioNeto();
-			System.out.println(salarioNeto);
+			logger.info(String.valueOf(salarioNeto));
+
 			sumaSalariosNetos += salarioNeto;
 			planilla.setMontoTotal(sumaSalariosNetos);
 

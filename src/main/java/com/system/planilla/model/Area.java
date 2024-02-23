@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "TB_AREA")
 @Setter
 @Getter
+@NoArgsConstructor
 public class Area {
 	
 	@Id
@@ -26,10 +28,6 @@ public class Area {
 	
 	
 	
-	public Area() {
-		// TODO Auto-generated constructor stub
-	}
-
 	
 	
 	
