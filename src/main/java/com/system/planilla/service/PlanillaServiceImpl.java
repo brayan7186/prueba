@@ -52,10 +52,11 @@ public class PlanillaServiceImpl implements PlanillaService {
 	}
 
    double salarioNeto = 0;
-	double sumaSalariosNetos = 0;
-
+	
 	@Override
 	public Integer registrarPlanilla(PlanillaRequest planillaRequest) {
+		
+		double sumaSalariosNetos = 0;
 
 		Planilla planilla = new Planilla();
 
