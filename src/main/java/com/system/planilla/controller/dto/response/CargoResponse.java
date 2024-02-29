@@ -16,6 +16,9 @@ public class CargoResponse {
   @JsonProperty("descripcion")
   private String descripcion ;
 
+  @JsonProperty("codArea")
+  private Integer codArea ;
+
   
   
   

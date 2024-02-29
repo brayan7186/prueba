@@ -1,4 +1,4 @@
-package com.system.planilla.controller.dto.request;
+ package com.system.planilla.controller.dto.request;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;

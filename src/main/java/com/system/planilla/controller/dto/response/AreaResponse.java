@@ -11,7 +11,7 @@ public class AreaResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("codAre")
+	@JsonProperty("codArea")
 	private Integer codArea;
 	
 	@JsonProperty("descripcion")

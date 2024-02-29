@@ -27,11 +27,33 @@ public class Cargo {
 	private Integer codCargo;
 	
 	
+	
+
+
 	@Column(name = "descripcion" , length = 50)
 	private String descripcion;
 
 	
+
+	@Column(name = "codArea")
+	private Integer codArea;
 	
+	
+	
+	
+	
+	
+	
+	public Cargo(String descripcion) {
+		super();
+		this.descripcion = descripcion;
+	}
+
+	
+
+	public Cargo() {
+		super();
+	}
 
 	
 	

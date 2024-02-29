@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.system.planilla.controller.dto.TrabajadorBusquedaResponse;
 import com.system.planilla.controller.dto.request.TrabajadorRequest;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.service.TrabajadorService;
@@ -63,4 +65,67 @@ public class TrabajadorController {
 			}
       
 
+			
+			
+			 //http://localhost:8081/planilla/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}
+			@RequestMapping(value = "/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<List<TrabajadorBusquedaResponse>> listado( @PathVariable Integer codArea,
+					@PathVariable Integer codCargo,@PathVariable Integer codEstadoCivil){
+				
+				List<TrabajadorBusquedaResponse> listaTrabajadorResponse = trabajadorService.listarTrabajadorPorCodAreaCarcoEstadoCivil(codArea,codCargo,codEstadoCivil);
+				
+				
+				 
+				listaTrabajadorResponse.forEach(a -> logger.info(a.toString()));
+				
+				return new ResponseEntity<>(listaTrabajadorResponse, HttpStatus.OK);
+				
+}
+			
+		
+			
+			@RequestMapping(value = "/eliminarTrabajador/{codTrabajador}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<Map<String, String>> listado1(@PathVariable Integer codTrabajador) {
+			    HashMap<String, String> response = new HashMap<>();
+			    Integer resultado = trabajadorService.eliminarTrabajador(codTrabajador);
+
+			    if (resultado > 0) {
+			        response.put("respuesta", "elimino correctamente");
+			    } else {
+			        response.put("respuesta", " eliminacion fallida");
+			    }
+
+			    // Devolver la respuesta con el mapa response y el estado HTTP correspondiente
+			    return ResponseEntity.ok().body(response);
+			}
+
+			
+			
+			
+		/*	//obtenerDatosProducto
+			@RequestMapping(value = "/obtenerDatosTrabajador/{codTrabajador}", method = RequestMethod.GET)
+			public ResponseEntity<Producto> obtenerEmpleado(@PathVariable ("codigo")  Integer codigo){
+				
+				Producto producto = new Producto();
+				
+				producto = iProductoService.obtenerProducto(codigo);
+				
+				return new ResponseEntity<Producto>(producto, HttpStatus.OK);
+			}*/
+			
+			
+			 //http://localhost:8081/planilla/buscarTrabajador/{codTrabajador}
+			@RequestMapping(value = "/obtenerDatosTrabajador/{codTrabajador}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<TrabajadorBusquedaResponse> listado( @PathVariable Integer codTrabajador){
+				
+				TrabajadorBusquedaResponse listaTrabajadorResponse = trabajadorService.obtenerTrabajador(codTrabajador);
+				
+				
+				return new ResponseEntity<>(listaTrabajadorResponse, HttpStatus.OK);
+				
+			
+			
+			}
+			
+			
 }

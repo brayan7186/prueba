@@ -1,17 +1,16 @@
-package com.system.planilla.controller.dto.response;
+package com.system.planilla.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 import lombok.Setter;
 
-
-@Getter
-@Setter
-public class TrabajadorResponse {
+ @Getter
+ @Setter
+public class TrabajadorBusquedaResponse {
 
 	
-	@JsonProperty("codTrabajador")
+	 @JsonProperty("codTrabajador")
 	 private Integer codTrabajador;
 	
 	

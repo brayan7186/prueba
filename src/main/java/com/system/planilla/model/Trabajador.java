@@ -9,7 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+
+@Getter
+@Setter
 @Table(name = "TB_TRABAJADOR")
 public class Trabajador {
 
@@ -42,6 +48,17 @@ public class Trabajador {
 	@Column(name = "dni", length = 8)
 	private String dni;
 	
+	
+	
+	/*@Column(name = "codArea" )
+	private String codArea;
+	
+	@Column(name = "codCargo" )
+	private String codCargo;
+	
+	@Column(name = "codEstadoCivil")
+	private String codEstadoCivil;*/
+	
 
 	@ManyToOne
 	@JoinColumn(name = "codEstCivil", referencedColumnName = "codEstCivil")
@@ -70,135 +87,11 @@ public class Trabajador {
 
 
 
-	public Integer getCodTrabajador() {
-		return codTrabajador;
-	}
+	
 
 
-
-
-
-
-
-	public void setCodTrabajador(Integer codTrabajador) {
-		this.codTrabajador = codTrabajador;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-
-
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	public String getApePaterno() {
-		return apePaterno;
-	}
-
-
-	public void setApePaterno(String apePaterno) {
-		this.apePaterno = apePaterno;
-	}
-
-
-
-
-	public String getApeMaterno() {
-		return apeMaterno;
-	}
-
-
-	public void setApeMaterno(String apeMaterno) {
-		this.apeMaterno = apeMaterno;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public Integer getEdad() {
-		return edad;
-	}
-
-
-
-	public void setEdad(Integer edad) {
-		this.edad = edad;
-	}
-
-
-	public String getCelular() {
-		return celular;
-	}
-
-
-	public void setCelular(String celular) {
-		this.celular = celular;
-	}
-
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-
-	public String getDni() {
-		return dni;
-	}
-
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-
-	public EstadoCivil getEstadoCivil() {
-		return estadoCivil;
-	}
-
-
-
-	public void setEstadoCivil(EstadoCivil estadoCivil) {
-		this.estadoCivil = estadoCivil;
-	}
-
-	public Area getArea() {
-		return area;
-	}
-
-
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
-
-
-	public Cargo getCargo() {
-		return cargo;
-	}
-
-
-
-	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
-	}
 
 
 	
-
+	
 }

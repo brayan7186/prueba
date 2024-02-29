@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Trabajador</title>
+
+
+	<script src="https://code.jquery.com/jquery-3.7.0.js"
+		integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="/js/cargo.js"></script>
+
+  
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+	<div class="container mt-5">
+		<h1 class="text-center mb-4">Trabajador</h1>
+
+
+		<!-- Área, Cargo y Estado Civil -->
+		<div class="row mb-4">
+			<div class="col-md-4">
+				<label class="form-check-label">Área:</label>
+				<select class="form-control" id="selEstadoArea" name="selArea">
+					<option value="" disabled selected hidden>Seleccionar</option>
+				</select>
+			</div>
+			<div class="col-md-4">
+				<label class="form-check-label">Cargo:</label>
+				<select class="form-control" id="selEstadoCargo">
+
+				</select>
+			</div>
+
+			<div class="col-md-4">
+				<label class="form-check-label">Estado Civil:</label>
+				<select class="form-control" id="selEstadoCivil">
+
+				</select>
+			</div>
+		</div>
+
+		<!-- Precio Inicio y Precio Fin
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="precioInicio"> Sueldo:</label>
+                    <input type="text" class="form-control" id="precioInicio">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="precioFin">Precio Fin:</label>
+                    <input type="text" class="form-control" id="precioFin">
+                </div>
+            </div>
+        </div>
+ -->
+		<!-- Botones y Tabla -->
+		<div class="row mb-4">
+			<div class="col-md-6">
+				<button id="btnListaProducto" class="btn btn-primary"
+					onclick="fn_listarProductoJquery()">visualizar</button>
+				<button id="btnregistrarProducto" class="btn btn-primary" onclick="fn_abrir()">Registra</button>
+			</div>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="col-md-12">
+			<button id="btnListaProducto" class="btn btn-primary" onclick="fn_buscarTrabajadorJquery()">Buscar</button>
+
+				<table border="1" class="table table-hover table-bordered">
+					<thead>
+				  <th>ID</th>
+                <th>TRABAJADOR</th>
+                <th>CORREO</th>
+                <th>DNI</th>
+                <th>AREA</th>
+                <th>CARGO</th>
+                <th>ESTADO CIVIL</th>
+                <th>ACCIONES</th>
+                
+					</thead>
+					<tbody id="tbody_trabajador">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- Bootstrap JS y jQuery -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"
+		integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+
+</html>
