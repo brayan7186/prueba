@@ -119,6 +119,10 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 					
 					intercambiarValores(trabajador, trabajadorResponse);
 					 
+					trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
+					 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
+					 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
+					 
 					   return trabajadorResponse;
 					   
 				}).collect(Collectors.toList());
@@ -171,14 +175,11 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		 trabajadorResponse.setNombre(trabajador.getNombre());
 		 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
 		 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
-			 trabajadorResponse.setCorreo(trabajador.getCorreo());
+	     trabajadorResponse.setCorreo(trabajador.getCorreo());
 		 trabajadorResponse.setEdad(trabajador.getEdad());
 		 trabajadorResponse.setCelular(trabajador.getCelular());
 		 trabajadorResponse.setDireccion(trabajador.getDireccion());
 		 trabajadorResponse.setDni(trabajador.getDni());
-		 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
-		 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
-		 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
 		 
 	}
 

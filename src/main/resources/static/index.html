@@ -98,6 +98,129 @@
 			</div>
 		</div>
 
+
+
+
+  
+	<!-- INICIO: modal para actualizar un producto  -->
+	
+	 <div class="modal" id="modalProducto">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal parte superior -->
+				<div class="modal-header">
+					<h4 class="modal-title">Actualizar Trabajador</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="fn_cerrar()">&times;</button>
+
+				</div>
+
+				<!-- Modal cuerpo -->
+				<div class="modal-body">
+					<form>
+						<div class="container">
+    <div class="row">
+       
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="txtNombreTrabajador">Nombre:</label>
+                <input type="text" class="form-control" id="txtNombreTrabajador" readonly>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="txtApePaternoTrabajador">Apellido Paterno:</label>
+                <input type="text" class="form-control" id="txtApePaternoTrabajador" readonly>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="txtApeMaternoTrabajador">Apellido Materno:</label>
+                <input type="text" class="form-control" id="txtApeMaternoTrabajador" readonly>
+            </div>
+        </div>
+   
+    <!-- Datos Secundarios -->
+   
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="txtEdadTrabajador">Edad:</label>
+                <input type="text" class="form-control" id="txtEdadTrabajador" readonly>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="txtDniTrabajador">DNI:</label>
+                <input type="text" class="form-control" id="txtDniTrabajador" readonly>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="txtCelularTrabajador">Celular:</label>
+                <input type="text" class="form-control" id="txtCelularTrabajador" readonly>
+            </div>
+        </div>
+   
+    <!-- Otros Datos -->
+   
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="txtCorreoTrabajador">Correo:</label>
+                <input type="text" class="form-control" id="txtCorreoTrabajador" readonly>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="txtDireccionTrabajador">Dirección:</label>
+                <input type="text" class="form-control" id="txtDireccionTrabajador" readonly>
+            </div>
+        </div>
+    
+   
+        <div class="col-md-4">
+            <label class="form-check-label">Área:</label>
+            <select class="form-control" id="selEstadoArea" name="selArea">
+                <option value="" disabled selected hidden>Seleccionar</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-check-label">Cargo:</label>
+            <select class="form-control" id="selEstadoCargo"></select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-check-label">Estado Civil:</label>
+            <select class="form-control" id="selEstadoCivil"></select>
+        </div>
+
+    
+
+</div>
+
+
+
+					</form>
+				</div>
+
+
+				<!-- Modal parte inferiror -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal"
+						onclick="fn_cerrar()">Cerrar</button>
+					<button type="button" class="btn btn-primary"
+						onclick="fn_actualizarProducto()">Actualizar</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- FIN: modal para actualizar un producto  -->
+
+	<!--  inicio  de registrar producto  -->
+
+
 	</div>
 
 

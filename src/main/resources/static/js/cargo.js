@@ -140,7 +140,7 @@ function fn_buscarTrabajadorJquery() {
            <td>
               <img title="Eliminar Trabajdor" src="img/delete.png" onclick="fn_eliminar(${trabajador.codTrabajador})">
          
-              <img title="Actualizar Trabajador" src="img/edit.png" onclick="fn_cargarProductoXCodigo(${trabajador.codTrabajador})">
+              <img title="Actualizar Trabajador" src="img/edit.png" onclick="fn_cargarTrabajadorPorCodigo(${trabajador.codTrabajador})">
             </td>
           </tr>`
     );
@@ -174,5 +174,27 @@ function fn_buscarTrabajadorJquery() {
 
 
 
+ function fn_cargarTrabajadorPorCodigo(codigoProducto) {
+	
+  $("#modalProducto").show();
+/*
+  $.ajax({
+    url: "http://localhost:8081/planilla/obtenerDatosTrabajador/" + codigoProducto,
+    type: "GET",
+    success: function(respuestaBackend) {
+      console.log(respuestaBackend);
+
+      $("#txtCodigoProductoAct")
+        .val(respuestaBackend.codigo)
+        .prop("readonly", true);
+      $("#txtDescripcionProdcutoAct").val(respuestaBackend.descripcion);
+      $("#txtPrecioProductoAct").val(respuestaBackend.preProducto);
+    },
+    error: function() {
+      console.error("No es posible completar la operación");
+    }
+  });
+  */
+}
 
 
