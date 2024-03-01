@@ -105,21 +105,28 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		 return listadoCargoResponse;
 	}*/
 	@Override
-	public List<TrabajadorBusquedaResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea, Integer codCargo,
+	public List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea, Integer codCargo,
 			Integer codEsatdoCivil) {
 		
-		List<TrabajadorBusquedaResponse> listarTrabajadorResponse;
+		List<TrabajadorResponse> listarTrabajadorResponse;
 		
 				
 	
 		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilJPQL(codArea, codCargo, codEsatdoCivil)
 				.stream()
 				.map(trabajador ->{
-					TrabajadorBusquedaResponse trabajadorResponse = new TrabajadorBusquedaResponse();
+					TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
 					
-					intercambiarValores(trabajador, trabajadorResponse);
-					 
-					trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
+					
+					trabajadorResponse.setNombre(trabajador.getNombre() +" "+ trabajador.getApePaterno() +""+  trabajador.getApeMaterno());
+
+					 trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
+				     trabajadorResponse.setCorreo(trabajador.getCorreo());
+					 trabajadorResponse.setEdad(trabajador.getEdad());
+					 trabajadorResponse.setCelular(trabajador.getCelular());
+					 trabajadorResponse.setDireccion(trabajador.getDireccion());
+					 trabajadorResponse.setDni(trabajador.getDni());
+					 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
 					 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
 					 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
 					 
@@ -162,6 +169,9 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 			TrabajadorBusquedaResponse trabajadorResponse = new TrabajadorBusquedaResponse();
 					
 					 intercambiarValores(trabajador, trabajadorResponse);
+					 trabajadorResponse.setNombre(trabajador.getNombre() );
+					 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
+					 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
 					 
 				
 		return trabajadorResponse;
@@ -172,15 +182,15 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	private void intercambiarValores(Trabajador trabajador, TrabajadorBusquedaResponse trabajadorResponse) {
 		
 		 trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
-		 trabajadorResponse.setNombre(trabajador.getNombre());
-		 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
-		 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
 	     trabajadorResponse.setCorreo(trabajador.getCorreo());
 		 trabajadorResponse.setEdad(trabajador.getEdad());
 		 trabajadorResponse.setCelular(trabajador.getCelular());
 		 trabajadorResponse.setDireccion(trabajador.getDireccion());
 		 trabajadorResponse.setDni(trabajador.getDni());
-		 
+		 trabajadorResponse.setCodArea(trabajador.getArea().getCodArea());
+		 trabajadorResponse.setCodCargo(trabajador.getCargo().getCodCargo());
+		 trabajadorResponse.setCodEstadoCivil(trabajador.getEstadoCivil().getCodEstCivil());
+		
 	}
 
 

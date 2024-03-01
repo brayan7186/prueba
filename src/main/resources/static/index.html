@@ -104,7 +104,7 @@
   
 	<!-- INICIO: modal para actualizar un producto  -->
 	
-	 <div class="modal" id="modalProducto">
+	 <div class="modal" id="modalTrabajador">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 
@@ -122,22 +122,23 @@
 						<div class="container">
     <div class="row">
        
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="txtNombreTrabajador">Nombre:</label>
-                <input type="text" class="form-control" id="txtNombreTrabajador" readonly>
-            </div>
-        </div>
+      <div class="col-md-4">
+    <div class="form-group">
+        <label for="txtNombreTrabajador">Nombre:</label>
+        <input type="text" class="form-control" id="txtNombreTrabajador">
+    </div>
+</div>
+
         <div class="col-md-4">
             <div class="form-group">
                 <label for="txtApePaternoTrabajador">Apellido Paterno:</label>
-                <input type="text" class="form-control" id="txtApePaternoTrabajador" readonly>
+                <input type="text" class="form-control" id="txtApePaternoTrabajador" >
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="txtApeMaternoTrabajador">Apellido Materno:</label>
-                <input type="text" class="form-control" id="txtApeMaternoTrabajador" readonly>
+                <input type="text" class="form-control" id="txtApeMaternoTrabajador" >
             </div>
         </div>
    
@@ -146,19 +147,19 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="txtEdadTrabajador">Edad:</label>
-                <input type="text" class="form-control" id="txtEdadTrabajador" readonly>
+                <input type="text" class="form-control" id="txtEdadTrabajador" >
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="txtDniTrabajador">DNI:</label>
-                <input type="text" class="form-control" id="txtDniTrabajador" readonly>
+                <input type="text" class="form-control" id="txtDniTrabajador" >
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="txtCelularTrabajador">Celular:</label>
-                <input type="text" class="form-control" id="txtCelularTrabajador" readonly>
+                <input type="text" class="form-control" id="txtCelularTrabajador" >
             </div>
         </div>
    
@@ -167,31 +168,38 @@
         <div class="col-md-8">
             <div class="form-group">
                 <label for="txtCorreoTrabajador">Correo:</label>
-                <input type="text" class="form-control" id="txtCorreoTrabajador" readonly>
+                <input type="text" class="form-control" id="txtCorreoTrabajador" >
             </div>
         </div>
+        
+         
         <div class="col-md-8">
             <div class="form-group">
                 <label for="txtDireccionTrabajador">Dirección:</label>
-                <input type="text" class="form-control" id="txtDireccionTrabajador" readonly>
+                <input type="text" class="form-control" id="txtDireccionTrabajador" >
             </div>
         </div>
     
-   
-        <div class="col-md-4">
-            <label class="form-check-label">Área:</label>
-            <select class="form-control" id="selEstadoArea" name="selArea">
+      <div class="col-md-4">
+            <label >Área:</label>
+            <select class="form-control" id="selEstadoAreaEditar" >
                 <option value="" disabled selected hidden>Seleccionar</option>
             </select>
         </div>
-        <div class="col-md-4">
-            <label class="form-check-label">Cargo:</label>
-            <select class="form-control" id="selEstadoCargo"></select>
+        
+   
+    <div class="col-md-4">
+        <div class="form-group">
+            <label >Cargo:</label>
+            <select class="form-control" id="selEstadoCargoEditar"></select>
         </div>
-        <div class="col-md-4">
-            <label class="form-check-label">Estado Civil:</label>
-            <select class="form-control" id="selEstadoCivil"></select>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Estado Civil:</label>
+            <select class="form-control" id="selEstadoCivilEditar"></select>
         </div>
+    </div>
 
     
 
@@ -199,14 +207,18 @@
 
 
 
-					</form>
-				</div>
+	</form>
+	</div>
 
 
+ <div class="modal-header">
+    <h4 class="modal-title">Actualizar Trabajador</h4>
+    <button type="button" class="close" data-dismiss="modal" onclick="fn_cerrarModal()">&times;</button>
+</div>
 				<!-- Modal parte inferiror -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal"
-						onclick="fn_cerrar()">Cerrar</button>
+							onclick="fn_cerrar()">Cerrar</button>
 					<button type="button" class="btn btn-primary"
 						onclick="fn_actualizarProducto()">Actualizar</button>
 				</div>

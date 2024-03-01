@@ -48,16 +48,16 @@ public class TrabajadorBusquedaResponse {
 
 
 	 
-	@JsonProperty("descripcionArea")
-	 private   String  descripcionArea;
+	@JsonProperty("codArea")
+	 private   Integer  codArea;
 	
 	
-	@JsonProperty("descripcionCargo")
-	 private String descripcionCargo; 
+	@JsonProperty("codCargo")
+	 private Integer codCargo; 
 	
 	
-	@JsonProperty("descripcionEstadoCivil")
-	 private  String descripcionEstadoCivil;
+	@JsonProperty("codEstadoCivil")
+	 private  Integer codEstadoCivil;
 	
 	  
 }

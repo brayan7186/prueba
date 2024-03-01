@@ -15,5 +15,5 @@ public interface TrabajadorService {
 	public abstract TrabajadorBusquedaResponse obtenerTrabajador(Integer codTrabajador);
 	
 	public abstract Integer eliminarTrabajador(Integer codTrabajador);
-	public abstract List<TrabajadorBusquedaResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea ,Integer codCargo ,Integer codEsatdoCivil);
+	public abstract List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea ,Integer codCargo ,Integer codEsatdoCivil);
 }
