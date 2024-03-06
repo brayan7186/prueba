@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-
+    fn_listarTipoDistritoJquery();
 	fn_listarTipoEstadoCivilJquery();
 	fn_listarTipoAreaJquery();
 
@@ -113,6 +113,34 @@ function fn_listarTipoAreaJquery() {
 
 
 
+/**Area*/
+function fn_listarTipoDistritoJquery() {
+	$.ajax({
+
+		url: "http://localhost:8081/planilla/listadoDistrito",
+		type: "GET",
+		success: function(respuestaBackend) {
+			console.log(respuestaBackend);
+			$("#selDistrito").empty();
+
+			if (respuestaBackend.length > 0) {
+
+				respuestaBackend.forEach(function(tipoDistrito, i) {
+
+					$("#selDistrito").append(`<option value="${tipoDistrito.codDistrito}">${tipoDistrito.descripcion}</option>`);
+
+
+
+				});
+			}
+
+
+		},
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
 
 
 
@@ -246,7 +274,7 @@ function fn_buscarTrabajadorJquery() {
 	var codCargo = $("#selEstadoCargo").val();
 	var codEstadoCivil = $("#selEstadoCivil").val();
 	
-    var distrito = $("#distrito").val();
+    var distrito = $("#selDistrito").val();
     
 	console.log(codEstadoCivil);
 
@@ -439,8 +467,11 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 	
 	
     $("#modalCrearTrabajador").show();
-    fn_listarTipoEstadoCivilCrear();
     
+      $('#txtNombreTrabajadorc').focus();
+     fn_listarTipoDistritoCrear();
+    fn_listarTipoEstadoCivilCrear();
+   
     fn_listarTipoAreaCrear();
 
     // Asegúrate de que el área se haya cargado antes de llamar a la función para cargar los cargos
@@ -471,6 +502,8 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
   var codEstadoCivil = $("#selEstadoCivilc").val();
   var codCargo = $("#selEstadoCargoc").val();
   var codArea = $("#selEstadoAreac").val();
+  var codDistrito = $("#selDistritoc").val();
+  
   
   
   // CREAR UN OBJETO CON JAVASCRIPT
@@ -482,10 +515,11 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
     dni: dni,
     celular: celular,
     correo: correo,
-    distrito: direccion,
+    direccion: direccion,
     codEstCivil: codEstadoCivil,
     codCargo: codCargo,
-    codArea: codArea
+    codArea: codArea,
+    codDistrito :codDistrito
   };
 
   $.ajax({
@@ -577,6 +611,37 @@ function fn_listarTipoAreaCrear() {
 				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
 
 					$("#selEstadoAreac").append(`<option value="${tipoEstadoCivil.codArea}">${tipoEstadoCivil.descripcion}</option>`);
+
+
+
+				});
+			}
+
+
+		},
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
+
+
+
+function fn_listarTipoDistritoCrear() {
+	$.ajax({
+
+		url: "http://localhost:8081/planilla/listadoDistrito",
+		type: "GET",
+		success: function(respuestaBackend) {
+			console.log(respuestaBackend);
+			$("#selDistritoc").empty();
+
+
+			if (respuestaBackend.length > 0) {
+
+				respuestaBackend.forEach(function(tipoDistrito, i) {
+
+					$("#selDistritoc").append(`<option value="${tipoDistrito.codDistrito}">${tipoDistrito.descripcion}</option>`);
 
 
 

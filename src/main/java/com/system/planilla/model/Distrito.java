@@ -38,6 +38,13 @@ public class Distrito {
 			this.codDistrito = codDistrito;
 		}
 
+
+
+
+		public Distrito() {
+			super();
+		}
+
 		
 
 

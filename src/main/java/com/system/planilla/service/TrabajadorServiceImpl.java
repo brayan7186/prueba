@@ -118,13 +118,13 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	}*/
 	@Override
 	public List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea, Integer codCargo,
-			Integer codEsatdoCivil , String distrito) {
+			Integer codEsatdoCivil , Integer codDistrito) {
 		
 		List<TrabajadorResponse> listarTrabajadorResponse;
 		
 				
 	
-		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilAndDistritoJPQL(codArea, codCargo, codEsatdoCivil ,distrito)
+		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilAndDistritoJPQL(codArea, codCargo, codEsatdoCivil ,codDistrito)
 				.stream()
 				.map(trabajador ->{
 					TrabajadorResponse trabajadorResponse = new TrabajadorResponse();

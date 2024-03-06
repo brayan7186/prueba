@@ -11,9 +11,9 @@
 		integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/js/cargo.js"></script>
+	<script type="text/javascript" src="/js/cargo.js"></script>
 
-  
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
@@ -23,6 +23,7 @@
 
 	<div class="container mt-5">
 		<h1 class="text-center mb-4">Trabajador</h1>
+
 
 
 		<!-- Área, Cargo y Estado Civil -->
@@ -47,11 +48,28 @@
 				</select>
 			</div>
 		</div>
-		
-		 <label>Distrito:</label>
-       <input type="text" id="distrito" name="distrito" placeholder="Escribe tu distrito aquí">
 
+		<div class="row mb-4">
+			<div class="col-md-4">
+				<label for="selDistrito">Distrito:</label>
+				<select class="form-control" id="selDistrito">
+					<!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+				</select>
+			</div>
+			<div class="col-md-8 text-right">
+				<button id="btnBuscarTrabajador" class="btn btn-primary"
+					onclick="fn_buscarTrabajadorJquery()">Buscar</button>
+			</div>
+		</div>
 
+		<div class="row mb-4">
+			<div class="col-md-6">
+				<button id="btnListaProducto" class="btn btn-primary"
+					onclick="fn_listarProductoJquery()">Visualizar</button>
+				<button id="btnregistrarProducto" class="btn btn-primary" onclick="fn_abrir()">Registrar</button>
+			</div>
+
+		</div>
 		<!-- Precio Inicio y Precio Fin
         <div class="row mb-4">
             <div class="col-md-3">
@@ -68,162 +86,149 @@
             </div>
         </div>
  -->
-		<!-- Botones y Tabla -->
-		<div class="row mb-4">
-			<div class="col-md-6">
-				<button id="btnListaProducto" class="btn btn-primary"
-					onclick="fn_listarProductoJquery()">visualizar</button>
-				<button id="btnregistrarProducto" class="btn btn-primary" onclick="fn_abrir()">Registra</button>
-			</div>
+
+		<div class="col-md-12">
+
+			<table border="1" class="table table-hover table-bordered">
+				<thead>
+					<th>ID</th>
+					<th>TRABAJADOR</th>
+					<th>CORREO</th>
+					<th>DISTRITO</th>
+					<th>DNI</th>
+					<th>AREA</th>
+					<th>CARGO</th>
+					<th>ESTADO CIVIL</th>
+					<th>ACCIONES</th>
+
+				</thead>
+				<tbody id="tbody_trabajador">
+
+				</tbody>
+			</table>
 		</div>
-		
-		
-		
-		<div class="row">
-			<div class="col-md-12">
-			<button id="btnListaProducto" class="btn btn-primary" onclick="fn_buscarTrabajadorJquery()">Buscar</button>
-
-				<table border="1" class="table table-hover table-bordered">
-					<thead>
-				  <th>ID</th>
-                <th>TRABAJADOR</th>
-                <th>CORREO</th>
-                 <th>DISTRITO</th>
-                <th>DNI</th>
-                <th>AREA</th>
-                <th>CARGO</th>
-                <th>ESTADO CIVIL</th>
-                <th>ACCIONES</th>
-                
-					</thead>
-					<tbody id="tbody_trabajador">
-
-					</tbody>
-				</table>
-			</div>
-		</div>
+	</div>
 
 
 
 
-  
+
 	<!-- INICIO: modal para actualizar un producto  -->
-	
-	 <div class="modal" id="modalTrabajador">
+
+	<div class="modal" id="modalTrabajador">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 
 				<!-- Modal parte superior -->
 				<div class="modal-header">
 					<h4 class="modal-title">Actualizar Trabajador</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="fn_cerrar()">&times;</button>
+					<button type="button" class="close" data-dismiss="modal" onclick="fn_cerrar()">&times;</button>
 
 				</div>
 
 				<!-- Modal cuerpo -->
 				<div class="modal-body">
 					<form>
-					
+
 						<div class="container">
-    <div class="row">
-       
-      <div class="col-md-4">
-    <div class="form-group">
-        <label for="txtNombreTrabajador">Nombre:</label>
-        <input type="text" class="form-control" id="txtNombreTrabajador">
-    </div>
-</div>
+							<div class="row">
 
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="txtApePaternoTrabajador">Apellido Paterno:</label>
-                <input type="text" class="form-control" id="txtApePaternoTrabajador" >
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="txtApeMaternoTrabajador">Apellido Materno:</label>
-                <input type="text" class="form-control" id="txtApeMaternoTrabajador" >
-            </div>
-        </div>
-   
-    <!-- Datos Secundarios -->
-   
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="txtEdadTrabajador">Edad:</label>
-                <input type="text" class="form-control" id="txtEdadTrabajador" >
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="txtDniTrabajador">DNI:</label>
-                <input type="text" class="form-control" id="txtDniTrabajador" >
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="txtCelularTrabajador">Celular:</label>
-                <input type="text" class="form-control" id="txtCelularTrabajador" >
-            </div>
-        </div>
-   
-    <!-- Otros Datos -->
-   
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="txtCorreoTrabajador">Correo:</label>
-                <input type="text" class="form-control" id="txtCorreoTrabajador" >
-            </div>
-        </div>
-        
-         
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="txtDireccionTrabajador">Dirección:</label>
-                <input type="text" class="form-control" id="txtDireccionTrabajador" >
-            </div>
-        </div>
-    
-      <div class="col-md-4">
-            <label >Área:</label>
-            <select class="form-control" id="selEstadoAreaEditar" >
-                <option value="" disabled selected hidden>Seleccionar</option>
-            </select>
-        </div>
-        
-   
-    <div class="col-md-4">
-        <div class="form-group">
-            <label >Cargo:</label>
-            <select class="form-control" id="selEstadoCargoEditar"></select>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label>Estado Civil:</label>
-            <select class="form-control" id="selEstadoCivilEditar"></select>
-        </div>
-    </div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtNombreTrabajador">Nombre:</label>
+										<input type="text" class="form-control" id="txtNombreTrabajador">
+									</div>
+								</div>
 
-    
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtApePaternoTrabajador">Apellido Paterno:</label>
+										<input type="text" class="form-control" id="txtApePaternoTrabajador">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtApeMaternoTrabajador">Apellido Materno:</label>
+										<input type="text" class="form-control" id="txtApeMaternoTrabajador">
+									</div>
+								</div>
 
-</div>
+								<!-- Datos Secundarios -->
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtEdadTrabajador">Edad:</label>
+										<input type="text" class="form-control" id="txtEdadTrabajador">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtDniTrabajador">DNI:</label>
+										<input type="text" class="form-control" id="txtDniTrabajador">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtCelularTrabajador">Celular:</label>
+										<input type="text" class="form-control" id="txtCelularTrabajador">
+									</div>
+								</div>
+
+								<!-- Otros Datos -->
+
+								<div class="col-md-8">
+									<div class="form-group">
+										<label for="txtCorreoTrabajador">Correo:</label>
+										<input type="text" class="form-control" id="txtCorreoTrabajador">
+									</div>
+								</div>
+
+
+								<div class="col-md-8">
+									<div class="form-group">
+										<label for="txtDireccionTrabajador">Dirección:</label>
+										<input type="text" class="form-control" id="txtDireccionTrabajador">
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<label>Área:</label>
+									<select class="form-control" id="selEstadoAreaEditar">
+										<option value="" disabled selected hidden>Seleccionar</option>
+									</select>
+								</div>
+
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Cargo:</label>
+										<select class="form-control" id="selEstadoCargoEditar"></select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Estado Civil:</label>
+										<select class="form-control" id="selEstadoCivilEditar"></select>
+									</div>
+								</div>
 
 
 
-	</form>
-	</div>
+							</div>
 
 
- 		<!-- Modal parte inferiror -->
+
+					</form>
+				</div>
+
+
+				<!-- Modal parte inferiror -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal"
-							onclick="fn_cerrar()">Cerrar</button>
+						onclick="fn_cerrar()">Cerrar</button>
 					<button type="button" class="btn btn-primary"
 						onclick="fn_actualizarTrabajador()">Actualizar</button>
-						
+
 				</div>
 
 			</div>
@@ -236,130 +241,131 @@
 	<!-- FIN: modal para actualizar un producto  -->
 
 	<!-- INICIO: modal para crear un nuevo trabajador -->
-<div class="modal" id="modalCrearTrabajador">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
+	<div class="modal" id="modalCrearTrabajador">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
 
-            <!-- Modal parte superior -->
-            <div class="modal-header">
-                <h4 class="modal-title">Registrar Nuevo Trabajador</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
+				<!-- Modal parte superior -->
+				<div class="modal-header">
+					<h4 class="modal-title">Registrar Nuevo Trabajador</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
 
-            <!-- Modal cuerpo -->
-            <div class="modal-body">
-                <form>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="txtNombreTrabajador">Nombre:</label>
-                                    <input type="text" class="form-control" id="txtNombreTrabajadorc">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="txtApePaternoTrabajador">Apellido Paterno:</label>
-                                    <input type="text" class="form-control" id="txtApePaternoTrabajadorc">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="txtApeMaternoTrabajador">Apellido Materno:</label>
-                                    <input type="text" class="form-control" id="txtApeMaternoTrabajadorc">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="txtEdadTrabajador">Edad:</label>
-                                    <input type="text" class="form-control" id="txtEdadTrabajadorc">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="txtDniTrabajador">DNI:</label>
-                                    <input type="text" class="form-control" id="txtDniTrabajadorc">
-                                </div>
-                            </div>
-                            
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Estado Civil:</label>
-                                    <select class="form-control" id="selEstadoCivilc">
-                                      
-                                    </select>
-                                </div>
-                            </div>
-                            
-                               
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="txtCelularTrabajador">Celular:</label>
-                                    <input type="text" class="form-control" id="txtCelularTrabajadorc">
-                                </div>
-                            </div>
-                           
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="txtCorreoTrabajador">Correo:</label>
-                                    <input type="text" class="form-control" id="txtCorreoTrabajadorc">
-                                </div>
-                            </div>
-                            
-                                
-                            <div class="col-md-4">
-                                <label>Distrito:</label>
-                                <select class="form-control" id="selDistrito">
-                                 
-                                   <!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="txtDireccionTrabajador">Dirección:</label>
-                                    <input type="text" class="form-control" id="txtDireccionTrabajadorc">
-                                </div>
-                            </div>
-                          
-                            
-                            <div class="col-md-4">
-                                <label>Área:</label>
-                                <select class="form-control" id="selEstadoAreac">
-                                 
-                                   <!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Cargo:</label>
-                                    <select class="form-control" id="selEstadoCargoc">
-                                        <!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
-                                    </select>
-                                </div>
-                            </div>
-                          
-                            
-                                
-                </form>
-            </div>
+				<!-- Modal cuerpo -->
+				<div class="modal-body">
+					<form>
+						<div class="container">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtNombreTrabajador">Nombre:</label>
+										<input autofocus type="text" class="form-control" id="txtNombreTrabajadorc">
+									</div>
 
-            <!-- Modal parte inferior -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="fn_crearTrabajador()">Crear</button>
-            </div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtApePaternoTrabajador">Apellido Paterno:</label>
+										<input type="text" class="form-control" id="txtApePaternoTrabajadorc">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtApeMaternoTrabajador">Apellido Materno:</label>
+										<input type="text" class="form-control" id="txtApeMaternoTrabajadorc">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtEdadTrabajador">Edad:</label>
+										<input type="text" class="form-control" id="txtEdadTrabajadorc">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtDniTrabajador">DNI:</label>
+										<input type="text" class="form-control" id="txtDniTrabajadorc">
+									</div>
+								</div>
 
-        </div>
-    </div>
-</div>
-<!-- FIN: modal para crear un nuevo trabajador -->
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Estado Civil:</label>
+										<select class="form-control" id="selEstadoCivilc">
+
+										</select>
+									</div>
+								</div>
 
 
-        
-    </form>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="txtCelularTrabajador">Celular:</label>
+										<input type="text" class="form-control" id="txtCelularTrabajadorc">
+									</div>
+								</div>
 
-</div>
+								<div class="col-md-8">
+									<div class="form-group">
+										<label for="txtCorreoTrabajador">Correo:</label>
+										<input type="text" class="form-control" id="txtCorreoTrabajadorc">
+									</div>
+								</div>
+
+
+								<div class="col-md-4">
+									<label>Distrito:</label>
+									<select class="form-control" id="selDistritoc">
+
+										<!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+									</select>
+								</div>
+
+								<div class="col-md-8">
+									<div class="form-group">
+										<label for="txtDireccionTrabajador">Dirección:</label>
+										<input type="text" class="form-control" id="txtDireccionTrabajadorc">
+									</div>
+								</div>
+
+
+								<div class="col-md-4">
+									<label>Área:</label>
+									<select class="form-control" id="selEstadoAreac">
+
+										<!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+									</select>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Cargo:</label>
+										<select class="form-control" id="selEstadoCargoc">
+											<!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+										</select>
+									</div>
+								</div>
+
+
+
+					</form>
+				</div>
+
+				<!-- Modal parte inferior -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" onclick="fn_crearTrabajador()">Crear</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- FIN: modal para crear un nuevo trabajador -->
+
+
+
+	</form>
+
+	</div>
 
 
 
