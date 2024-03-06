@@ -1,8 +1,10 @@
 package com.system.planilla.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.system.planilla.controller.dto.request.TrabajadorRequest;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.model.Area;
 import com.system.planilla.model.Cargo;
+import com.system.planilla.model.Distrito;
 import com.system.planilla.model.EstadoCivil;
 import com.system.planilla.model.Trabajador;
 import com.system.planilla.repository.TrabajadorRepository;
@@ -61,7 +64,7 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	@Override
 	public 	Integer registrarTrabajador(TrabajadorRequest trabajadorRequest) {
 		
-		
+		Integer codTrabajdorBD = 0 ;
 		Trabajador trabajador = new Trabajador();
 		
 		trabajador.setNombre(trabajadorRequest.getNombre());
@@ -84,8 +87,17 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		Area area = new Area(trabajadorRequest.getCodArea());
 		trabajador.setArea(area);
 		
+		Distrito distrito = new Distrito(trabajadorRequest.getCodDistrito());
+		trabajador.setDistrito(distrito);
 
-		return trabajadorRepository.save(trabajador).getCodTrabajador();
+		try {
+			
+			codTrabajdorBD = trabajadorRepository.save(trabajador).getCodTrabajador();
+		}catch(Exception ex) {
+			System.out.println("ERROR BD -> " +  ex.getMessage());
+		}
+		
+		return codTrabajdorBD;
 	}
 
 /* List<CargoResponse> listadoCargoResponse;
@@ -106,19 +118,19 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	}*/
 	@Override
 	public List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea, Integer codCargo,
-			Integer codEsatdoCivil) {
+			Integer codEsatdoCivil , String distrito) {
 		
 		List<TrabajadorResponse> listarTrabajadorResponse;
 		
 				
 	
-		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilJPQL(codArea, codCargo, codEsatdoCivil)
+		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilAndDistritoJPQL(codArea, codCargo, codEsatdoCivil ,distrito)
 				.stream()
 				.map(trabajador ->{
 					TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
 					
 					
-					trabajadorResponse.setNombre(trabajador.getNombre() +" "+ trabajador.getApePaterno() +""+  trabajador.getApeMaterno());
+					trabajadorResponse.setNombre(trabajador.getNombre() +"  "+ trabajador.getApePaterno() +" "+  trabajador.getApeMaterno());
 
 					 trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
 				     trabajadorResponse.setCorreo(trabajador.getCorreo());
@@ -194,5 +206,48 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	}
 
 
+	@Override
+	public TrabajadorBusquedaResponse Trabjadordistrito(String distrito) {
+		
+		return null;
+	}
 
+
+	@Override
+	public Integer actualizarTrabajador(TrabajadorRequest trabajadorRequest  ) {
+		
+		Trabajador trabajador = new Trabajador();
+		
+		
+		
+		trabajador.setCodTrabajador(trabajadorRequest.getCodTrabajador());
+		    
+		trabajador.setNombre(trabajadorRequest.getNombre());
+		trabajador.setApeMaterno(trabajadorRequest.getApeMaterno());
+		trabajador.setApePaterno(trabajadorRequest.getApePaterno());
+		trabajador.setCorreo(trabajadorRequest.getCorreo());
+		trabajador.setEdad(trabajadorRequest.getEdad());
+		trabajador.setCelular(trabajadorRequest.getCelular());
+		trabajador.setDireccion(trabajadorRequest.getDireccion());
+		trabajador.setDni(trabajadorRequest.getDni());
+		
+		
+		   
+		 EstadoCivil estadoCivil = new EstadoCivil(trabajadorRequest.getCodEstCivil());
+		trabajador.setEstadoCivil(estadoCivil);
+	
+		Cargo cargo = new Cargo(trabajadorRequest.getCodCargo());
+		trabajador.setCargo(cargo);
+		
+		Area area = new Area(trabajadorRequest.getCodArea());
+		trabajador.setArea(area);
+		
+
+		return trabajadorRepository.save(trabajador).getCodTrabajador();
+	}
+
+
+
+	
+	
 }

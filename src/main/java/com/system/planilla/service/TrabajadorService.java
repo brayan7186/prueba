@@ -14,6 +14,13 @@ public interface TrabajadorService {
 	
 	public abstract TrabajadorBusquedaResponse obtenerTrabajador(Integer codTrabajador);
 	
+	public abstract     TrabajadorBusquedaResponse     Trabjadordistrito(String distrito);
+	
 	public abstract Integer eliminarTrabajador(Integer codTrabajador);
-	public abstract List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea ,Integer codCargo ,Integer codEsatdoCivil);
+	
+	public abstract Integer actualizarTrabajador(TrabajadorRequest trabajadorRequest  );
+	
+	//public abstract Integer crearTrabajador(TrabajadorRequest trabajadorRequest);
+	
+	public abstract List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea ,Integer codCargo ,Integer codEsatdoCivil,String distrito);
 }

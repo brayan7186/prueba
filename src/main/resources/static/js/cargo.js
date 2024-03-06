@@ -32,7 +32,7 @@ function fn_listarTipoCargoJquery(codArea) {
 	$.ajax({
 		url: "http://localhost:8081/planilla/listadoCargoPorArea/" + codArea,
 		type: "GET",
-		success: function(respuestaBackend) {
+		success: function(respuestaBackend) {  
 			console.log(respuestaBackend);
 			$("#selEstadoCargo").empty();
 			if (respuestaBackend.length > 0) {
@@ -78,6 +78,57 @@ function fn_listarTipoEstadoCivilJquery() {
 		}
 	});
 }
+
+
+
+/**Area*/
+function fn_listarTipoAreaJquery() {
+	$.ajax({
+
+		url: "http://localhost:8081/planilla/listadoArea",
+		type: "GET",
+		success: function(respuestaBackend) {
+			console.log(respuestaBackend);
+			$("#selEstadoArea").empty();
+
+			if (respuestaBackend.length > 0) {
+
+				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
+
+					$("#selEstadoArea").append(`<option value="${tipoEstadoCivil.codArea}">${tipoEstadoCivil.descripcion}</option>`);
+
+
+
+				});
+			}
+
+
+		},
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**Estado civil*/
@@ -182,34 +233,6 @@ function fn_listarTipoCargoEditar(codigoAreBD, codigoCargoBD) {
 
 /********************************************** */
 
-/**Area*/
-function fn_listarTipoAreaJquery() {
-	$.ajax({
-
-		url: "http://localhost:8081/planilla/listadoArea",
-		type: "GET",
-		success: function(respuestaBackend) {
-			console.log(respuestaBackend);
-			$("#selEstadoArea").empty();
-
-			if (respuestaBackend.length > 0) {
-
-				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
-
-					$("#selEstadoArea").append(`<option value="${tipoEstadoCivil.codArea}">${tipoEstadoCivil.descripcion}</option>`);
-
-
-
-				});
-			}
-
-
-		},
-		error: function() {
-			console.error("No es posible completar la operación");
-		}
-	});
-}
 
 
 /**  listar trabajadro por codigo area codigo cargo codgio estadoCivil */
@@ -222,15 +245,18 @@ function fn_buscarTrabajadorJquery() {
 	var codArea = $("#selEstadoArea").val();
 	var codCargo = $("#selEstadoCargo").val();
 	var codEstadoCivil = $("#selEstadoCivil").val();
-
+	
+    var distrito = $("#distrito").val();
+    
 	console.log(codEstadoCivil);
 
 	console.log(codArea);
 	console.log(codCargo);
 
-
+  console.log(distrito);
+  
 	$.ajax({
-		url: "http://localhost:8081/planilla/buscarTrabajador/" + codArea + "/" + codCargo + "/" + codEstadoCivil,
+		url: "http://localhost:8081/planilla/buscarTrabajador/" + codArea + "/" + codCargo + "/" + codEstadoCivil +"/"+ distrito ,
 		type: "GET",
 		success: function(respuestaBackend) {
 			console.log(respuestaBackend);
@@ -241,6 +267,7 @@ function fn_buscarTrabajadorJquery() {
              <td>${trabajador.codTrabajador}</td>
         <td>${trabajador.nombre}</td>
         <td>${trabajador.correo}</td>
+        <td>${trabajador.distrito}</td>
         <td>${trabajador.dni}</td>
         <td>${trabajador.descripcionArea}</td>
         <td>${trabajador.descripcionCargo}</td>
@@ -283,30 +310,15 @@ function fn_eliminar(codTrabajador) {
 
 
 
+    var codigoEstadoCivilBD;
+	var codigoCargoBD;
+	var codigoAreBD;
+	var codTrabajadorBD;
+	
 function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 
 	$("#modalTrabajador").show();
 
-
-	// Obtener los elementos select después de obtener la respuesta del servidor
-	var selectArea = document.getElementById("selEstadoArea");
-	var selectCargo = document.getElementById("selEstadoCargo");
-	var selectEstadoCivil = document.getElementById("selEstadoCivil");
-
-	// Obtener los valores seleccionados
-	var valorArea = selectArea.value;
-	var valorCargo = selectCargo.value;
-	var valorEstadoCivil = selectEstadoCivil.value;
-
-	// Hacer algo con los valores seleccionados, como mostrarlos en la consola
-	console.log("Área seleccionada:", valorArea);
-	console.log("Cargo seleccionado:", valorCargo);
-	console.log("Estado Civil seleccionado:", valorEstadoCivil);
-
-
-	var codigoEstadoCivilBD;
-	var codigoCargoBD;
-	var codigoAreBD;
 
 	$.ajax({
 		url: "http://localhost:8081/planilla/obtenerDatosTrabajador/" + codTrabajador,
@@ -323,30 +335,261 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 			$("#txtDniTrabajador").val(respuestaBackend.dni);
 			$("#txtCelularTrabajador").val(respuestaBackend.celular);
 			$("#txtCorreoTrabajador").val(respuestaBackend.correo);
-			$("#txtDireccionTrabajador").val(respuestaBackend.direccion);
+			$("#txtDireccionTrabajador").val(respuestaBackend.distrito);
 			debugger;
 			codigoEstadoCivilBD = respuestaBackend.codEstadoCivil;
 			codigoAreBD = respuestaBackend.codArea
 			codigoCargoBD = respuestaBackend.codCargo;
-
+			
+            codTrabajadorBD  = codTrabajador;
+            
 			console.log("este cogidigo  estado civil BD" + codigoEstadoCivilBD);
 
 			fn_listarTipoEstadoCivilEditar(codigoEstadoCivilBD);
 			fn_listarTipoAreaEditar(codigoAreBD);
 			fn_listarTipoCargoEditar(codigoAreBD, codigoCargoBD);
+		
+		
 		},
 		error: function() {
 			console.error("No es posible completar la operación");
 		}
 	});
 
+
+}
 	// Llenar los combos con los datos obtenidos
 
 
+//tipo  de  dsitrito  escogido  
 
 
+ //actualizar  trabajador 
 
+ function fn_actualizarTrabajador() {
+  // Capturar los valores ingresados en el formulario
+ 
+ 
+  // var codTrabajador = $("#txtCodTrabajador").val();
+   var nombre  =$("#txtNombreTrabajador").val();
+   var apePaterno  =$("#txtApePaternoTrabajador").val();
+   var apeMaterno  =$("#txtApeMaternoTrabajador").val();
+   var edad  =$("#txtEdadTrabajador").val();
+   
+   var dni  =$("#txtDniTrabajador").val();
+   var celular  =$("#txtCelularTrabajador").val();
+   
+   var correo  =$("#txtCorreoTrabajador").val();
+   var distrito  =$("#txtDireccionTrabajador").val();
+   
+   var estadoAres  =$("#selEstadoAreaEditar").val();
+   var estadoCargo  =$("#selEstadoCargoEditar").val();
+   var estadoCivil  =$("#selEstadoCivilEditar").val();
+ 
+     
 
+  var objetoTrabajador = {
+   
+      codTrabajador : codTrabajadorBD,
+     nombre : nombre,
+     apeMaterno :apeMaterno ,
+     apePaterno :apePaterno,
+     celular : celular,
+	 correo : correo,
+	 distrito : distrito,
+	 dni : dni,
+     edad : edad,
+     codArea :estadoAres,
+	 codCargo : estadoCargo, 
+     codEstCivil : estadoCivil
+  };
+
+  $.ajax({
+	
+    url:"http://localhost:8081/planilla/actualizarTrabajador",
+    type:"PUT",
+    //  DE  
+    data:JSON.stringify(objetoTrabajador),
+    contentType:"application/json",
+    success: function(respuestaBackend) {
+      console.log(respuestaBackend);
+      $("#modalTrabajador").hide();
+      fn_buscarTrabajadorJquery(); // función para actualizar la lista de productos después de la actualización
+    },
+   
+   
+    error: function(httpError) {
+      console.error("No es posible completar la operación");
+      alert("Error al solicitar la petición al servidor: " + httpError);
+    }
+  });
 }
+
+
+/* registrar producto    inicio*/
+
+
+
+	var codAre;
+	var codCargo;
+	var codEstadoCivil;
+	
+ function fn_abrir() {
+	
+	
+	
+    $("#modalCrearTrabajador").show();
+    fn_listarTipoEstadoCivilCrear();
+    
+    fn_listarTipoAreaCrear();
+
+    // Asegúrate de que el área se haya cargado antes de llamar a la función para cargar los cargos
+    $("#selEstadoAreac").on("change", function() {
+         codArea = $(this).val();
+        fn_listarTipoCargoCrear(codArea);
+    });
+    
+}
+
+
+  
+
+ function fn_crearTrabajador() {
+
+	
+	
+	 
+  // CAPTURAR LOS VALORES INGRESADOS EN EL FORMULARIO
+  var nombre = $("#txtNombreTrabajadorc").val();
+  var apePaterno = $("#txtApePaternoTrabajadorc").val();
+  var apeMaterno = $("#txtApeMaternoTrabajadorc").val();
+  var edad = $("#txtEdadTrabajadorc").val();
+  var dni = $("#txtDniTrabajadorc").val();
+  var celular = $("#txtCelularTrabajadorc").val();
+  var correo = $("#txtCorreoTrabajadorc").val();
+  var direccion = $("#txtDireccionTrabajadorc").val();
+  var codEstadoCivil = $("#selEstadoCivilc").val();
+  var codCargo = $("#selEstadoCargoc").val();
+  var codArea = $("#selEstadoAreac").val();
+  
+  
+  // CREAR UN OBJETO CON JAVASCRIPT
+  var objetoTrabajador = {
+    nombre: nombre,
+    apePaterno: apePaterno,
+    apeMaterno: apeMaterno,
+    edad: edad,
+    dni: dni,
+    celular: celular,
+    correo: correo,
+    distrito: direccion,
+    codEstCivil: codEstadoCivil,
+    codCargo: codCargo,
+    codArea: codArea
+  };
+
+  $.ajax({
+    url: "http://localhost:8081/planilla/crearTrabajador",
+    type: "POST",
+    data: JSON.stringify(objetoTrabajador),
+    contentType: "application/json",
+    success: function(respuestaBackend) {
+      console.log(respuestaBackend);
+      $("#modalTrabajador").hide();
+      alert(respuestaBackend.respuesta);
+    },
+    error: function() {
+      console.error("No es posible completar la operación");
+    }
+  });
+}
+
+
+/**Estado civil*/
+function fn_listarTipoEstadoCivilCrear() {
+	$.ajax({
+
+		url: "http://localhost:8081/planilla/listadoEstadoCivil",
+		type: "GET",
+		success: function(respuestaBackend) {
+			console.log(respuestaBackend);
+			$("#selEstadoCivilc").empty();
+
+
+			if (respuestaBackend.length > 0) {
+
+				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
+
+					$("#selEstadoCivilc").append(`<option value="${tipoEstadoCivil.codEstCivil}">${tipoEstadoCivil.descripcion}</option>`);
+
+
+
+				});
+			}
+
+
+		},
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
+
+
+
+
+/** */
+function fn_listarTipoCargoCrear(codArea) {
+	/* http://localhost:8081/planilla/listadoCargoPorArea*/
+	$.ajax({
+		url: "http://localhost:8081/planilla/listadoCargoPorArea/" + codArea,
+		type: "GET",
+		success: function(respuestaBackend) {  
+			console.log(respuestaBackend);
+			$("#selEstadoCargoc").empty();
+			if (respuestaBackend.length > 0) {
+				respuestaBackend.forEach(function(tipoCargo, i) {
+					$("#selEstadoCargoc").append(`<option value="${tipoCargo.codCargo}">${tipoCargo.descripcion}</option>`);
+				});
+			}
+		},
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
+
+
+
+
+/**Area*/
+function fn_listarTipoAreaCrear() {
+	$.ajax({
+
+		url: "http://localhost:8081/planilla/listadoArea",
+		type: "GET",
+		success: function(respuestaBackend) {
+			console.log(respuestaBackend);
+			$("#selEstadoAreac").empty();
+
+			if (respuestaBackend.length > 0) {
+
+				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
+
+					$("#selEstadoAreac").append(`<option value="${tipoEstadoCivil.codArea}">${tipoEstadoCivil.descripcion}</option>`);
+
+
+
+				});
+			}
+
+
+		},
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
+
 
 

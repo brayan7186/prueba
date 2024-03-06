@@ -17,18 +17,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class Cargo {
 
 	
 	@Id
 	@Column(name = "codCargo")
-	@NonNull
 	private Integer codCargo;
 	
 	
 	
-
 
 	@Column(name = "descripcion" , length = 50)
 	private String descripcion;
@@ -55,6 +52,14 @@ public class Cargo {
 		super();
 	}
 
+
+
+	public Cargo(Integer codCargo) {
+		super();
+		this.codCargo = codCargo;
+	}
+
+	
 	
 	
 }

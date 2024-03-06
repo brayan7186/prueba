@@ -36,14 +36,17 @@ public class Trabajador {
 	@Column(name = "correo", length = 150)
 	private String correo;
 	
+	
+	@Column(name = "direccion", length = 150)
+	private String direccion;
+	
 	@Column(name = "edad")
 	private Integer edad;
 	
 	@Column(name = "celular", length = 10)
 	private String celular;
 	
-	@Column(name = "direccion", length = 150)
-	private String direccion;
+	
 	
 	@Column(name = "dni", length = 8)
 	private String dni;
@@ -71,7 +74,12 @@ public class Trabajador {
 	@ManyToOne
 	@JoinColumn(name = "codCargo", referencedColumnName = "codCargo")
 	private Cargo cargo;
-
+  
+	
+	@ManyToOne
+	@JoinColumn(name = "codDistrito", referencedColumnName = "codDistrito")
+	private Distrito distrito;
+  
 
 
   public Trabajador () {

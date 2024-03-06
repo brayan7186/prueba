@@ -47,6 +47,10 @@
 				</select>
 			</div>
 		</div>
+		
+		 <label>Distrito:</label>
+       <input type="text" id="distrito" name="distrito" placeholder="Escribe tu distrito aquí">
+
 
 		<!-- Precio Inicio y Precio Fin
         <div class="row mb-4">
@@ -84,6 +88,7 @@
 				  <th>ID</th>
                 <th>TRABAJADOR</th>
                 <th>CORREO</th>
+                 <th>DISTRITO</th>
                 <th>DNI</th>
                 <th>AREA</th>
                 <th>CARGO</th>
@@ -119,6 +124,7 @@
 				<!-- Modal cuerpo -->
 				<div class="modal-body">
 					<form>
+					
 						<div class="container">
     <div class="row">
        
@@ -211,16 +217,13 @@
 	</div>
 
 
- <div class="modal-header">
-    <h4 class="modal-title">Actualizar Trabajador</h4>
-    <button type="button" class="close" data-dismiss="modal" onclick="fn_cerrarModal()">&times;</button>
-</div>
-				<!-- Modal parte inferiror -->
+ 		<!-- Modal parte inferiror -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal"
 							onclick="fn_cerrar()">Cerrar</button>
 					<button type="button" class="btn btn-primary"
-						onclick="fn_actualizarProducto()">Actualizar</button>
+						onclick="fn_actualizarTrabajador()">Actualizar</button>
+						
 				</div>
 
 			</div>
@@ -228,12 +231,136 @@
 	</div>
 
 
+	</div>
+
 	<!-- FIN: modal para actualizar un producto  -->
 
-	<!--  inicio  de registrar producto  -->
+	<!-- INICIO: modal para crear un nuevo trabajador -->
+<div class="modal" id="modalCrearTrabajador">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal parte superior -->
+            <div class="modal-header">
+                <h4 class="modal-title">Registrar Nuevo Trabajador</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal cuerpo -->
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="txtNombreTrabajador">Nombre:</label>
+                                    <input type="text" class="form-control" id="txtNombreTrabajadorc">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="txtApePaternoTrabajador">Apellido Paterno:</label>
+                                    <input type="text" class="form-control" id="txtApePaternoTrabajadorc">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="txtApeMaternoTrabajador">Apellido Materno:</label>
+                                    <input type="text" class="form-control" id="txtApeMaternoTrabajadorc">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="txtEdadTrabajador">Edad:</label>
+                                    <input type="text" class="form-control" id="txtEdadTrabajadorc">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="txtDniTrabajador">DNI:</label>
+                                    <input type="text" class="form-control" id="txtDniTrabajadorc">
+                                </div>
+                            </div>
+                            
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Estado Civil:</label>
+                                    <select class="form-control" id="selEstadoCivilc">
+                                      
+                                    </select>
+                                </div>
+                            </div>
+                            
+                               
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="txtCelularTrabajador">Celular:</label>
+                                    <input type="text" class="form-control" id="txtCelularTrabajadorc">
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="txtCorreoTrabajador">Correo:</label>
+                                    <input type="text" class="form-control" id="txtCorreoTrabajadorc">
+                                </div>
+                            </div>
+                            
+                                
+                            <div class="col-md-4">
+                                <label>Distrito:</label>
+                                <select class="form-control" id="selDistrito">
+                                 
+                                   <!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="txtDireccionTrabajador">Dirección:</label>
+                                    <input type="text" class="form-control" id="txtDireccionTrabajadorc">
+                                </div>
+                            </div>
+                          
+                            
+                            <div class="col-md-4">
+                                <label>Área:</label>
+                                <select class="form-control" id="selEstadoAreac">
+                                 
+                                   <!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Cargo:</label>
+                                    <select class="form-control" id="selEstadoCargoc">
+                                        <!-- Aquí puedes cargar dinámicamente las opciones desde tu backend -->
+                                    </select>
+                                </div>
+                            </div>
+                          
+                            
+                                
+                </form>
+            </div>
+
+            <!-- Modal parte inferior -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="fn_crearTrabajador()">Crear</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- FIN: modal para crear un nuevo trabajador -->
 
 
-	</div>
+        
+    </form>
+
+</div>
+
 
 
 	<!-- Bootstrap JS y jQuery -->

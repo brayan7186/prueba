@@ -68,11 +68,11 @@ public class TrabajadorController {
 			
 			
 			 //http://localhost:8081/planilla/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}
-			@RequestMapping(value = "/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			@RequestMapping(value = "/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}/{distrito}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<List<TrabajadorResponse>> listado( @PathVariable Integer codArea,
-					@PathVariable Integer codCargo,@PathVariable Integer codEstadoCivil){
+					@PathVariable Integer codCargo,@PathVariable Integer codEstadoCivil ,@PathVariable String distrito){
 				
-				List<TrabajadorResponse> listaTrabajadorResponse = trabajadorService.listarTrabajadorPorCodAreaCarcoEstadoCivil(codArea,codCargo,codEstadoCivil);
+				List<TrabajadorResponse> listaTrabajadorResponse = trabajadorService.listarTrabajadorPorCodAreaCarcoEstadoCivil(codArea,codCargo,codEstadoCivil,distrito);
 				
 				
 				 
@@ -99,19 +99,7 @@ public class TrabajadorController {
 			    return ResponseEntity.ok().body(response);
 			}
 
-			
-			
-			
-		/*	//obtenerDatosProducto
-			@RequestMapping(value = "/obtenerDatosTrabajador/{codTrabajador}", method = RequestMethod.GET)
-			public ResponseEntity<Producto> obtenerEmpleado(@PathVariable ("codigo")  Integer codigo){
-				
-				Producto producto = new Producto();
-				
-				producto = iProductoService.obtenerProducto(codigo);
-				
-				return new ResponseEntity<Producto>(producto, HttpStatus.OK);
-			}*/
+
 			
 			
 			 //http://localhost:8081/planilla/buscarTrabajador/{codTrabajador}
@@ -126,6 +114,34 @@ public class TrabajadorController {
 			
 			
 			}
+			
+			
+			
+			
+			
+			//http://localhost:8080/planilla/actualizarTrabajador
+			@RequestMapping(value = "/actualizarTrabajador" , method = RequestMethod.PUT, produces =  MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<Map<String, String>> actualizarTrabajadaor(@RequestBody TrabajadorRequest trabajadorRequest ){
+				
+				
+				HashMap<String, String>	response = new HashMap<>();
+		         	Integer resultado = trabajadorService.actualizarTrabajador(trabajadorRequest);
+				  
+				    
+				   if( resultado > 0 ) {
+					   response.put("respuesta", "actualizo  exitoso"); 
+				   }
+				   else {
+					   response.put("respuesta", "actualizacion incorrecto"); 
+				   }
+				 
+				 return new ResponseEntity<>(response,HttpStatus.CREATED);
+				
+			}
+			
+			
+			
+      
 			
 			
 }
