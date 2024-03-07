@@ -11,7 +11,7 @@ import com.system.planilla.model.Trabajador;
 @Repository
 public interface TrabajadorRepository extends JpaRepository<Trabajador, Integer> {
 	
+	@Query("SELECT t FROM Trabajador t WHERE t.area.codArea = :codArea AND t.cargo.codCargo = :codCargo AND t.estadoCivil.codEstCivil = :codEstadoCivil AND t.distrito.codDistrito = :codDistrito")
+	List<Trabajador> findByCodAreaAndCodCargoAndCodEstadoCivilAndCodDistritoJPQL(@Param("codArea") Integer codArea, @Param("codCargo") Integer codCargo, @Param("codEstadoCivil") Integer codEstadoCivil, @Param("codDistrito") Integer codDistrito);
 
-	@Query("SELECT t FROM Trabajador t WHERE t.area.codArea = :codArea AND t.cargo.codCargo = :codCargo AND t.estadoCivil.codEstCivil = :codEstadoCivil AND t.distrito = :codDistrito")
-	List<Trabajador> findByCodAreaAndCodCargoAndCodEstadoCivilAndCodDistritoJPQL(@Param("codArea") Integer codArea, @Param("codCargo") Integer codCargo, @Param("codEstadoCivil") Integer codEstadoCivil, @Param("codDistrito") Integer distrito);
 }

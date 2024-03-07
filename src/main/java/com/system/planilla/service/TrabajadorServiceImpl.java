@@ -124,7 +124,7 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		
 				
 	
-		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilAndDistritoJPQL(codArea, codCargo, codEsatdoCivil ,codDistrito)
+		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilAndCodDistritoJPQL(codArea, codCargo, codEsatdoCivil ,codDistrito)
 				.stream()
 				.map(trabajador ->{
 					TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
@@ -141,6 +141,8 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 					 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
 					 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
 					 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
+					 trabajadorResponse.setDescripcionCargo(trabajador.getDistrito().getDescripcion());
+					 
 					 
 					   return trabajadorResponse;
 					   

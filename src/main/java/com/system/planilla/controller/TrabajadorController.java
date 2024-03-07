@@ -68,11 +68,11 @@ public class TrabajadorController {
 			
 			
 			 //http://localhost:8081/planilla/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}
-			@RequestMapping(value = "/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}/{distrito}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			@RequestMapping(value = "/buscarTrabajador/{codArea}/{codCargo}/{codEstadoCivil}/{codDistrito}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<List<TrabajadorResponse>> listado( @PathVariable Integer codArea,
-					@PathVariable Integer codCargo,@PathVariable Integer codEstadoCivil ,@PathVariable String distrito){
+					@PathVariable Integer codCargo,@PathVariable Integer codEstadoCivil ,@PathVariable Integer codDistrito){
 				
-				List<TrabajadorResponse> listaTrabajadorResponse = trabajadorService.listarTrabajadorPorCodAreaCarcoEstadoCivil(codArea,codCargo,codEstadoCivil,distrito);
+				List<TrabajadorResponse> listaTrabajadorResponse = trabajadorService.listarTrabajadorPorCodAreaCarcoEstadoCivil(codArea,codCargo,codEstadoCivil,codDistrito);
 				
 				
 				 
