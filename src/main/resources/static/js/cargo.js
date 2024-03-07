@@ -259,6 +259,41 @@ function fn_listarTipoCargoEditar(codigoAreBD, codigoCargoBD) {
 	});
 }
 
+
+function fn_listarTipoDistritoEditar(codDistritoBD) {
+
+
+	$.ajax({
+
+		url: "http://localhost:8081/planilla/listadoDistrito",
+		type: "GET",
+		success: function(respuestaBackend) {
+			console.log(respuestaBackend);
+			$("#selDistritoEditar").empty();
+
+
+			if (respuestaBackend.length > 0) {
+
+				respuestaBackend.forEach(function(tipoDistrito, i) {
+
+					$("#selDistritoEditar")
+						.append(`<option value="${tipoDistrito.codDistrito}">${tipoDistrito.descripcion}</option>`);
+
+					if (tipoDistrito.codDistrito == codDistritoBD) {
+						// Establece el atributo selected
+						$("#selDistritoEditar option[value='" + tipoDistrito.codDistrito + "']").prop("selected", true);
+					}
+				});
+			}
+		},
+		
+		error: function() {
+			console.error("No es posible completar la operación");
+		}
+	});
+}
+
+
 /********************************************** */
 
 
@@ -342,6 +377,7 @@ function fn_eliminar(codTrabajador) {
 	var codigoCargoBD;
 	var codigoAreBD;
 	var codTrabajadorBD;
+	var codDistritoBD;
 	
 function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 
@@ -363,12 +399,12 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 			$("#txtDniTrabajador").val(respuestaBackend.dni);
 			$("#txtCelularTrabajador").val(respuestaBackend.celular);
 			$("#txtCorreoTrabajador").val(respuestaBackend.correo);
-			$("#txtDireccionTrabajador").val(respuestaBackend.distrito);
+			$("#txtDireccionTrabajador").val(respuestaBackend.direccion);
 			debugger;
 			codigoEstadoCivilBD = respuestaBackend.codEstadoCivil;
-			codigoAreBD = respuestaBackend.codArea
+			codigoAreBD = respuestaBackend.codArea;
 			codigoCargoBD = respuestaBackend.codCargo;
-			
+			codDistritoBD = respuestaBackend.codDistrito;
             codTrabajadorBD  = codTrabajador;
             
 			console.log("este cogidigo  estado civil BD" + codigoEstadoCivilBD);
@@ -376,7 +412,7 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 			fn_listarTipoEstadoCivilEditar(codigoEstadoCivilBD);
 			fn_listarTipoAreaEditar(codigoAreBD);
 			fn_listarTipoCargoEditar(codigoAreBD, codigoCargoBD);
-		
+		    fn_listarTipoDistritoEditar(codDistritoBD);
 		
 		},
 		error: function() {
@@ -408,11 +444,14 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
    var celular  =$("#txtCelularTrabajador").val();
    
    var correo  =$("#txtCorreoTrabajador").val();
-   var distrito  =$("#txtDireccionTrabajador").val();
+   var direccion  =$("#txtDireccionTrabajador").val();
    
    var estadoAres  =$("#selEstadoAreaEditar").val();
    var estadoCargo  =$("#selEstadoCargoEditar").val();
    var estadoCivil  =$("#selEstadoCivilEditar").val();
+    var estadoDistrito  =$("#selDistritoEditar").val();
+ 
+    
  
      
 
@@ -424,12 +463,13 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
      apePaterno :apePaterno,
      celular : celular,
 	 correo : correo,
-	 distrito : distrito,
+	 direccion : direccion,
 	 dni : dni,
      edad : edad,
      codArea :estadoAres,
 	 codCargo : estadoCargo, 
-     codEstCivil : estadoCivil
+     codEstCivil : estadoCivil,
+     codDistrito : estadoDistrito
   };
 
   $.ajax({
@@ -442,7 +482,8 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
     success: function(respuestaBackend) {
       console.log(respuestaBackend);
       $("#modalTrabajador").hide();
-      fn_buscarTrabajadorJquery(); // función para actualizar la lista de productos después de la actualización
+      fn_buscarTrabajadorJquery();
+     // función para actualizar la lista de productos después de la actualización
     },
    
    

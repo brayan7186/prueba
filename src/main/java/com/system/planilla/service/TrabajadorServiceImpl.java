@@ -205,7 +205,8 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		 trabajadorResponse.setCodArea(trabajador.getArea().getCodArea());
 		 trabajadorResponse.setCodCargo(trabajador.getCargo().getCodCargo());
 		 trabajadorResponse.setCodEstadoCivil(trabajador.getEstadoCivil().getCodEstCivil());
-		
+		 trabajadorResponse.setCodDistrito(trabajador.getDistrito().getCodDistrito());
+			
 	}
 
 
@@ -245,6 +246,8 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		Area area = new Area(trabajadorRequest.getCodArea());
 		trabajador.setArea(area);
 		
+		Distrito distrito = new Distrito(trabajadorRequest.getCodDistrito());
+		trabajador.setDistrito(distrito);
 
 		return trabajadorRepository.save(trabajador).getCodTrabajador();
 	}

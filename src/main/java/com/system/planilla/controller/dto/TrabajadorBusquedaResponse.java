@@ -59,5 +59,10 @@ public class TrabajadorBusquedaResponse {
 	@JsonProperty("codEstadoCivil")
 	 private  Integer codEstadoCivil;
 	
+	
+	@JsonProperty("codDistrito")
+	 private  Integer codDistrito;
+	
+	  
 	  
 }
