@@ -53,6 +53,7 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 						 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
 						 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
 						 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
+						 trabajadorResponse.setDescripcionDistrito(trabajador.getDistrito().getDescripcion());
 						 
 						   return trabajadorResponse;
 					 }).collect(Collectors.toList());
@@ -141,7 +142,7 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 					 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
 					 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
 					 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
-					 trabajadorResponse.setDescripcionCargo(trabajador.getDistrito().getDescripcion());
+					 trabajadorResponse.setDescripcionDistrito(trabajador.getDistrito().getDescripcion());
 					 
 					 
 					   return trabajadorResponse;

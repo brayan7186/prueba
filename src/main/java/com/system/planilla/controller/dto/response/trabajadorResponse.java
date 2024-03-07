@@ -61,4 +61,8 @@ public class TrabajadorResponse {
 	 private  String descripcionEstadoCivil;
 	
 	  
+	
+	@JsonProperty("descripcionDistrito")
+	 private  String descripcionDistrito;
+	
 }

@@ -274,17 +274,17 @@ function fn_buscarTrabajadorJquery() {
 	var codCargo = $("#selEstadoCargo").val();
 	var codEstadoCivil = $("#selEstadoCivil").val();
 	
-    var distrito = $("#selDistrito").val();
+    var codDistrito = $("#selDistrito").val();
     
 	console.log(codEstadoCivil);
 
 	console.log(codArea);
 	console.log(codCargo);
 
-  console.log(distrito);
+  console.log(codDistrito);
   
 	$.ajax({
-		url: "http://localhost:8081/planilla/buscarTrabajador/" + codArea + "/" + codCargo + "/" + codEstadoCivil +"/"+ distrito ,
+		url: "http://localhost:8081/planilla/buscarTrabajador/" + codArea + "/" + codCargo + "/" + codEstadoCivil +"/"+ codDistrito ,
 		type: "GET",
 		success: function(respuestaBackend) {
 			console.log(respuestaBackend);
@@ -295,12 +295,12 @@ function fn_buscarTrabajadorJquery() {
              <td>${trabajador.codTrabajador}</td>
         <td>${trabajador.nombre}</td>
         <td>${trabajador.correo}</td>
-        <td>${trabajador.distrito}</td>
+        <td>${trabajador.descripcionDistrito}</td>
         <td>${trabajador.dni}</td>
         <td>${trabajador.descripcionArea}</td>
         <td>${trabajador.descripcionCargo}</td>
         <td>${trabajador.descripcionEstadoCivil}</td>
-        
+       
            <td>
               <img title="Eliminar Trabajdor" src="img/delete.png" onclick="fn_eliminar(${trabajador.codTrabajador})">
          
