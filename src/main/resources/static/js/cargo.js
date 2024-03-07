@@ -1,6 +1,5 @@
 
 
-
 $(document).ready(function() {
 
     fn_listarTipoDistritoJquery();
@@ -503,7 +502,7 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 	var codCargo;
 	var codEstadoCivil;
 	
- function fn_abrir() {
+  function fn_abrir() {
 	
 	
 	
@@ -525,58 +524,165 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 
 
   
+   function validarCorreo(correo) {
+    // Expresión regular para validar el formato del correo electrónico
+    var regex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail)\.com$/;
 
- function fn_crearTrabajador() {
+    // Verificar si el correo cumple con el formato permitido
+    return regex.test(correo);
+}
 
-	
-	
-	 
-  // CAPTURAR LOS VALORES INGRESADOS EN EL FORMULARIO
-  var nombre = $("#txtNombreTrabajadorc").val();
-  var apePaterno = $("#txtApePaternoTrabajadorc").val();
-  var apeMaterno = $("#txtApeMaternoTrabajadorc").val();
-  var edad = $("#txtEdadTrabajadorc").val();
-  var dni = $("#txtDniTrabajadorc").val();
-  var celular = $("#txtCelularTrabajadorc").val();
-  var correo = $("#txtCorreoTrabajadorc").val();
-  var direccion = $("#txtDireccionTrabajadorc").val();
-  var codEstadoCivil = $("#selEstadoCivilc").val();
-  var codCargo = $("#selEstadoCargoc").val();
-  var codArea = $("#selEstadoAreac").val();
-  var codDistrito = $("#selDistritoc").val();
-  
-  
-  
-  // CREAR UN OBJETO CON JAVASCRIPT
-  var objetoTrabajador = {
-    nombre: nombre,
-    apePaterno: apePaterno,
-    apeMaterno: apeMaterno,
-    edad: edad,
-    dni: dni,
-    celular: celular,
-    correo: correo,
-    direccion: direccion,
-    codEstCivil: codEstadoCivil,
-    codCargo: codCargo,
-    codArea: codArea,
-    codDistrito :codDistrito
-  };
+function fn_crearTrabajador() {
+    var campos = [
+        { id: "#txtNombreTrabajadorc", mensaje: "Nombre" },
+        { id: "#txtApePaternoTrabajadorc", mensaje: "Apellido Paterno" },
+        { id: "#txtApeMaternoTrabajadorc", mensaje: "Apellido Materno" },
+        { id: "#txtDniTrabajadorc", mensaje: "DNI" },
+        { id: "#txtEdadTrabajadorc", mensaje: "Edad" },
+        { id: "#txtCelularTrabajadorc", mensaje: "Celular" },
+        { id: "#txtCorreoTrabajadorc", mensaje: "Correo" },
+        { id: "#selEstadoCivilc", mensaje: "Estado Civil" },
+        { id: "#selEstadoAreac", mensaje: "Área" },
+        { id: "#selEstadoCargoc", mensaje: "Cargo" },
+        { id: "#selDistritoc", mensaje: "Distrito" }
+    ];
 
-  $.ajax({
-    url: "http://localhost:8081/planilla/crearTrabajador",
-    type: "POST",
-    data: JSON.stringify(objetoTrabajador),
-    contentType: "application/json",
-    success: function(respuestaBackend) {
-      console.log(respuestaBackend);
-      $("#modalTrabajador").hide();
-      alert(respuestaBackend.respuesta);
-    },
-    error: function() {
-      console.error("No es posible completar la operación");
+    var camposFaltantes = [];
+
+    for (var i = 0; i < campos.length; i++) {
+        var campo = campos[i];
+        var valor = $(campo.id).val();
+        if (valor === "" || valor === null) {
+            camposFaltantes.push(campo.mensaje); // Agregar mensaje al array de campos faltantes
+            $(campo.id).focus(); // Dar foco al campo vacío
+        }
     }
-  });
+
+    if (camposFaltantes.length > 0) {
+        var mensajeAlerta = "<div style='text-align:left'>";
+        for (var j = 0; j < camposFaltantes.length; j++) {
+            mensajeAlerta += j+1 + ') ' + `${camposFaltantes[j]} <span style="color: red">(*)</span> </br>`;
+        }
+        mensajeAlerta += "</div>";
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos faltantes',
+            html: mensajeAlerta,
+            allowHtml: true, // Permitir interpretación HTML
+            confirmButtonColor: '#3085d6',
+        });
+
+        return; // Detener la ejecución del código
+    }
+
+ 
+
+  var correo = $("#txtCorreoTrabajadorc").val();
+
+    if (!validarCorreo(correo)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Correo inválido',
+            text: 'Por favor ingrese un correo electrónico válido en el formato example@domain.com',
+            confirmButtonText: 'Entendido'
+        });
+        $("#txtCorreoTrabajadorc").focus();
+        return;
+    }
+
+
+    var edad = parseInt($("#txtEdadTrabajadorc").val());
+
+    // Validar que la edad esté dentro del rango permitido (18-45 años)
+    if (edad < 18 || edad > 45 || isNaN(edad)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Edad inválida',
+            text: 'Por favor ingrese una edad válida entre 18 y 45 años.',
+            confirmButtonText: 'Entendido'
+        });
+        $("#txtEdadTrabajadorc").focus();
+        return;
+    }
+
+
+    // Confirmar antes de crear un trabajador
+    Swal.fire({
+        icon: 'question',
+        title: '¿Estás seguro de registrar trabajador?',
+        
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: "No",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, proceder a crear el trabajador
+            var nombre = $("#txtNombreTrabajadorc").val();
+            var apePaterno = $("#txtApePaternoTrabajadorc").val();
+            var apeMaterno = $("#txtApeMaternoTrabajadorc").val();
+            var edad = $("#txtEdadTrabajadorc").val();
+            var dni = $("#txtDniTrabajadorc").val();
+            var celular = $("#txtCelularTrabajadorc").val();
+            correo = $("#txtCorreoTrabajadorc").val();
+            var direccion = $("#txtDireccionTrabajadorc").val();
+            var codEstadoCivil = $("#selEstadoCivilc").val();
+            var codDistrito = $("#selDistritoc").val();
+            var codArea = $("#selEstadoAreac").val();
+            var codCargo = $("#selEstadoCargoc").val();
+
+            // CREAR UN OBJETO CON JAVASCRIPT
+            var objetoTrabajador = {
+                nombre: nombre,
+                apePaterno: apePaterno,
+                apeMaterno: apeMaterno,
+                edad: edad,
+                dni: dni,
+                celular: celular,
+                correo: correo,
+                direccion: direccion,
+                codEstCivil: codEstadoCivil,
+                codCargo: codCargo,
+                codArea: codArea,
+                codDistrito: codDistrito
+            };
+
+            $.ajax({
+                url: "http://localhost:8081/planilla/crearTrabajador",
+                type: "POST",
+                data: JSON.stringify(objetoTrabajador),
+                contentType: "application/json",
+                success: function(respuestaBackend) {
+                    console.log(respuestaBackend);
+                    $("#modalTrabajador").hide();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro exitoso!',
+                        text: 'El trabajador se ha creado correctamente.'
+                    }).then(() => {
+            // Limpiar los campos después de la confirmación de éxito
+            $("#txtNombreTrabajadorc").val("");
+            $("#txtApePaternoTrabajadorc").val("");
+            $("#txtApeMaternoTrabajadorc").val("");
+            $("#txtDniTrabajadorc").val("");
+            $("#txtEdadTrabajadorc").val("");
+            $("#txtCelularTrabajadorc").val("");
+            $("#txtCorreoTrabajadorc").val("");
+            $("#txtDireccionTrabajadorc").val("");
+            $("#selEstadoCivilc").val("");
+            $("#selEstadoAreac").val("");
+            $("#selEstadoCargoc").val("");
+            $("#selDistritoc").val("");
+        });
+    },
+                error: function() {
+                    console.error("No es posible completar la operación");
+                }
+            });
+        }
+    });
 }
 
 
@@ -592,6 +698,8 @@ function fn_listarTipoEstadoCivilCrear() {
 
 
 			if (respuestaBackend.length > 0) {
+				  $("#selEstadoCivilc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
+                
 
 				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
 
@@ -623,7 +731,12 @@ function fn_listarTipoCargoCrear(codArea) {
 			console.log(respuestaBackend);
 			$("#selEstadoCargoc").empty();
 			if (respuestaBackend.length > 0) {
+				
+				 
+                  $("#selEstadoCargoc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
+          
 				respuestaBackend.forEach(function(tipoCargo, i) {
+					
 					$("#selEstadoCargoc").append(`<option value="${tipoCargo.codCargo}">${tipoCargo.descripcion}</option>`);
 				});
 			}
@@ -648,6 +761,9 @@ function fn_listarTipoAreaCrear() {
 			$("#selEstadoAreac").empty();
 
 			if (respuestaBackend.length > 0) {
+				
+				 $("#selEstadoAreac").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
+                
 
 				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
 
@@ -679,6 +795,8 @@ function fn_listarTipoDistritoCrear() {
 
 
 			if (respuestaBackend.length > 0) {
+				 $("#selDistritoc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
+                
 
 				respuestaBackend.forEach(function(tipoDistrito, i) {
 
@@ -698,4 +816,16 @@ function fn_listarTipoDistritoCrear() {
 }
 
 
+/** metodo para  cerrar las  vetantanas  */
+function fn_cerrar() {
+    var modalTrabajador = $("#modalTrabajador");
+    var modalCrearTrabajador = $("#modalCrearTrabajador");
 
+    if (modalTrabajador.length > 0) {
+        modalTrabajador.hide();
+    }
+
+    if (modalCrearTrabajador.length > 0) {
+        modalCrearTrabajador.hide();
+    }
+}

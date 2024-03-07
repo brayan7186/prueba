@@ -1,0 +1,10 @@
+
+  .text-danger {
+    font-size: 20px;
+  
+}
+
+.text-danger.asterisk {
+  vertical-align: -0.2em; 
+    font-weight: bold;/* Ajusta este valor según lo necesites */
+}
