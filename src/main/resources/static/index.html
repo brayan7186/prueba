@@ -68,26 +68,11 @@
 			<div class="col-md-6">
 				<button id="btnListaProducto" class="btn btn-primary"
 					onclick="fn_listarProductoJquery()">Visualizar</button>
-				<button id="btnregistrarProducto" class="btn btn-primary" onclick="fn_abrir()">Registrar</button>
+				<button id="btnregistrarProducto" class="btn btn-primary" onclick="fn_abrirModalRegistrarTrabajador()">Registrar</button>
 			</div>
 
 		</div>
-		<!-- Precio Inicio y Precio Fin
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="precioInicio"> Sueldo:</label>
-                    <input type="text" class="form-control" id="precioInicio">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="precioFin">Precio Fin:</label>
-                    <input type="text" class="form-control" id="precioFin">
-                </div>
-            </div>
-        </div>
- -->
+
 
 		<div class="col-md-12">
 
@@ -330,7 +315,7 @@
 
 
 								<div class="col-md-4">
-									<label for="selDistritoc">Distrito (<span class="text-danger asterisk">*</span>)</label>
+									<label autofocus for="selDistritoc">Distrito (<span class="text-danger asterisk">*</span>)</label>
 
 									<select class="form-control" id="selDistritoc">
 
@@ -342,7 +327,7 @@
 								<div class="col-md-8">
 									<div class="form-group">
 										<label for="txtDireccionTrabajador">Dirección:</label>
-										<input type="text" class="form-control" id="txtDireccionTrabajadorc">
+										<input autofocus type="text" class="form-control" id="txtDireccionTrabajadorc">
 									</div>
 								</div>
 

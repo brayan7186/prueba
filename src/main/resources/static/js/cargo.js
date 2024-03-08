@@ -502,7 +502,7 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
 	var codCargo;
 	var codEstadoCivil;
 	
-  function fn_abrir() {
+  function fn_abrirModalRegistrarTrabajador() {
 	
 	
 	
@@ -513,6 +513,12 @@ function fn_cargarTrabajadorPorCodigo(codTrabajador) {
     fn_listarTipoEstadoCivilCrear();
    
     fn_listarTipoAreaCrear();
+    
+     $("#selEstadoCargoc").empty();
+			 
+      $("#selEstadoCargoc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
+          
+    
 
     // Asegúrate de que el área se haya cargado antes de llamar a la función para cargar los cargos
     $("#selEstadoAreac").on("change", function() {
@@ -673,7 +679,9 @@ function fn_crearTrabajador() {
             $("#txtDireccionTrabajadorc").val("");
             $("#selEstadoCivilc").val("");
             $("#selEstadoAreac").val("");
-            $("#selEstadoCargoc").val("");
+             llenarCombo("#selEstadoCargoc");
+
+           
             $("#selDistritoc").val("");
         });
     },
@@ -694,16 +702,14 @@ function fn_listarTipoEstadoCivilCrear() {
 		type: "GET",
 		success: function(respuestaBackend) {
 			console.log(respuestaBackend);
-			$("#selEstadoCivilc").empty();
-
-
+			
 			if (respuestaBackend.length > 0) {
-				  $("#selEstadoCivilc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
-                
+				  llenarCombo("#selEstadoCivilc");
+				
 
-				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
+				respuestaBackend.forEach(function(estadoCivil, i) {
 
-					$("#selEstadoCivilc").append(`<option value="${tipoEstadoCivil.codEstCivil}">${tipoEstadoCivil.descripcion}</option>`);
+					$("#selEstadoCivilc").append(`<option value="${estadoCivil.codEstCivil}">${estadoCivil.descripcion}</option>`);
 
 
 
@@ -729,15 +735,15 @@ function fn_listarTipoCargoCrear(codArea) {
 		type: "GET",
 		success: function(respuestaBackend) {  
 			console.log(respuestaBackend);
-			$("#selEstadoCargoc").empty();
+			
+			
 			if (respuestaBackend.length > 0) {
 				
-				 
-                  $("#selEstadoCargoc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
-          
-				respuestaBackend.forEach(function(tipoCargo, i) {
+				   llenarCombo("#selEstadoCargoc");
+				
+				respuestaBackend.forEach(function(cargo, i) {
 					
-					$("#selEstadoCargoc").append(`<option value="${tipoCargo.codCargo}">${tipoCargo.descripcion}</option>`);
+					$("#selEstadoCargoc").append(`<option value="${cargo.codCargo}">${cargo.descripcion}</option>`);
 				});
 			}
 		},
@@ -758,16 +764,15 @@ function fn_listarTipoAreaCrear() {
 		type: "GET",
 		success: function(respuestaBackend) {
 			console.log(respuestaBackend);
-			$("#selEstadoAreac").empty();
-
+			
 			if (respuestaBackend.length > 0) {
 				
-				 $("#selEstadoAreac").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
-                
+				  llenarCombo("#selEstadoAreac");
+				
 
-				respuestaBackend.forEach(function(tipoEstadoCivil, i) {
+				respuestaBackend.forEach(function(area, i) {
 
-					$("#selEstadoAreac").append(`<option value="${tipoEstadoCivil.codArea}">${tipoEstadoCivil.descripcion}</option>`);
+					$("#selEstadoAreac").append(`<option value="${area.codArea}">${area.descripcion}</option>`);
 
 
 
@@ -791,12 +796,11 @@ function fn_listarTipoDistritoCrear() {
 		type: "GET",
 		success: function(respuestaBackend) {
 			console.log(respuestaBackend);
-			$("#selDistritoc").empty();
-
-
+			
 			if (respuestaBackend.length > 0) {
-				 $("#selDistritoc").append(`<option value="" disabled selected hidden>Seleccionar</option>`);
-                
+				
+				 llenarCombo("#selDistritoc");
+				
 
 				respuestaBackend.forEach(function(tipoDistrito, i) {
 
@@ -818,6 +822,22 @@ function fn_listarTipoDistritoCrear() {
 
 /** metodo para  cerrar las  vetantanas  */
 function fn_cerrar() {
+	
+	        //limpia loos  campos  
+	       $("#txtNombreTrabajadorc").val("");
+            $("#txtApePaternoTrabajadorc").val("");
+            $("#txtApeMaternoTrabajadorc").val("");
+            $("#txtDniTrabajadorc").val("");
+            $("#txtEdadTrabajadorc").val("");
+            $("#txtCelularTrabajadorc").val("");
+            $("#txtCorreoTrabajadorc").val("");
+            $("#txtDireccionTrabajadorc").val("");
+            $("#selEstadoCivilc").val("");
+            $("#selEstadoAreac").val("");
+             llenarCombo("#selEstadoCargoc");
+
+           
+            $("#selDistritoc").val("");
     var modalTrabajador = $("#modalTrabajador");
     var modalCrearTrabajador = $("#modalCrearTrabajador");
 
@@ -829,3 +849,16 @@ function fn_cerrar() {
         modalCrearTrabajador.hide();
     }
 }
+
+
+
+
+
+ function llenarCombo(comboId) {
+    var combo = $(comboId);
+    combo.empty(); // Limpiar el combo antes de agregar nuevas opciones
+    combo.append(`<option value="" disabled selected hidden>Seleccionar</option>`); // Opción por defecto
+
+}
+
+
