@@ -46,6 +46,7 @@ public class ContratoController {
 			
 			
 			//crear
+			//http://localhost:8080/planilla/crearContrato
 			@RequestMapping(value = "/crearContrato" , method = RequestMethod.POST, produces =  MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<Map<String, String>> registrarContrato(@RequestBody  ContratoRequest contratoRequest  ){
 				

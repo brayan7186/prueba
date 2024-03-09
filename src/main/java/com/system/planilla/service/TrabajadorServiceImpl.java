@@ -252,6 +252,32 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 	}
 
 
+	
+	@Override
+	public TrabajadorResponse listarTrabajadorPorDni(String dni) {
+		
+		
+		  Trabajador trabajador  = trabajadorRepository.findByDni(dni);
+		  
+			TrabajadorResponse   trabajadorResponse = new TrabajadorResponse();
+			
+		if( trabajador != null )	{
+			
+		
+			 
+					
+					trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
+					 trabajadorResponse.setNombre(trabajador.getNombre() );
+					 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
+					 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
+					 
+		}
+		
+		return trabajadorResponse;
+		
+	}
+
+
 
 	
 	

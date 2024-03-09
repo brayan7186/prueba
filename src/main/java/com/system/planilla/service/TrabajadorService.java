@@ -22,5 +22,8 @@ public interface TrabajadorService {
 	
 	//public abstract Integer crearTrabajador(TrabajadorRequest trabajadorRequest);
 	
+	public abstract TrabajadorResponse listarTrabajadorPorDni( String dni);
+
+	
 	public abstract List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea ,Integer codCargo ,Integer codEsatdoCivil,Integer codDistrito);
 }
