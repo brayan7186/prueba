@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +31,7 @@ public class ContratoController {
 	@Autowired 
 	ContratoService contratoService;
 	
-	//http://localhost:8080/planilla/listadoContrato
-		
+	    
 			// http://localhost:8080/planilla/listadoContrato
 			@RequestMapping(value = "/listadoContrato", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<List<ContratoResponse>> listado() {
@@ -39,6 +39,7 @@ public class ContratoController {
 			    
 			    
 			    listaContratoResponse.forEach(a -> logger.info(a.toString()));
+			    
 			    return new ResponseEntity<>(listaContratoResponse, HttpStatus.OK);
 			}
 
@@ -63,4 +64,43 @@ public class ContratoController {
 				 return new ResponseEntity<>(response,HttpStatus.CREATED);
 				
 			}
+			
+			
+			
+		//	http://localhost:8081/planilla/actualizarContrato
+			@RequestMapping(value = "/actualizarContrato" , method = RequestMethod.PUT, produces =  MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<Map<String, String>>   actualizarContrato(@RequestBody  ContratoRequest contratoRequest  ){
+				
+				
+				HashMap<String, String>	response = new HashMap<>();
+		         	Integer resultado = contratoService.actualizarContrato(contratoRequest);
+				  
+				    
+				   if( resultado > 0) {
+					   response.put("respuesta", "actualizacion  exitoso"); 
+				   }
+				   else {
+					   response.put("respuesta", "actualizacion  incorrecto"); 
+				   }
+				 
+				 return new ResponseEntity<>(response,HttpStatus.CREATED);
+				
+			}
+			
+			
+
+			// http://localhost:8080/planilla/obtenerContrato/{codContrato}
+			@RequestMapping(value = "/obtenerContrato/{codContrato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<ContratoResponse> obtenerContrato( @PathVariable Integer codContrato) {
+			   
+				ContratoResponse  obtenerContratoResponse = contratoService.obtenerContrato(codContrato);
+			   
+			    
+			    return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
+			}
+
+			
+			
+			
+			
 }

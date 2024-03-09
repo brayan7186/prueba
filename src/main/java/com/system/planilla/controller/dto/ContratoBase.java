@@ -23,7 +23,7 @@ import lombok.Setter;
 	private LocalDate fechaInicio;
 
 	@JsonProperty("fechaFin")
-	@JsonFormat(pattern = "dd/MMy/yyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate fechaFin;
 
 	

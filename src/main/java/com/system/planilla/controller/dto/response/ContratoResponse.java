@@ -1,6 +1,8 @@
 package com.system.planilla.controller.dto.response;
 
 
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.system.planilla.controller.dto.ContratoBase;
 
@@ -19,8 +21,15 @@ public class ContratoResponse extends ContratoBase {
 		private String sueldoBruto;
 
 	 
+	
 	@JsonProperty("nombreCompletoTrabajador")
+   @JsonInclude(JsonInclude.Include.NON_NULL)
 	private String nombreCompletoTrabajador;
+	
+	
+	@JsonProperty("estado")
+	private String estado;
+	
 	
 	 
 }

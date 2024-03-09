@@ -24,6 +24,9 @@ public class ContratoRequest extends  ContratoBase {
 	@JsonProperty("sueldoBruto")
 	private Double sueldoBruto;
 
+
+	@JsonProperty("estado")
+	private String estado;
 	
 	
 

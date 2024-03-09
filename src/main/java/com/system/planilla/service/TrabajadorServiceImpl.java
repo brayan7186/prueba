@@ -77,7 +77,6 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		trabajador.setDireccion(trabajadorRequest.getDireccion());
 		trabajador.setDni(trabajadorRequest.getDni());
 		
-		
 		   
 		 EstadoCivil estadoCivil = new EstadoCivil(trabajadorRequest.getCodEstCivil());
 		trabajador.setEstadoCivil(estadoCivil);

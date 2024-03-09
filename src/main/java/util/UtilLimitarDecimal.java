@@ -14,6 +14,15 @@ public class UtilLimitarDecimal {
 		return df.format(decimalDouble);
 
 	}
+	
+	/*
+	public static Double limitarDosDecimal(Double decimalDouble) {
+	   
+	    DecimalFormat df = new DecimalFormat("#.00");
+	    String formatted = df.format(decimalDouble);
+	    return Double.parseDouble(formatted);
+	}
+*/
 
 	public static String limitarTresDecimales(Double decimalDouble) {
 

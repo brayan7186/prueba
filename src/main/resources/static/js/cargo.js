@@ -553,14 +553,31 @@ function fn_crearTrabajador() {
         { id: "#selDistritoc", mensaje: "Distrito" }
     ];
 
+
+
+ for (var i = 0; i < campos.length; i++) {
+    $(campos[i].id).focus(function() {
+        $(this).removeClass("is-invalid");
+    });
+
+    // Verificar si el campo está vacío al obtener el foco
+    $(campos[i].id).focus(function() {
+        if ($(this).val().trim() === '') {
+            $(this).addClass("is-invalid");
+        }
+    });
+}
+
     var camposFaltantes = [];
 
+
+ 
     for (var i = 0; i < campos.length; i++) {
         var campo = campos[i];
         var valor = $(campo.id).val();
         if (valor === "" || valor === null) {
             camposFaltantes.push(campo.mensaje); // Agregar mensaje al array de campos faltantes
-            $(campo.id).focus(); // Dar foco al campo vacío
+            // Dar foco al campo vacío
         }
     }
 
@@ -570,6 +587,7 @@ function fn_crearTrabajador() {
             mensajeAlerta += j+1 + ') ' + `${camposFaltantes[j]} <span style="color: red">(*)</span> </br>`;
         }
         mensajeAlerta += "</div>";
+
 
         Swal.fire({
             icon: 'warning',
@@ -821,7 +839,7 @@ function fn_listarTipoDistritoCrear() {
 
 
 /** metodo para  cerrar las  vetantanas  */
-function fn_cerrar() {
+function fn_cerrarRegistroTrabajador() {
 	
 	        //limpia loos  campos  
 	       $("#txtNombreTrabajadorc").val("");
