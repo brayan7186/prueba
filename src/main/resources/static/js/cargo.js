@@ -674,7 +674,7 @@ function fn_crearTrabajador() {
             };
 
             $.ajax({
-                url: "http://localhost:8080/planilla/crearContrato",
+                url: "http://localhost:8081/planilla/crearTrabajador",
                 type: "POST",
                 data: JSON.stringify(objetoTrabajador),
                 contentType: "application/json",

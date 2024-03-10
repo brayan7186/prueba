@@ -141,7 +141,7 @@ public class TrabajadorController {
 			
 			
 			
-			 //http://localhost:8081/planilla/obtenerTrabajadorPorDni/{codTrabajador}
+			 //http://localhost:8081/planilla/obtenerTrabajadorPorDni/{dni}
 			@RequestMapping(value = "/obtenerTrabajadorPorDni/{dni}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<TrabajadorResponse> listadoPorDni( @PathVariable String dni){
 				

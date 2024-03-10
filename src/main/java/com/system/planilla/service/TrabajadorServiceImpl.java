@@ -267,10 +267,9 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 			 
 					
 					trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
-					 trabajadorResponse.setNombre(trabajador.getNombre() );
-					 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
-					 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
-					 
+					
+					 trabajadorResponse.setNombre(trabajador.getNombre() + " "+ trabajador.getApeMaterno() +" "+ trabajador.getApePaterno());
+					
 		}
 		
 		return trabajadorResponse;
