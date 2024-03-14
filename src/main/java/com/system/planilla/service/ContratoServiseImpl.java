@@ -83,7 +83,7 @@ public class ContratoServiseImpl implements ContratoService{
 		contrato.setBonificacion(contratoRequest.getBonificacion());
 		contrato.setSueldoBruto(contratoRequest.getSueldoBruto())  ;
 		
-		contrato.setEstado("activo");
+		contrato.setEstado("Nuevo");
 		
 
 	

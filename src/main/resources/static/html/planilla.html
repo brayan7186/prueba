@@ -4,14 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Contrato</title>
+	<title>planilla</title>
 
 	<script src="https://code.jquery.com/jquery-3.7.0.js"
 		integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" type="text/css" href="/css/contrato.css">
+	<link rel="stylesheet" type="text/css" href="/css/planilla.css">
 
-	<script type="text/javascript" src="/js/contrato.js"></script>
+	<script type="text/javascript" src="/js/planilla.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -22,30 +22,24 @@
 
 <body>
 
-	<div class="container mt-5">
-		<h1 class="text-center mb-4">Contrato</h1>
+	<div class="container mt-5 mx-auto">
+    <h1 class="text-center mb-4">Planilla</h1>
 
-  	</div>
-  	
-  <div class="row mb-4">
-    <div class="col-md-3">
-        <label class="form-check-label">Fecha Inicio:</label>
-        <input type="date" class="form-control" id="fechaInicioBusqueda">
-    </div>
-    
-    <div class="col-md-3">
-        <label class="form-check-label">Fecha Fin:</label>
-        <input type="date" class="form-control" id="fechaFinBusqueda">
-    </div>
+    <div class="row mb-4">
+        <div class="col-md-3 mb-4">
+            <label class="form-check-label">Año:</label>
+            <input type="number" class="form-control" id="txtAnioBuscar" placeholder="Ingrese el año">
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <label class="form-check-label">Mes:</label>
+            <input class="form-control" id="txtMesBuscar" placeholder="Ingrese el mes">
+        </div>
 
-    <div class="col-md-3">
-        <label for="txtSueldoBruto">Sueldo Bruto:</label>
-        <input type="number" class="form-control" id="txtSueldoBrutoBusqueda">
-    </div>
-
-    <div class="col-md-1">
-        <label>&nbsp;</label>
-        <button id="btnBuscarTrabajador" class="btn btn-primary btn-block" onclick="fn_listarContrato()">Buscar</button>
+        <div class="col-md-1">
+            <label>&nbsp;</label>
+            <button id="btnBuscarPlanilla" class="btn btn-primary btn-block" onclick="fn_listarContrato()">Buscar</button>
+        </div>
     </div>
 </div>
 
@@ -58,31 +52,26 @@
 
 
 
-
-	<div class="row mb-4">
-		<div class="col-md-6">
-		 <button id="btnIrAOtraPagina">Ir a otra página</button>
-			<button id="btnListaContrato" class="btn btn-primary" onclick="fn_visualizarContrato()">Visualizar</button>
-<button id="btnregistrarContrato" class="btn btn-primary"
-				onclick="fn_abrirModalRegistrarContrato()">Registrar</button>
-
-		</div>
-
-	</div>
+<div class="row mb-4">
+    <div class="col-md-6 ml-3"> <!-- Agrega la clase "ml-3" para agregar margen izquierdo -->
+        <button id="btnListaPlanilla" class="btn btn-primary" onclick="">Visualizar</button>
+        <button id="btnregistrarPlanilla" class="btn btn-primary" onclick="">Registrar</button>
+    </div>
+</div>
 
 
-	<div class="col-md-12">
+
+	<div class="col-md-11">
 		<table border="1" class="table table-hover table-bordered">
 			<thead>
 				<th>Código</th>
-				<th>Modalidad</th>
-				<th>Fecha de Inicio</th>
-				<th>Fecha de Fin</th>
-				<th>Sueldo Bruto</th>
-				<th>Bonificación</th>
+				<th>Descripcion</th>
+				<th>Año</th>
+				<th>Mes</th>
+				<th>Monto Total</th>
 				<th>Acciones</th>
 			</thead>
-			<tbody id="tbody_contrato">
+			<tbody id="tbody_planilla">
 				<!-- Aquí se cargarán dinámicamente los contratos -->
 			</tbody>
 		</table>
@@ -90,11 +79,11 @@
 	</div>
 
 	<!-- INICIO: modal para agregar un nuevo contrato -->
-	<div class="modal" id="modalContrato">
+	<div class="modal" id="modalPlanilla">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Registrar Contrato</h4>
+					<h4 class="modal-title">Registrar Planilla</h4>
 					<button type="button" class="close" data-dismiss="modal" onclick="fn_cerrar()">&times;</button>
 				</div>
 
@@ -104,17 +93,7 @@
 							<div class="row">
 
 
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="selModalidad">Modalidad:</label>
-										<select class="form-control" id="selModalidad">
-											<option value="" disabled selected hidden>Seleccionar</option>
-											<option value="Presencial">Presencial</option>
-											<option value="Híbrida">Híbrida</option>
-											<option value="Remota">Remota</option>
-										</select>
-									</div>
-								</div>
+								
 
 								<div class="col-md-6">
 									<div class="form-group">
@@ -122,24 +101,28 @@
 										<input type="date" class="form-control" id="txtFechaInicio">
 									</div>
 								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="txtFechaFin">Fecha de Fin:</label>
 										<input type="date" class="form-control" id="txtFechaFin">
 									</div>
 								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="txtSueldoBruto">Sueldo Bruto:</label>
 										<input type="number" class="form-control" id="txtSueldoBruto">
 									</div>
 								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="txtBonificacion">Bonificación:</label>
 										<input type="number" class="form-control" id="txtBonificacion">
 									</div>
 								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="txtDniTrabajador">DNI Trabajador:</label>

@@ -13,4 +13,7 @@ public interface PlanillaService {
 	   
 	   
 	   public abstract Integer registrarPlanilla(PlanillaRequest planillaRequest);
+	   
+	   public abstract PlanillaResponse obtenerPlanilla(Integer codPlanilla);
+	   
 }

@@ -75,8 +75,8 @@ function fn_registrarContrato() {
 		return;
 	}
 
-	var fechaInicioFormateado = formatoFecha(fechaInicio);
-	var fechaFinformateado = formatoFecha(fechaFin);
+	var fechaInicioFormateado = formatoFechaEvioPorSolicitud(fechaInicio);
+	var fechaFinformateado = formatoFechaEvioPorSolicitud(fechaFin);
 
 
 	// Crear un objeto con los datos del contrato
@@ -123,11 +123,11 @@ function fn_registrarContrato() {
 
 
 
-function formatoFecha1(fechaString) {
+function formatoFechaEvioPorSolicitud(fechaString) {
 	var fechaPartida = fechaString.split('-');  			// 2023-12-01
 	var anio = fechaPartida[0];
 	var mes  = fechaPartida[1];
-	var dia  = fechaPartida[2];;
+	var dia  = fechaPartida[2];
 	var fechaFormateada = dia + '/' + mes + '/' + anio;   	// 01/12/2023
 	return fechaFormateada;    
 }
@@ -172,8 +172,6 @@ function fn_obtenerTrabajadorPorDni(idTrabajador) {
 function fn_listarContrato() {
 
 
-  
-   
 	$.ajax({
 		url: "http://localhost:8081/planilla/listadoContrato",
 		type: "GET",
@@ -209,8 +207,7 @@ function fn_listarContrato() {
 
 
 
-
-function formatoFecha(fechaString) {
+function cargarFormatoComponeteFecha(fechaString) {
     var fechaPartida = fechaString.split('/');           
     var anio = fechaPartida[0];
     var mes = fechaPartida[1];
@@ -218,6 +215,7 @@ function formatoFecha(fechaString) {
     var fechaFormateada = dia + '-' + mes + '-' + anio;   
     return fechaFormateada;    
 }
+
  
  var trabajadorCodigo
  var codContratoBD; // Declara la variable globalmente para que esté disponible en todo el script
@@ -231,8 +229,8 @@ function fn_cargarContratoPorCodigo(codContrato) {
         success: function(respuestaBackend) {
             console.log(respuestaBackend);
 
-            var fechaInicioFormateada = formatoFecha(respuestaBackend.fechaInicio);
-            var fechaFinFormateada = formatoFecha(respuestaBackend.fechaFin);
+            var fechaInicioFormateada = cargarFormatoComponeteFecha(respuestaBackend.fechaInicio);
+            var fechaFinFormateada = cargarFormatoComponeteFecha(respuestaBackend.fechaFin);
             
             $("#txtfechaInicioac").val(fechaInicioFormateada);
             $("#txtfechaFinac").val(fechaFinFormateada);
@@ -254,16 +252,32 @@ $("#selModalidadac").val(modalidadContrato);
              
              
              // Crear las opciones "Activo" e "Inactivo"
-var optionActivo = $("<option>").attr("value", "Activo").text("Activo");
-var optionInactivo = $("<option>").attr("value", "Inactivo").text("Inactivo");
+   /*var optionFinalizado = $("<option>").attr("value", "Finalizado").text("Finalizado");
+   var optionAnulado= $("<option>").attr("value", "Anulado").text("Anulado");
 
+*/
 // Agregar las opciones al combo
-$("#selEstadoac").append(optionActivo, optionInactivo);
+//$("#selEstadoac").append(optionFinalizado, optionAnulado);
+
+ 
+ //
+ 
+ // charAt(0) devuelve el primer carácter de estadoContrato, 
+ //toUpperCase() lo convierte a mayúscula y luego 
+ //slice(1) obtiene el resto de la cadena original a partir del segundo carácter.
+ //nuevo anulado y  finalizado    ,   Al registrar  contrato  Por defecto  nuevo  
+ //	 A  +   ctvo      Activo
+//var estadoContratoCapitalizado = estadoContrato.charAt(0).toUpperCase() + estadoContrato.slice(1);
+							
 
 // Seleccionar la opción correspondiente al estado del contrato
-var estadoContrato = respuestaBackend.estado;
-$("#selEstadoac").val(estadoContrato);
-             
+//var estadoContrato = respuestaBackend.estado;
+//var estadoContrato = respuestaBackend.estado;
+//var estadoContratoCapitalizado = estadoContrato.charAt(0).toUpperCase() + estadoContrato.slice(1);
+//$("#selEstadoac").val();
+
+
+
              
              
              
@@ -299,6 +313,17 @@ $("#selEstadoac").val(estadoContrato);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 function fn_actualizarContrato() {
     // Capturar los valores ingresados en el formulario
     var fechaInicio = $("#txtfechaInicioac").val();
@@ -308,12 +333,13 @@ function fn_actualizarContrato() {
     var modalidad = $("#selModalidadac").val();
   
     var estado = $("#selEstadoac").val();
+    
   
     var sueldoBruto = $("#txtSueldoBrutoac").val().replace(',', '.');
 
     // Si el servidor espera fechas en formato dd/mm/yyyy, puedes usar la función formatoFecha para asegurarte de que estén en el formato correcto
-    fechaInicio = formatoFecha1(fechaInicio);
-    fechaFin = formatoFecha1(fechaFin);
+    fechaInicio = formatoFechaEvioPorSolicitud(fechaInicio);
+    fechaFin = formatoFechaEvioPorSolicitud(fechaFin);
 
     var objetoContrato = {
         codContrato: codContratoBD, // Utiliza el código del contrato almacenado globalmente
@@ -333,9 +359,26 @@ function fn_actualizarContrato() {
         data: JSON.stringify(objetoContrato),
         contentType: "application/json",
         success: function(respuestaBackend) {
-            console.log(respuestaBackend);
-            $("#modalContrato").hide();
-            fn_listarContrato();
+	 	console.log(respuestaBackend);
+	  
+	 		fn_visualizarContrato();
+				
+	Swal.fire({
+				icon: 'success',
+				title: '¡Registro exitoso!',
+				text: 'El contrato se ha actualizado correctamente.'
+			}).then(() => {
+				// Limpiar los campos después de la confirmación de éxito
+				$("#selModalidadac").val("");
+				$("#txtFechaInicioac").val("");
+				$("#txtFechaFinac").val("");
+				$("#txtSueldoBrutoac").val("");
+				$("#txtBonificacionac").val("");
+
+				
+			
+
+			});
         },
         error: function(httpError) {
             console.error("No es posible completar la operación");
@@ -361,7 +404,7 @@ $(document).ready(function() {
 function fn_visualizarContrato() {
 
 
-    $("#modalListarContratos").empty();
+   $("#modalListarContratos").empty();
    
 	$.ajax({
 		url: "http://localhost:8081/planilla/listadoContrato",

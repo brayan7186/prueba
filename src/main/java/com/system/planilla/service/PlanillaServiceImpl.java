@@ -83,7 +83,8 @@ public class PlanillaServiceImpl implements PlanillaService {
 			detallePlanilla.setDescuentoImpRenta(descuentoImpuestoRenta(detRequest));
 			
 			
-			 detallePlanilla.setDescuentoHora(descuentoPorHora(detRequest));
+			detallePlanilla.setDescuentoHora(descuentoPorHora(detRequest));
+			
 			detallePlanilla.setCodPlanilla(codigoPlanillaBD);
 			detallePlanilla.setCodTrabajador(detRequest.getCodTrabajador());
          
@@ -148,4 +149,19 @@ public class PlanillaServiceImpl implements PlanillaService {
 
 		return totaldescuentoLey(detalle) + totaldescuentoPoliticaEmpresa(detalle) ;
 	}
+
+	
+	
+	
+	
+	
+	@Override
+	public PlanillaResponse obtenerPlanilla(Integer codPlanilla) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
 }
