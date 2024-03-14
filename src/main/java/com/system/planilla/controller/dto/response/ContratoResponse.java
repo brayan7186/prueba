@@ -30,6 +30,8 @@ public class ContratoResponse extends ContratoBase {
 	@JsonProperty("estado")
 	private String estado;
 	
+	 
+	
 	
 	 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.system.planilla.controller.dto.TrabajadorBusquedaDni;
 import com.system.planilla.controller.dto.TrabajadorBusquedaResponse;
 import com.system.planilla.controller.dto.request.TrabajadorRequest;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
@@ -146,6 +147,19 @@ public class TrabajadorController {
 			public ResponseEntity<TrabajadorResponse> listadoPorDni( @PathVariable String dni){
 				
 				TrabajadorResponse listaTrabajadorResponse = trabajadorService.listarTrabajadorPorDni(dni);
+				
+				
+				return new ResponseEntity<>(listaTrabajadorResponse, HttpStatus.OK);
+				
+			
+			
+			}
+      
+			 //http://localhost:8081/planilla/obtenerTrabajadorPorDni/{dni}
+			@RequestMapping(value = "/cargarTrabajadorcod/{codTrabajador}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<TrabajadorBusquedaDni> obtener( @PathVariable Integer codTrabajador){
+				
+				TrabajadorBusquedaDni listaTrabajadorResponse = trabajadorService.obtenerDniNombreCompleto(codTrabajador);
 				
 				
 				return new ResponseEntity<>(listaTrabajadorResponse, HttpStatus.OK);

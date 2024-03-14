@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.system.planilla.controller.dto.TrabajadorBusquedaDni;
 import com.system.planilla.controller.dto.TrabajadorBusquedaResponse;
 import com.system.planilla.controller.dto.request.TrabajadorRequest;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
@@ -275,6 +276,29 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		return trabajadorResponse;
 		
 	}
+
+
+	
+		
+		
+		@Override
+		public TrabajadorBusquedaDni obtenerDniNombreCompleto(Integer codTrabajador) {
+			// TODO Auto-generated method stub
+			Trabajador trabajador =  trabajadorRepository.getOne(codTrabajador);
+			
+			TrabajadorBusquedaDni   busquedaDni = new TrabajadorBusquedaDni();
+			
+             busquedaDni.setCodTrabajador(trabajador.getCodTrabajador());
+			
+			busquedaDni.setNombre(trabajador.getNombre() + " "+ trabajador.getApeMaterno() +" "+ trabajador.getApePaterno());
+			 busquedaDni.setDni(trabajador.getDni());
+
+			 return busquedaDni;
+		}
+		
+		
+	
+	
 
 
 

@@ -29,5 +29,9 @@ import lombok.Setter;
 	
 	@JsonProperty("bonificacion")
 	private Double bonificacion;
+	
+	@JsonProperty("codTrabajador")
+	 private Integer codTrabajador;
+	
 
 }

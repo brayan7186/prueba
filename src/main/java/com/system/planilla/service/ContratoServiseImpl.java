@@ -15,7 +15,6 @@ import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.model.Contrato;
 import com.system.planilla.model.Trabajador;
 import com.system.planilla.repository.ContratoRepository;
-import util.UtilFecha;
 import util.UtilLimitarDecimal;
 
 @Service
@@ -43,8 +42,8 @@ public class ContratoServiseImpl implements ContratoService{
 					 contratoResponse.setFechaInicio(contrato.getFechaInicio());
 					 contratoResponse.setFechaFin(contrato.getFechaFin());
 
-					 contratoResponse.setFechaInicio(UtilFecha.parseFechaBaseDatos(UtilFecha.formatoFechaBaseDatos(contrato.getFechaInicio())));
-		    contratoResponse.setFechaFin(UtilFecha.parseFechaBaseDatos(UtilFecha.formatoFechaBaseDatos(contrato.getFechaFin())));
+					 contratoResponse.setFechaInicio(contrato.getFechaInicio());
+		    contratoResponse.setFechaFin(contrato.getFechaFin());
 					
 					 
 					 
@@ -115,6 +114,8 @@ public class ContratoServiseImpl implements ContratoService{
 			contrato.setBonificacion(contratoRequest.getBonificacion());
 			contrato.setSueldoBruto(contratoRequest.getSueldoBruto())  ;
 			
+			contrato.setEstado(contratoRequest.getEstado());
+			
 			//contrato.setEstado(contratoRequest.getEstado());
 			
 
@@ -148,10 +149,10 @@ public class ContratoServiseImpl implements ContratoService{
 			contratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()))  ;
 			contratoResponse.setEstado(contrato.getEstado());
 			
-
+               contratoResponse.setCodTrabajador(contrato.getTrabajador().getCodTrabajador());
 		
-			Trabajador trabajador = new Trabajador(contrato.getTrabajador().getCodTrabajador());
-			 contrato.setTrabajador(trabajador);
+			/*Trabajador trabajador = new Trabajador(contrato.getTrabajador().getCodTrabajador());
+			 contrato.setTrabajador(trabajador);*/
 		
 
 			return contratoResponse;
@@ -174,10 +175,8 @@ public class ContratoServiseImpl implements ContratoService{
 					contratoResponse.setModContrato(contrato.getModContrato());
 					contratoResponse.setFechaInicio(contrato.getFechaInicio());
 					contratoResponse.setFechaFin(contrato.getFechaFin());
-					contratoResponse.setFechaInicio(contrato.getFechaInicio());
-			        contratoResponse.setFechaFin(contrato.getFechaFin());
 					contratoResponse.setBonificacion(contrato.getBonificacion());
-					contratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()))  ;
+					//contratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()))  ;
 					contratoResponse.setEstado(contrato.getEstado());
 					
 

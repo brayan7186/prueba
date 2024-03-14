@@ -1,5 +1,6 @@
 package com.system.planilla.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -89,8 +91,30 @@ public class ContratoController {
 			}
 			
 			
+			@RequestMapping(value = "/obtenerContrato/{fechaInicio}/{fechaFin}/{sueldoBruto}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<List<ContratoResponse>> listado(@PathVariable @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaInicio,
+			                                                        @PathVariable @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaFin,
+			                                                        @PathVariable Double sueldoBruto) {
+			    
+			    List<ContratoResponse> obtenerContratoResponse = contratoService.listarContratoPorFechaInicioFechaFinSuedoBruto(fechaInicio, fechaFin, sueldoBruto);
+			    
+			    return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
+			}
 
-			// http://localhost:8080/planilla/obtenerContrato/{codContrato}
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			// http://localhost:8080/planilla/obtenerContrato/{fechaInico}{fechaFin}{sueldoBruto}
 			@RequestMapping(value = "/obtenerContrato/{codContrato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<ContratoResponse> obtenerContrato( @PathVariable Integer codContrato) {
 			   
@@ -100,7 +124,6 @@ public class ContratoController {
 			    return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
 			}
 
-			
 			
 			
 			
