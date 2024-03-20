@@ -13,62 +13,62 @@ import org.springframework.stereotype.Service;
 import com.system.planilla.controller.dto.TrabajadorBusquedaDni;
 import com.system.planilla.controller.dto.TrabajadorBusquedaResponse;
 import com.system.planilla.controller.dto.request.TrabajadorRequest;
+import com.system.planilla.controller.dto.response.DataTrabajadorContratoResponse;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.model.Area;
 import com.system.planilla.model.Cargo;
+import com.system.planilla.model.Contrato;
 import com.system.planilla.model.Distrito;
 import com.system.planilla.model.EstadoCivil;
 import com.system.planilla.model.Trabajador;
+import com.system.planilla.repository.ContratoRepository;
 import com.system.planilla.repository.TrabajadorRepository;
 
+import util.UtilLimitarDecimal;
 
 @Service
-public class TrabajadorServiceImpl  implements TrabajadorService{
+public class TrabajadorServiceImpl implements TrabajadorService {
 
-	
-	 @Autowired
-	 TrabajadorRepository trabajadorRepository;
-	
+	@Autowired
+	TrabajadorRepository trabajadorRepository;
+
+	@Autowired
+	ContratoRepository contratoRepository;
+
 	@Override
 	public List<TrabajadorResponse> listarTrabajador() {
-		
-		  List<TrabajadorResponse> listadoTrabajadorResponse;
-			 
-			 
-		  listadoTrabajadorResponse  = trabajadorRepository.findAll()
-					 .stream()
-					 .map(trabajador -> {
-						 TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
-						
-					 
-					
-						 trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
-						 trabajadorResponse.setNombre(trabajador.getNombre());
-						 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
-						 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
-			  			 trabajadorResponse.setCorreo(trabajador.getCorreo());
-						 trabajadorResponse.setEdad(trabajador.getEdad());
-						 trabajadorResponse.setCelular(trabajador.getCelular());
-						 trabajadorResponse.setDireccion(trabajador.getDireccion());
-						 trabajadorResponse.setDni(trabajador.getDni());
-						 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
-						 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
-						 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
-						 trabajadorResponse.setDescripcionDistrito(trabajador.getDistrito().getDescripcion());
-						 
-						   return trabajadorResponse;
-					 }).collect(Collectors.toList());
-	
+
+		List<TrabajadorResponse> listadoTrabajadorResponse;
+
+		listadoTrabajadorResponse = trabajadorRepository.findAll().stream().map(trabajador -> {
+			TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
+
+			trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
+			trabajadorResponse.setNombre(trabajador.getNombre());
+			trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
+			trabajadorResponse.setApePaterno(trabajador.getApePaterno());
+			trabajadorResponse.setCorreo(trabajador.getCorreo());
+			trabajadorResponse.setEdad(trabajador.getEdad());
+			trabajadorResponse.setCelular(trabajador.getCelular());
+			trabajadorResponse.setDireccion(trabajador.getDireccion());
+			trabajadorResponse.setDni(trabajador.getDni());
+			trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
+			trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
+			trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
+			trabajadorResponse.setDescripcionDistrito(trabajador.getDistrito().getDescripcion());
+
+			return trabajadorResponse;
+		}).collect(Collectors.toList());
+
 		return listadoTrabajadorResponse;
 	}
 
-	 
 	@Override
-	public 	Integer registrarTrabajador(TrabajadorRequest trabajadorRequest) {
-		
-		Integer codTrabajdorBD = 0 ;
+	public Integer registrarTrabajador(TrabajadorRequest trabajadorRequest) {
+
+		Integer codTrabajdorBD = 0;
 		Trabajador trabajador = new Trabajador();
-		
+
 		trabajador.setNombre(trabajadorRequest.getNombre());
 		trabajador.setApeMaterno(trabajadorRequest.getApeMaterno());
 		trabajador.setApePaterno(trabajadorRequest.getApePaterno());
@@ -77,155 +77,135 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		trabajador.setCelular(trabajadorRequest.getCelular());
 		trabajador.setDireccion(trabajadorRequest.getDireccion());
 		trabajador.setDni(trabajadorRequest.getDni());
-		
-		   
-		 EstadoCivil estadoCivil = new EstadoCivil(trabajadorRequest.getCodEstCivil());
+
+		EstadoCivil estadoCivil = new EstadoCivil(trabajadorRequest.getCodEstCivil());
 		trabajador.setEstadoCivil(estadoCivil);
-	
+
 		Cargo cargo = new Cargo(trabajadorRequest.getCodCargo());
 		trabajador.setCargo(cargo);
-		
+
 		Area area = new Area(trabajadorRequest.getCodArea());
 		trabajador.setArea(area);
-		
+
 		Distrito distrito = new Distrito(trabajadorRequest.getCodDistrito());
 		trabajador.setDistrito(distrito);
 
 		try {
-			
+
 			codTrabajdorBD = trabajadorRepository.save(trabajador).getCodTrabajador();
-		}catch(Exception ex) {
-			System.out.println("ERROR BD -> " +  ex.getMessage());
+		} catch (Exception ex) {
+			System.out.println("ERROR BD -> " + ex.getMessage());
 		}
-		
+
 		return codTrabajdorBD;
 	}
 
-/* List<CargoResponse> listadoCargoResponse;
-		 
-		 
-		 listadoCargoResponse  = cargoRepository.findByCodArea(codArea)
-				 .stream()
-				 .map(cargo -> {
-					CargoResponse cargoResponse = new CargoResponse();
-					
-					 cargoResponse.setCodCargo(cargo.getCodCargo());
-					 cargoResponse.setDescripcion(cargo.getDescripcion());
-					 cargoResponse.setCodArea(cargo.getCodArea());
-					   return cargoResponse;
-				 }).collect(Collectors.toList());
-		 
-		 return listadoCargoResponse;
-	}*/
+	/*
+	 * List<CargoResponse> listadoCargoResponse;
+	 * 
+	 * 
+	 * listadoCargoResponse = cargoRepository.findByCodArea(codArea) .stream()
+	 * .map(cargo -> { CargoResponse cargoResponse = new CargoResponse();
+	 * 
+	 * cargoResponse.setCodCargo(cargo.getCodCargo());
+	 * cargoResponse.setDescripcion(cargo.getDescripcion());
+	 * cargoResponse.setCodArea(cargo.getCodArea()); return cargoResponse;
+	 * }).collect(Collectors.toList());
+	 * 
+	 * return listadoCargoResponse; }
+	 */
 	@Override
 	public List<TrabajadorResponse> listarTrabajadorPorCodAreaCarcoEstadoCivil(Integer codArea, Integer codCargo,
-			Integer codEsatdoCivil , Integer codDistrito) {
-		
-		List<TrabajadorResponse> listarTrabajadorResponse;
-		
-				
-	
-		listarTrabajadorResponse = trabajadorRepository.findByCodAreaAndCodCargoAndCodEstadoCivilAndCodDistritoJPQL(codArea, codCargo, codEsatdoCivil ,codDistrito)
-				.stream()
-				.map(trabajador ->{
-					TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
-					
-					
-					trabajadorResponse.setNombre(trabajador.getNombre() +"  "+ trabajador.getApePaterno() +" "+  trabajador.getApeMaterno());
+			Integer codEsatdoCivil, Integer codDistrito) {
 
-					 trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
-				     trabajadorResponse.setCorreo(trabajador.getCorreo());
-					 trabajadorResponse.setEdad(trabajador.getEdad());
-					 trabajadorResponse.setCelular(trabajador.getCelular());
-					 trabajadorResponse.setDireccion(trabajador.getDireccion());
-					 trabajadorResponse.setDni(trabajador.getDni());
-					 trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
-					 trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
-					 trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
-					 trabajadorResponse.setDescripcionDistrito(trabajador.getDistrito().getDescripcion());
-					 
-					 
-					   return trabajadorResponse;
-					   
+		List<TrabajadorResponse> listarTrabajadorResponse;
+
+		listarTrabajadorResponse = trabajadorRepository
+				.findByCodAreaAndCodCargoAndCodEstadoCivilAndCodDistritoJPQL(codArea, codCargo, codEsatdoCivil,
+						codDistrito)
+				.stream().map(trabajador -> {
+					TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
+
+					trabajadorResponse.setNombre(trabajador.getNombre() + "  " + trabajador.getApePaterno() + " "
+							+ trabajador.getApeMaterno());
+
+					trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
+					trabajadorResponse.setCorreo(trabajador.getCorreo());
+					trabajadorResponse.setEdad(trabajador.getEdad());
+					trabajadorResponse.setCelular(trabajador.getCelular());
+					trabajadorResponse.setDireccion(trabajador.getDireccion());
+					trabajadorResponse.setDni(trabajador.getDni());
+					trabajadorResponse.setDescripcionEstadoCivil(trabajador.getEstadoCivil().getDescripcion());
+					trabajadorResponse.setDescripcionArea(trabajador.getArea().getDescripcion());
+					trabajadorResponse.setDescripcionCargo(trabajador.getCargo().getDescripcion());
+					trabajadorResponse.setDescripcionDistrito(trabajador.getDistrito().getDescripcion());
+
+					return trabajadorResponse;
+
 				}).collect(Collectors.toList());
 		return listarTrabajadorResponse;
 	}
-	
-
 
 	@Override
 	public Integer eliminarTrabajador(Integer codTrabajador) {
-	    // Buscar el trabajador por su código
-	    Optional<Trabajador> optionalTrabajador = trabajadorRepository.findById(codTrabajador);
-	    
-	   
-	    if (optionalTrabajador.isPresent()) {
-	        trabajadorRepository.delete(optionalTrabajador.get());
-	        return 1; 
-	    } else {
-	       
-	        return 0;
-	    }
+		// Buscar el trabajador por su código
+		Optional<Trabajador> optionalTrabajador = trabajadorRepository.findById(codTrabajador);
+
+		if (optionalTrabajador.isPresent()) {
+			trabajadorRepository.delete(optionalTrabajador.get());
+			return 1;
+		} else {
+
+			return 0;
+		}
 	}
-
-
-	
-
 
 	@Override
 	public TrabajadorBusquedaResponse obtenerTrabajador(Integer codTrabajador) {
-		
-		//TrabajadorBusquedaResponse listarTrabajadorResponse;
-		
-		
-		  Trabajador trabajador  = trabajadorRepository.getOne(codTrabajador);
-			
-			
-			TrabajadorBusquedaResponse trabajadorResponse = new TrabajadorBusquedaResponse();
-					
-					 intercambiarValores(trabajador, trabajadorResponse);
-					 trabajadorResponse.setNombre(trabajador.getNombre() );
-					 trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
-					 trabajadorResponse.setApePaterno(trabajador.getApePaterno());
-					 
-				
-		return trabajadorResponse;
-			
-	}
 
+		// TrabajadorBusquedaResponse listarTrabajadorResponse;
+
+		Trabajador trabajador = trabajadorRepository.getOne(codTrabajador);
+
+		TrabajadorBusquedaResponse trabajadorResponse = new TrabajadorBusquedaResponse();
+
+		intercambiarValores(trabajador, trabajadorResponse);
+		trabajadorResponse.setNombre(trabajador.getNombre());
+		trabajadorResponse.setApeMaterno(trabajador.getApeMaterno());
+		trabajadorResponse.setApePaterno(trabajador.getApePaterno());
+
+		return trabajadorResponse;
+
+	}
 
 	private void intercambiarValores(Trabajador trabajador, TrabajadorBusquedaResponse trabajadorResponse) {
-		
-		 trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
-	     trabajadorResponse.setCorreo(trabajador.getCorreo());
-		 trabajadorResponse.setEdad(trabajador.getEdad());
-		 trabajadorResponse.setCelular(trabajador.getCelular());
-		 trabajadorResponse.setDireccion(trabajador.getDireccion());
-		 trabajadorResponse.setDni(trabajador.getDni());
-		 trabajadorResponse.setCodArea(trabajador.getArea().getCodArea());
-		 trabajadorResponse.setCodCargo(trabajador.getCargo().getCodCargo());
-		 trabajadorResponse.setCodEstadoCivil(trabajador.getEstadoCivil().getCodEstCivil());
-		 trabajadorResponse.setCodDistrito(trabajador.getDistrito().getCodDistrito());
-			
-	}
 
+		trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
+		trabajadorResponse.setCorreo(trabajador.getCorreo());
+		trabajadorResponse.setEdad(trabajador.getEdad());
+		trabajadorResponse.setCelular(trabajador.getCelular());
+		trabajadorResponse.setDireccion(trabajador.getDireccion());
+		trabajadorResponse.setDni(trabajador.getDni());
+		trabajadorResponse.setCodArea(trabajador.getArea().getCodArea());
+		trabajadorResponse.setCodCargo(trabajador.getCargo().getCodCargo());
+		trabajadorResponse.setCodEstadoCivil(trabajador.getEstadoCivil().getCodEstCivil());
+		trabajadorResponse.setCodDistrito(trabajador.getDistrito().getCodDistrito());
+
+	}
 
 	@Override
 	public TrabajadorBusquedaResponse Trabjadordistrito(String distrito) {
-		
+
 		return null;
 	}
 
-
 	@Override
-	public Integer actualizarTrabajador(TrabajadorRequest trabajadorRequest  ) {
-		
+	public Integer actualizarTrabajador(TrabajadorRequest trabajadorRequest) {
+
 		Trabajador trabajador = new Trabajador();
-		
-		
-		
+
 		trabajador.setCodTrabajador(trabajadorRequest.getCodTrabajador());
-		    
+
 		trabajador.setNombre(trabajadorRequest.getNombre());
 		trabajador.setApeMaterno(trabajadorRequest.getApeMaterno());
 		trabajador.setApePaterno(trabajadorRequest.getApePaterno());
@@ -234,74 +214,121 @@ public class TrabajadorServiceImpl  implements TrabajadorService{
 		trabajador.setCelular(trabajadorRequest.getCelular());
 		trabajador.setDireccion(trabajadorRequest.getDireccion());
 		trabajador.setDni(trabajadorRequest.getDni());
-		
-		
-		   
-		 EstadoCivil estadoCivil = new EstadoCivil(trabajadorRequest.getCodEstCivil());
+
+		EstadoCivil estadoCivil = new EstadoCivil(trabajadorRequest.getCodEstCivil());
 		trabajador.setEstadoCivil(estadoCivil);
-	
+
 		Cargo cargo = new Cargo(trabajadorRequest.getCodCargo());
 		trabajador.setCargo(cargo);
-		
+
 		Area area = new Area(trabajadorRequest.getCodArea());
 		trabajador.setArea(area);
-		
+
 		Distrito distrito = new Distrito(trabajadorRequest.getCodDistrito());
 		trabajador.setDistrito(distrito);
 
 		return trabajadorRepository.save(trabajador).getCodTrabajador();
 	}
 
-
-	
 	@Override
 	public TrabajadorResponse listarTrabajadorPorDni(String dni) {
-		
-		
-		  Trabajador trabajador  = trabajadorRepository.findByDni(dni);
-		  
-			TrabajadorResponse   trabajadorResponse = new TrabajadorResponse();
-			
-		if( trabajador != null )	{
-			
-		
-			 
-					
-					trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
-					
-					 trabajadorResponse.setNombre(trabajador.getNombre() + " "+ trabajador.getApeMaterno() +" "+ trabajador.getApePaterno());
-					
+
+		Trabajador trabajador = trabajadorRepository.findByDni(dni);
+
+		TrabajadorResponse trabajadorResponse = new TrabajadorResponse();
+
+		if (trabajador != null) {
+
+			trabajadorResponse.setCodTrabajador(trabajador.getCodTrabajador());
+
+			trabajadorResponse.setNombre(
+					trabajador.getNombre() + " " + trabajador.getApeMaterno() + " " + trabajador.getApePaterno());
+
 		}
-		
+
 		return trabajadorResponse;
-		
+
 	}
 
+	@Override
+	public TrabajadorBusquedaDni obtenerDniNombreCompleto(Integer codTrabajador) {
+		// TODO Auto-generated method stub
+		Trabajador trabajador = trabajadorRepository.getOne(codTrabajador);
 
-	
+		TrabajadorBusquedaDni busquedaDni = new TrabajadorBusquedaDni();
+
+		busquedaDni.setCodTrabajador(trabajador.getCodTrabajador());
+
+		busquedaDni.setNombre(
+				trabajador.getNombre() + " " + trabajador.getApeMaterno() + " " + trabajador.getApePaterno());
+		busquedaDni.setDni(trabajador.getDni());
+
+		return busquedaDni;
+	}
+
+	@Override
+	public DataTrabajadorContratoResponse obtenerDataTrabajadorContrato(String dni) {
+
+		Trabajador trabajador = trabajadorRepository.findByDni(dni);
+
+		Contrato contrato = contratoRepository.findByCodTrabajadorJPQL(trabajador.getCodTrabajador());
+
+		DataTrabajadorContratoResponse dataTrabajadorContratoResponse = new DataTrabajadorContratoResponse();
+        
 		
-		
-		@Override
-		public TrabajadorBusquedaDni obtenerDniNombreCompleto(Integer codTrabajador) {
-			// TODO Auto-generated method stub
-			Trabajador trabajador =  trabajadorRepository.getOne(codTrabajador);
+
+			dataTrabajadorContratoResponse.setCodTrabajador(trabajador.getCodTrabajador());
+
+			dataTrabajadorContratoResponse.setNombreCompletoTrabajador(
+					trabajador.getNombre() + " " + trabajador.getApeMaterno() + " " + trabajador.getApePaterno());
 			
-			TrabajadorBusquedaDni   busquedaDni = new TrabajadorBusquedaDni();
-			
-             busquedaDni.setCodTrabajador(trabajador.getCodTrabajador());
-			
-			busquedaDni.setNombre(trabajador.getNombre() + " "+ trabajador.getApeMaterno() +" "+ trabajador.getApePaterno());
-			 busquedaDni.setDni(trabajador.getDni());
+			dataTrabajadorContratoResponse.setBonificacion(contrato.getBonificacion());
+			dataTrabajadorContratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()));
 
-			 return busquedaDni;
-		}
+	
+
+		return dataTrabajadorContratoResponse;
+
+	}
+	
+	
+	
+	
+	
+	
+	/************* *    * ***********************/
+	
+	
+/*
+	@Override
+	public List<DataTrabajadorContratoResponse> listarDataTrabajadorContrato(Integer codTrabajador) {
+		Trabajador trabajador = trabajadorRepository.getOne(codTrabajador);
+
+		Contrato contrato = contratoRepository.findByCodTrabajadorJPQL(trabajador.getCodTrabajador());
+
+		DataTrabajadorContratoResponse dataTrabajadorContratoResponse = new DataTrabajadorContratoResponse();
+        
 		
-		
+
+			dataTrabajadorContratoResponse.setCodTrabajador(trabajador.getCodTrabajador());
+			
+
+			dataTrabajadorContratoResponse.setNombreCompletoTrabajador(
+					
+					trabajador.getNombre() + " " + trabajador.getApeMaterno() + " " + trabajador.getApePaterno());
+			
+			
+			dataTrabajadorContratoResponse.setBonificacion(contrato.getBonificacion());
+			
+			dataTrabajadorContratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()));
+
+	
+
+		return dataTrabajadorContratoResponse;
+	}
+	
+	*/
 	
 	
 
-
-
-	
-	
 }

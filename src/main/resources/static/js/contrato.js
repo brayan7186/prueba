@@ -20,6 +20,9 @@ function fn_abrirModalRegistrarContrato() {
 
 
 
+
+
+
 var codigoTrabajador;
 
 function fn_cargarTrabajadorPorDni() {
@@ -155,8 +158,6 @@ function fn_obtenerTrabajadorPorDni(idTrabajador) {
              
            
             // Luego puedes usar esta información como desees, por ejemplo, actualizar elementos HTML
-            $("#txtnombreTrabajadorac").val(nombre);
-           $("#txtDniTrabajadorac").val(dni);
            
              
            
@@ -237,48 +238,18 @@ function fn_cargarContratoPorCodigo(codContrato) {
             
           //   $("#selModalidadac").val(respuestaBackend.modContrato);
              
- var optionPresencial = $("<option>").attr("value", "Presencial").text("Presencial");
-var optionHibrida = $("<option>").attr("value", "Híbrida").text("Híbrida");
-var optionRemota = $("<option>").attr("value", "Remota").text("Remota");
+  var optionPresencial = $("<option>").attr("value", "Presencial").text("Presencial");
+  var optionHibrida = $("<option>").attr("value", "Híbrida").text("Híbrida");
+  var optionRemota = $("<option>").attr("value", "Remota").text("Remota");
 
-// Agregar las opciones al combo
-$("#selModalidadac").append(optionPresencial, optionHibrida, optionRemota);
+  // Agregar las opciones al combo
+  $("#selModalidadac").append(optionPresencial, optionHibrida, optionRemota);
 
-// Seleccionar la opción correspondiente a la modalidad del contrato
-var modalidadContrato = respuestaBackend.modContrato;
-$("#selModalidadac").val(modalidadContrato);
+  // Seleccionar la opción correspondiente a la modalidad del contrato
+  var modalidadContrato = respuestaBackend.modContrato;
+  $("#selModalidadac").val(modalidadContrato);
              
-            // $("#selEstadoac").val(respuestaBackend.estado);
-             
-             
-             // Crear las opciones "Activo" e "Inactivo"
-   /*var optionFinalizado = $("<option>").attr("value", "Finalizado").text("Finalizado");
-   var optionAnulado= $("<option>").attr("value", "Anulado").text("Anulado");
-
-*/
-// Agregar las opciones al combo
-//$("#selEstadoac").append(optionFinalizado, optionAnulado);
-
- 
- //
- 
- // charAt(0) devuelve el primer carácter de estadoContrato, 
- //toUpperCase() lo convierte a mayúscula y luego 
- //slice(1) obtiene el resto de la cadena original a partir del segundo carácter.
- //nuevo anulado y  finalizado    ,   Al registrar  contrato  Por defecto  nuevo  
- //	 A  +   ctvo      Activo
-//var estadoContratoCapitalizado = estadoContrato.charAt(0).toUpperCase() + estadoContrato.slice(1);
-							
-
-// Seleccionar la opción correspondiente al estado del contrato
-//var estadoContrato = respuestaBackend.estado;
-//var estadoContrato = respuestaBackend.estado;
-//var estadoContratoCapitalizado = estadoContrato.charAt(0).toUpperCase() + estadoContrato.slice(1);
-//$("#selEstadoac").val();
-
-
-
-             
+           
              
              
              
@@ -291,8 +262,10 @@ $("#selModalidadac").val(modalidadContrato);
             trabajadorCodigo = respuestaBackend.codTrabajador;
             // Realizar acciones con el código del trabajador según sea necesario
            
-            fn_obtenerTrabajadorPorDni(trabajadorCodigo);
-            
+           // fn_obtenerTrabajadorPorDni(trabajadorCodigo);
+             $("#txtnombreTrabajadorac").val(respuestaBackend.nombreCompletoTrabajador);
+           $("#txtDniTrabajadorac").val(respuestaBackend.dni);
+           
             
            
             var sueldoBruto = respuestaBackend.sueldoBruto.replace(',', '.'); // Reemplazar la coma por un punto

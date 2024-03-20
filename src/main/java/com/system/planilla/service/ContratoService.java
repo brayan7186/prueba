@@ -3,9 +3,9 @@ package com.system.planilla.service;
 import java.time.LocalDate;
 import java.util.List;
 
-
 import com.system.planilla.controller.dto.request.ContratoRequest;
 import com.system.planilla.controller.dto.response.ContratoResponse;
+import com.system.planilla.controller.dto.response.DataTrabajadorContratoResponse;
 
 
 public interface ContratoService {
@@ -21,5 +21,8 @@ public interface ContratoService {
 	
 	
 	public abstract List<ContratoResponse> listarContratoPorFechaInicioFechaFinSuedoBruto(LocalDate fechaInicio, LocalDate fechaFin, Double sueldoBruto);
+	
+	
+	public abstract DataTrabajadorContratoResponse obtenerContratoPorCodTrabajador(Integer codTrabajador);
 	
 }

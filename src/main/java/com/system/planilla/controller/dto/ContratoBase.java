@@ -3,6 +3,7 @@ package com.system.planilla.controller.dto;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -30,8 +31,12 @@ import lombok.Setter;
 	@JsonProperty("bonificacion")
 	private Double bonificacion;
 	
+	
 	@JsonProperty("codTrabajador")
 	 private Integer codTrabajador;
 	
-
+	@JsonProperty("dni")
+	 private String dni; 
+	
+	
 }

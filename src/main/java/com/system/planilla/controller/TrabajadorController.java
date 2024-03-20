@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.system.planilla.controller.dto.TrabajadorBusquedaDni;
 import com.system.planilla.controller.dto.TrabajadorBusquedaResponse;
 import com.system.planilla.controller.dto.request.TrabajadorRequest;
+import com.system.planilla.controller.dto.response.DataTrabajadorContratoResponse;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.service.TrabajadorService;
 
@@ -155,7 +156,8 @@ public class TrabajadorController {
 			
 			}
       
-			 //http://localhost:8081/planilla/obtenerTrabajadorPorDni/{dni}
+			
+			/* //http://localhost:8081/planilla/obtenerTrabajadorPorDni/{dni}
 			@RequestMapping(value = "/cargarTrabajadorcod/{codTrabajador}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 			public ResponseEntity<TrabajadorBusquedaDni> obtener( @PathVariable Integer codTrabajador){
 				
@@ -166,8 +168,26 @@ public class TrabajadorController {
 				
 			
 			
-			}
+			}*/
       
+			
+			
+			
+			
+			
+			 //http://localhost:8081/planilla/obtenerTrabajadorPorDni/{dni}
+			@RequestMapping(value = "/obtenerTrabajadorContrato/{dni}" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+			public ResponseEntity<DataTrabajadorContratoResponse> obtenerDataTrabajadorContrato( @PathVariable String dni){
+				
+				DataTrabajadorContratoResponse dataTrabajadorContrato = trabajadorService.obtenerDataTrabajadorContrato(dni);
+				
+				
+				return new ResponseEntity<>(dataTrabajadorContrato, HttpStatus.OK);
+				
+			
+			
+			}
+     
 			
 			
 }

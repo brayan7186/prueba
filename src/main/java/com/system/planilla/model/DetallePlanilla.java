@@ -26,24 +26,15 @@ public class DetallePlanilla {
 	private Double   sueldoBruto;
 	
 	 
-	 @Column(name = "diaNoLaborado")
-	 private  Double diaNoLaborado;
 	 
-	 @Column(name = "bonoAlimento")
-	 private  Double bonoAlimeto;
+	 @Column(name = "bonificacion")
+	 private  Double bonificacion;
 	 
 	 
 	 @Column(name = "salarioNeto")
 	 private  Double salarioNeto;
 	 
-	 
-	 @Column(name = "bonoInternet")
-	 private  Double bonoInternet;
-	 
-	 @Column(name = "bonoMovilidad")
-	 private  Double bonoMovilidad;
-	 
-	 
+	
 	 @Column(name = "descuentoAfp")
 	 private  Double descuentoAfp;
 	 
@@ -55,16 +46,6 @@ public class DetallePlanilla {
 	 private  Double descuentoImpRenta;
 	 
 	 
-	 
-	 @Column(name = "descuentoDia")
-	 private  Double descuentoDia;
-	 
-	 @Column(name = "descuentoHora")
-	 private  Double descuentoHora;
-	 
-	 
-	 @Column(name = "cantidadHoraTardanza")
-	 private  Double cantidadHoraTardanza;
 	 
 	 @Column(name = "codPlanilla")
 	private Integer codPlanilla;

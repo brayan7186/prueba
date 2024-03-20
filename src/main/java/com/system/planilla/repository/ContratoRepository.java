@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.system.planilla.model.Cargo;
 import com.system.planilla.model.Contrato;
+import com.system.planilla.model.Trabajador;
 
 @Repository
 public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
@@ -20,5 +21,9 @@ public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
 
 	 
 	 
+	 @Query("SELECT c FROM Contrato c WHERE c.trabajador.codTrabajador = :codTrabajador")
+	 Contrato findByCodTrabajadorJPQL(@Param("codTrabajador") Integer codTrabajador);
+
+	
 		
 }

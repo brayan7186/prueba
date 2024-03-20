@@ -20,111 +20,112 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.planilla.controller.dto.request.ContratoRequest;
 import com.system.planilla.controller.dto.response.ContratoResponse;
+import com.system.planilla.controller.dto.response.DataTrabajadorContratoResponse;
 import com.system.planilla.service.ContratoService;
 
 @RestController
 @RequestMapping("/planilla")
 public class ContratoController {
 
-	
-	 private static final Logger logger = LoggerFactory.getLogger(ContratoController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ContratoController.class);
 
-
-	@Autowired 
+	@Autowired
 	ContratoService contratoService;
+
+	// http://localhost:8080/planilla/listadoContrato
+	@RequestMapping(value = "/listadoContrato", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ContratoResponse>> listado() {
+		List<ContratoResponse> listaContratoResponse = contratoService.listarContrato();
+
+		listaContratoResponse.forEach(a -> logger.info(a.toString()));
+
+		return new ResponseEntity<>(listaContratoResponse, HttpStatus.OK);
+	}
+
+	// crear
+	// http://localhost:8080/planilla/crearContrato
+	@RequestMapping(value = "/crearContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> registrarContrato(@RequestBody ContratoRequest contratoRequest) {
+
+		HashMap<String, String> response = new HashMap<>();
+		Integer resultado = contratoService.registrarContrato(contratoRequest);
+
+		if (resultado > 0) {
+			response.put("respuesta", "registro  exitoso");
+		} else {
+			response.put("respuesta", "registro  incorrecto");
+		}
+
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+	}
+
+	// http://localhost:8081/planilla/actualizarContrato
+	@RequestMapping(value = "/actualizarContrato", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, String>> actualizarContrato(@RequestBody ContratoRequest contratoRequest) {
+
+		HashMap<String, String> response = new HashMap<>();
+		Integer resultado = contratoService.actualizarContrato(contratoRequest);
+
+		if (resultado > 0) {
+			response.put("respuesta", "actualizacion  exitoso");
+		} else {
+			response.put("respuesta", "actualizacion  incorrecto");
+		}
+
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+	}
+
+	@RequestMapping(value = "/buscarContrato/{fechaInicio}/{fechaFin}/{sueldoBruto}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ContratoResponse>> buscarContrato(
+			@PathVariable @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaInicio,
+			@PathVariable @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaFin,
+			@PathVariable Double sueldoBruto) {
+
+		List<ContratoResponse> obtenerContratoResponse = contratoService
+				.listarContratoPorFechaInicioFechaFinSuedoBruto(fechaInicio, fechaFin, sueldoBruto);
+
+		return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
+
+	}
+
+	// http://localhost:8080/planilla/obtenerContrato/
+	@RequestMapping(value = "/obtenerContrato/{codContrato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ContratoResponse> obtenerContrato(@PathVariable Integer codContrato) {
+
+		ContratoResponse obtenerContratoResponse = contratoService.obtenerContrato(codContrato);
+
+		return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
+	}
 	
-	    
-			// http://localhost:8080/planilla/listadoContrato
-			@RequestMapping(value = "/listadoContrato", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<List<ContratoResponse>> listado() {
-			    List<ContratoResponse> listaContratoResponse = contratoService.listarContrato();
-			    
-			    
-			    listaContratoResponse.forEach(a -> logger.info(a.toString()));
-			    
-			    return new ResponseEntity<>(listaContratoResponse, HttpStatus.OK);
-			}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// http://localhost:8080/planilla/obtenerContratoPorTrabajdor/
+		@RequestMapping(value = "/obtenerContratoPorTrabajdor/{codContrato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<DataTrabajadorContratoResponse> obtenerContratoPorCodTrabajador(@PathVariable Integer codContrato) {
 
-			
-			
-			//crear
-			//http://localhost:8080/planilla/crearContrato
-			@RequestMapping(value = "/crearContrato" , method = RequestMethod.POST, produces =  MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<Map<String, String>> registrarContrato(@RequestBody  ContratoRequest contratoRequest  ){
-				
-				
-				HashMap<String, String>	response = new HashMap<>();
-		         	Integer resultado = contratoService.registrarContrato(contratoRequest);
-				  
-				    
-				   if( resultado > 0) {
-					   response.put("respuesta", "registro  exitoso"); 
-				   }
-				   else {
-					   response.put("respuesta", "registro  incorrecto"); 
-				   }
-				 
-				 return new ResponseEntity<>(response,HttpStatus.CREATED);
-				
-			}
-			
-			
-			
-		//	http://localhost:8081/planilla/actualizarContrato
-			@RequestMapping(value = "/actualizarContrato" , method = RequestMethod.PUT, produces =  MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<Map<String, String>>   actualizarContrato(@RequestBody  ContratoRequest contratoRequest  ){
-				
-				
-				HashMap<String, String>	response = new HashMap<>();
-		         	Integer resultado = contratoService.actualizarContrato(contratoRequest);
-				  
-				    
-				   if( resultado > 0) {
-					   response.put("respuesta", "actualizacion  exitoso"); 
-				   }
-				   else {
-					   response.put("respuesta", "actualizacion  incorrecto"); 
-				   }
-				 
-				 return new ResponseEntity<>(response,HttpStatus.CREATED);
-				
-			}
-			
-			
-			@RequestMapping(value = "/obtenerContrato/{fechaInicio}/{fechaFin}/{sueldoBruto}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<List<ContratoResponse>> listado(@PathVariable @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaInicio,
-			                                                        @PathVariable @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaFin,
-			                                                        @PathVariable Double sueldoBruto) {
-			    
-			    List<ContratoResponse> obtenerContratoResponse = contratoService.listarContratoPorFechaInicioFechaFinSuedoBruto(fechaInicio, fechaFin, sueldoBruto);
-			    
-			    return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
-			}
+			DataTrabajadorContratoResponse obtenerContratoResponse = contratoService.obtenerContratoPorCodTrabajador(codContrato);
 
+			return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			// http://localhost:8080/planilla/obtenerContrato/{fechaInico}{fechaFin}{sueldoBruto}
-			@RequestMapping(value = "/obtenerContrato/{codContrato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-			public ResponseEntity<ContratoResponse> obtenerContrato( @PathVariable Integer codContrato) {
-			   
-				ContratoResponse  obtenerContratoResponse = contratoService.obtenerContrato(codContrato);
-			   
-			    
-			    return new ResponseEntity<>(obtenerContratoResponse, HttpStatus.OK);
-			}
-
-			
-			
-			
 }

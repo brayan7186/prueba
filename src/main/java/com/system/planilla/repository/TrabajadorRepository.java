@@ -16,5 +16,7 @@ public interface TrabajadorRepository extends JpaRepository<Trabajador, Integer>
 
 	
 	Trabajador findByDni(String dni);
-
+	
+	
+  
 }

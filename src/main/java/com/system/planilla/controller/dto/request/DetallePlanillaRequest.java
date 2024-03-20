@@ -17,23 +17,12 @@ public class DetallePlanillaRequest {
 	@JsonProperty("sueldoBruto")
 	 private Double  sueldoBruto;
 	
-	 
-	@JsonProperty("diaNoLaborado")
-	 private  Double diaNoLaborado;
-	 
-	 @Column(name = "cantidadHoraTardanza")
-	 private  Double cantidadHoraTardanza;
+ 
+	
+	 @JsonProperty( "bonificacion")
+	 private  Double bonificacion;
 	 
 	
-	 @JsonProperty( "bonoAlimento")
-	 private  Double bonoAlimeto;
-	 
-	 @Column(name = "bonoInternet")
-	 private  Double bonoInternet;
-	 
-	 @Column(name = "bonoMovilidad")
-	 private  Double bonoMovilidad;
-	 
 	
 	 @JsonProperty("codTrabajador")
 	 private Integer   codTrabajador;

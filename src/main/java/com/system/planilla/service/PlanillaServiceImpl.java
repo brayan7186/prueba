@@ -72,18 +72,21 @@ public class PlanillaServiceImpl implements PlanillaService {
 			DetallePlanilla detallePlanilla = new DetallePlanilla();
 
 			detallePlanilla.setSueldoBruto(detRequest.getSueldoBruto());
-			detallePlanilla.setBonoAlimeto(detRequest.getBonoAlimeto());
-			detallePlanilla.setBonoInternet(detRequest.getBonoInternet());
-			detallePlanilla.setBonoMovilidad(detRequest.getBonoMovilidad());
-			detallePlanilla.setDiaNoLaborado(detRequest.getDiaNoLaborado());
-			detallePlanilla.setCantidadHoraTardanza(detRequest.getCantidadHoraTardanza());
+			detallePlanilla.setBonificacion(detRequest.getBonificacion());
+		
+			//detallePlanilla.setDiaNoLaborado(detRequest.getDiaNoLaborado());
+			
+			//detallePlanilla.setCantidadHoraTardanza(detRequest.getCantidadHoraTardanza());
+			
 			detallePlanilla.setDescuentoAfp(descuentoAfp(detRequest));
 			detallePlanilla.setDescuentoAfpSeguro(descuentoAfpSeguro(detRequest));
-			detallePlanilla.setDescuentoDia(descuentoPorDia(detRequest));
+			
+			//detallePlanilla.setDescuentoDia(descuentoPorDia(detRequest));
+			
 			detallePlanilla.setDescuentoImpRenta(descuentoImpuestoRenta(detRequest));
 			
 			
-			detallePlanilla.setDescuentoHora(descuentoPorHora(detRequest));
+			//detallePlanilla.setDescuentoHora(descuentoPorHora(detRequest));
 			
 			detallePlanilla.setCodPlanilla(codigoPlanillaBD);
 			detallePlanilla.setCodTrabajador(detRequest.getCodTrabajador());
@@ -92,7 +95,6 @@ public class PlanillaServiceImpl implements PlanillaService {
 
 			salarioNeto = detallePlanilla.getSalarioNeto();
 			logger.info(String.valueOf(salarioNeto));
-
 			sumaSalariosNetos += salarioNeto;
 			planilla.setMontoTotal(sumaSalariosNetos);
 
@@ -121,33 +123,33 @@ public class PlanillaServiceImpl implements PlanillaService {
 
 	}
 
-	public double descuentoPorDia(DetallePlanillaRequest detalle) {
+	/*public double descuentoPorDia(DetallePlanillaRequest detalle) {
 
 		return Constante.DESCUENTO_DIA * detalle.getDiaNoLaborado();
 	}
 	
 	public double descuentoPorHora(DetallePlanillaRequest detalle) {
 		return Constante.DESCUENTO_HORA * detalle.getCantidadHoraTardanza();
-	}
+	}*/
 
 	public double totaldescuentoLey(DetallePlanillaRequest detalle) {
 		return descuentoAfp(detalle) + descuentoAfpSeguro(detalle)  
 				+ descuentoImpuestoRenta(detalle);
 	}
 
-	public  double totaldescuentoPoliticaEmpresa( DetallePlanillaRequest detalle) {
+	/*public  double totaldescuentoPoliticaEmpresa( DetallePlanillaRequest detalle) {
 		  return descuentoPorDia(detalle) + descuentoPorHora(detalle);
-	  }
+	  }*/
 	
 	public double bonificacionTotal(DetallePlanillaRequest detalle) {
-		return detalle.getBonoAlimeto() + detalle.getBonoInternet() + detalle.getBonoMovilidad();
+		return detalle.getBonificacion() ;
 	}
 	
   
 
 	public double descuentoTotal(DetallePlanillaRequest detalle) {
 
-		return totaldescuentoLey(detalle) + totaldescuentoPoliticaEmpresa(detalle) ;
+		return totaldescuentoLey(detalle) ;//+ totaldescuentoPoliticaEmpresa(detalle) ;
 	}
 
 	

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.system.planilla.controller.dto.TrabajadorBusquedaResponse;
 import com.system.planilla.controller.dto.request.ContratoRequest;
 import com.system.planilla.controller.dto.response.ContratoResponse;
+import com.system.planilla.controller.dto.response.DataTrabajadorContratoResponse;
 import com.system.planilla.controller.dto.response.TrabajadorResponse;
 import com.system.planilla.model.Contrato;
 import com.system.planilla.model.Trabajador;
@@ -151,8 +152,11 @@ public class ContratoServiseImpl implements ContratoService{
 			
                contratoResponse.setCodTrabajador(contrato.getTrabajador().getCodTrabajador());
 		
-			/*Trabajador trabajador = new Trabajador(contrato.getTrabajador().getCodTrabajador());
-			 contrato.setTrabajador(trabajador);*/
+               
+               contratoResponse.setDni(contrato.getTrabajador().getDni());
+               
+               contratoResponse.setNombreCompletoTrabajador(contrato.getTrabajador().getNombre() + "  "+  contrato.getTrabajador().getApePaterno()+  "  "+ contrato.getTrabajador().getApeMaterno());
+				
 		
 
 			return contratoResponse;
@@ -194,6 +198,26 @@ public class ContratoServiseImpl implements ContratoService{
 
 	
 	
+	@Override
+	public DataTrabajadorContratoResponse obtenerContratoPorCodTrabajador(Integer codTrabajador) {
+		
+		
+	    Contrato contrato = contratoRepository.findByCodTrabajadorJPQL(codTrabajador);
+	    
+	    DataTrabajadorContratoResponse contratoResponse = new DataTrabajadorContratoResponse();
+	    
+	   
+	    
+	   
+	    contratoResponse.setBonificacion(contrato.getBonificacion());
+	    contratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()));
+	    
+	   // contratoResponse.setCodTrabajador(contrato.getTrabajador().getCodTrabajador());
+	    //contratoResponse.setDni(contrato.getTrabajador().getDni());
+	    contratoResponse.setNombreCompletoTrabajador(contrato.getTrabajador().getNombre() + " " + contrato.getTrabajador().getApePaterno() + " " + contrato.getTrabajador().getApeMaterno());
+	    
+	    return contratoResponse;
+	}
 	
 	
 }
