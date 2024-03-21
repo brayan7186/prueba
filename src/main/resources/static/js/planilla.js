@@ -126,7 +126,7 @@ function calcularDescuentos(sueldoBrutoBD,bonificacionBD) {
         IMP_RENTA: 0.10
     };
 
-    // Calcular los descuentos
+     // Calcular los descuentos
      descuentoAFP = sueldoBrutoBD * tasas.AFP;
      descuentoAFP_SEGURURO = sueldoBrutoBD * tasas.AFP_SEGURURO;
      impuestoRenta = sueldoBrutoBD * tasas.IMP_RENTA;
@@ -184,11 +184,12 @@ var totalSueldosNetos = 0;
   }
 }
 
-
+var codTrabajador
 function agregarFilaTabla() {
 	
-    var codTrabajador = codigoTrabajador;
+    codTrabajador = codigoTrabajador;
 
+ console.log("salio los codigos "+ codTrabajador);
 
     // Obtener la referencia al cuerpo de la tabla
     var tbody = document.getElementById("tbody_registroPlanilla");
@@ -219,7 +220,7 @@ function agregarFilaTabla() {
 
     montototal(sueldoNeto);
     
-    
+   
     
 
     accionCell.innerHTML = '<button class="btn btn-danger btn-eliminar">Eliminar</button>';
@@ -230,6 +231,24 @@ function agregarFilaTabla() {
         eliminarFila(this);
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function eliminarFila(btnEliminar) {
     var fila = btnEliminar.closest("tr");
@@ -272,9 +291,23 @@ function abrirModalDetalle() {
 }
 
 
-function fn_registrarContrato() {
-    // Obtener el número de filas con datos en la tabla
-    var rowCount = $("#tbody_registroPlanilla tr").length;
+
+
+
+
+
+
+// Función para limpiar los campos después del registro exitoso
+function limpiarCampos() {
+    $("#selectAnio").val("");
+    $("#selectMes").val("");
+    
+}
+
+/* ******************************************** */
+function fn_registrarPlanilla() {
+	
+     var rowCount = $("#tbody_registroPlanilla tr").length;
     // Verificar si hay al menos dos filas con datos
     if (rowCount < 2) {
         // Mostrar un mensaje de advertencia con SweetAlert2
@@ -287,49 +320,61 @@ function fn_registrarContrato() {
         });
         return; // Detener la ejecución de la función si no hay suficientes filas
     }
-
-    // Obtener los valores de los campos del contrato
-    var anio = $("#selectAnio").val();
+    
+      
+     var anio = $("#selectAnio").val();
     var mes = $("#selectMes").val();
     var descripcion = $("#txtdescripcion").val();
-    var montoTotal = $("#txtMontoTotal").val();
-    var dni = $("#txtDniTrabajador").val();
-    var nombre = $("#txtTrabajador").val();
-    var bonificacion = $("#txtBonificacion").val();
-    var sueldoBruto = $("#txtSueldoBruto").val();
-    var diaNoLaborado = $("#txtDiasNoLaborado").val();
-    var descuentotoAfp = $("#txtDescuentoAfp").val();
-    var descuentoHora = $("#txtDescuentoPorHoras").val();
-    var descuentoAfpSeguro = $("#txtDescuentoAfpSeguro").val();
-    var cantidadDeHorasTardanzas = $("#txtCantidadDeHorasTardanza").val();
+    
+   
+    var detallesPlanilla = [];
 
-    // Crear un objeto con los datos del contrato
+
+    // Iterar sobre las filas de la tabla y obtener los valores de cada detalle
+    $("#tbody_registroPlanilla tr").each(function() {
+       
+         codTrabajador = $(this).find("td:eq(0)").text();
+        var sueldoBruto = $(this).find("td:eq(2)").text();
+        var bonificacion = $(this).find("td:eq(3)").text();
+  
+         
+         //var montoTotal = $("#txtMontoTotalPlanilla").val();
+     // var bonificacion = $("#txtBonificacionDet").val();
+     // var sueldoBruto = $("#txtSueldoBrutoDet").val();
+  
+      //var cod =+codTrabajador ;
+      
+     // Crear un objeto con los datos del detalle de la planilla y agregarlo al array de detalles
+        var detalle = {
+            sueldoBruto: parseFloat(sueldoBruto), // Convertir a número
+            bonificacion: parseFloat(bonificacion), // Convertir a número
+            codTrabajador: parseInt(codTrabajador) // Convertir a número entero
+        };
+        detallesPlanilla.push(detalle);
+        
+    });
+
+    // Crear el objeto de la planilla con los datos recopilados
     var planilla = {
-        anio: anio,
-        mes: mes,
         nombre: descripcion,
-        detalle: [{
-            bonificacion: bonificacion,
-            sueldoBruto: sueldoBruto,
-            diaNoLaborado: diaNoLaborado,
-            cantidadHoraTardanza: cantidadDeHorasTardanzas,
-            codTrabajador: 5068 // No se proporciona el código del trabajador en este código, asegúrate de ajustarlo según tus necesidades
-        }]
+        anio: anio, // Convertir a número entero
+        mes: mes,
+        detalle: detallesPlanilla
     };
 
-    // Realizar la petición AJAX para registrar el contrato
+    // Realizar la petición AJAX para registrar la planilla
     $.ajax({
-        url: "http://localhost:8081/planilla/crearContrato",
+        url: "http://localhost:8081/planilla/crearPlanilla",
         type: "POST",
         data: JSON.stringify(planilla),
         contentType: "application/json",
         success: function(respuestaBackend) {
             console.log(respuestaBackend);
-            // Mostrar un mensaje de éxito con SweetAlert2
-            Swal.fire({
+            
+           Swal.fire({
                 icon: 'success',
                 title: '¡Registro exitoso!',
-                text: 'El contrato se ha creado correctamente.'
+                text: 'La planilla se ha registrado correctamente.'
             }).then(() => {
                 // Limpiar los campos después de la confirmación de éxito
                 limpiarCampos();
@@ -337,33 +382,11 @@ function fn_registrarContrato() {
         },
         error: function() {
             console.error("No es posible completar la operación");
+            // Mostrar un mensaje de error al usuario
+            alert('Se produjo un error al registrar la planilla. Por favor, inténtalo de nuevo.');
         }
     });
 }
 
-// Función para limpiar los campos después del registro exitoso
-function limpiarCampos() {
-    $("#selectAnio").val("");
-    $("#selectMes").val("");
-    $("#txtdescripcion").val("");
-    $("#txtMontoTotal").val("");
-    $("#txtDniTrabajador").val("");
-    $("#txtTrabajador").val("");
-    $("#txtBonificacion").val("");
-    $("#txtSueldoBruto").val("");
-    $("#txtDiasNoLaborado").val("");
-    $("#txtDescuentoAfp").val("");
-    $("#txtDescuentoPorHoras").val("");
-    $("#txtDescuentoAfpSeguro").val("");
-    $("#txtCantidadDeHorasTardanza").val("");
-}
 
-
-
-
-	
-
-
- 
-
- 
+  

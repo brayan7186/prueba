@@ -35,6 +35,7 @@ public class DetallePlanilla {
 	 private  Double salarioNeto;
 	 
 	
+	 
 	 @Column(name = "descuentoAfp")
 	 private  Double descuentoAfp;
 	 
