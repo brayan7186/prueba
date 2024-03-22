@@ -138,28 +138,26 @@
 						</div>
 						<div class="row mb-3">
 							<div class="col">
-								<table class="table" id="tablaDetallePlanilla">
-								
-								  
-<thead>
-    <tr>
-        <th colspan="4"></th> <!-- Celdas vacías para dejar espacio -->
-        <th colspan="3">Descuento Ley</th> <!-- Agrupación de Impuesto Renta, AFP y AFP Seguro -->
-        <th colspan="4"></th> <!-- Celdas vacías para mantener el formato -->
-    </tr>
-    <tr>
-        <th>codTrabajador</th>
-        <th>Trabajador</th>
-        <th>Sueldo Bruto</th>
-        <th>Bonificacion</th>
-        <th>Impuesto Renta</th> 
-        <th>Afp</th> 
-        <th>Afp Seguro</th> 
-        <th>Sueldo Neto</th>
-        <th>Accion</th>
-    </tr>
-</thead>
-									<tbody id="tbody_registroPlanilla">
+
+								<table class="table" id="tablaDetallePlanilla" border="1">
+
+
+       
+	
+
+      <TR >
+        <TH ROWSPAN=2 id="centrado"> codTrabajador</TH>
+        <TH  ROWSPAN=2 id="centrado"> Trabajador</TH> <TH COLSPAN=2 id="centrado"  class="color-gris"> Acuerdo Contrato</TH>
+         <TH COLSPAN=3 id="centrado" class="color-gris">Descuento de ley</TH>  <TH ROWSPAN=2 id="centrado"> Sueldo <br>   Neto</TH> <TH ROWSPAN=2 id="centrado">  Accion</TH>
+     </TR>
+    <TR>
+       <TH id="centrado">Sueldo Bruto</TH>
+ <TH id="centrado">Bonificacion</TH> <TH id="centrado">Impuesto  Renta <br> (10%)</TH> <TH id="centrado">Afp <br> (10%)</TH>
+        <TH id="centrado">Afp  Seguro <br>  (1.25%)</TH> 
+    </TR>
+    						
+    						
+									<tbody id="tbody_registroPlanilla" >
 										<!-- Aquí se agregarán las filas dinámicamente -->
 									</tbody>
 								</table>
@@ -183,20 +181,21 @@
 
 	<!-- Modal para agregar detalle -->
 	<div class="modal fade" id="modalAgregarDetalle" tabindex="-1" aria-labelledby="modalAgregarDetalleLabel"
-		aria-hidden="true">
+    aria-hidden="true" data-backdrop="static">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalAgregarDetalleLabel">Agregar Detalle</h5>
-					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+					
+					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"  onclick="limpiarCapos()"></button>
 				</div>
 				<div class="modal-body">
 					<!-- Contenido del formulario para agregar detalle -->
 					<div class="form-group">
 						<label>DNI Trabajador:</label>
 						<input type="text" class="form-control" id="txtDniTrabajador"
-							oninput="fn_cargarTrabajadorPorDni()">
-					</div>
+							oninput="fn_cargarTrabajadorPorDni()"  maxlength="8" pattern="[0-9]{8} >
+					 </div>
 					<div class="form-group">
 						<label>Trabajador:</label>
 						<input type="text" class="form-control" id="txtTrabajadorDet" disabled>
@@ -210,12 +209,11 @@
 						<input type="text" class="form-control" id="txtSueldoBrutoDet" disabled>
 					</div>
 
-
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="limpiarCapos()">Cancelar</button>
 					<button type="button" class="btn btn-primary" id="btnAgregarDetalleConfirmar"
-						onclick="agregarFilaTabla()">Agregar</button>
+						onclick="agregarFilaTabla()" >Agregar</button>
 				</div>
 			</div>
 		</div>

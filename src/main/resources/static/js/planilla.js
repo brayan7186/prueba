@@ -76,6 +76,11 @@ function fn_cargarTrabajadorPorDni() {
 
 	var dni = document.getElementById("txtDniTrabajador").value;
 
+  
+    
+  
+
+    
 	if (dni.length == 8) {
 		$.ajax({
 			url: "http://localhost:8081/planilla/obtenerTrabajadorContrato/" + dni,
@@ -83,15 +88,29 @@ function fn_cargarTrabajadorPorDni() {
 			success: function(respuestaBackend) {
 				console.log(respuestaBackend);
 				//$("#txtCodigoProductoAct").val(respuestaBackend.codTrabajador).prop("readonly", true);
-				debugger;
+				
+				
+				  
 				codigoTrabajador = respuestaBackend.codTrabajador;
 				
 				$("#txtTrabajadorDet").val(respuestaBackend.nombreCompletoTrabajador);
                  $("#txtBonificacionDet").val(respuestaBackend.bonificacion);
                   $("#txtSueldoBrutoDet").val(respuestaBackend.sueldoBruto);
+                  
+                   if (respuestaBackend.bonificacion == null || respuestaBackend.sueldoBruto == null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '¡Uy!',
+                        text: 'el trabajador  con dni :'+dni+'   aun no tiene contrato'
+                    });
+                    
+                     limpiarCapos();
+                } else {
+                    // Si no son nulos, calcular descuentos y realizar otras operaciones
                     bonificacionBD = respuestaBackend.bonificacion;
-                     sueldoBrutoBD = respuestaBackend.sueldoBruto
-                       calcularDescuentos(sueldoBrutoBD, bonificacionBD);
+                    sueldoBrutoBD = respuestaBackend.sueldoBruto;
+                    calcularDescuentos(sueldoBrutoBD, bonificacionBD);
+                }
                         
 			},
 			error: function() {
@@ -155,95 +174,76 @@ function calcularDescuentos(sueldoBrutoBD,bonificacionBD) {
 
 /**  */
 var totalSueldosNetos = 0;
-
-
+var codTrabajador;
+  
   function agregarFilaTabla() {
-  var tbody = document.getElementById("tbody_registroPlanilla");
-  if (tbody.rows.length === 0) {
-    Swal.fire({
-      title: "Custom width, padding, color, background.",
-      width: 600,
-      padding: "3em",
-      color: "#716add",
-      background: "#fff url(/images/trees.png)",
-      backdrop: `
-        rgba(0,0,123,0.4)
-        url("/images/nyan-cat.gif")
-        left top
-        no-repeat
-      `
-    });
-  } else {
-    
-    
-    
-    
-    
-    
-    
-  }
-}
-
-var codTrabajador
-function agregarFilaTabla() {
 	
-    codTrabajador = codigoTrabajador;
+	  
+    var codTrabajador = codigoTrabajador;
+    var existe = false;
 
- console.log("salio los codigos "+ codTrabajador);
+    // Verificar si el código del trabajador ya existe en la tabla
+    var tabla = document.getElementById("tbody_registroPlanilla");
+    for (var i = 0, row; row = tabla.rows[i]; i++) {
+        if (row.cells[0].textContent == codTrabajador) {
+            existe = true;
+            break;
+        }
+    }
 
-    // Obtener la referencia al cuerpo de la tabla
-    var tbody = document.getElementById("tbody_registroPlanilla");
 
-    // Crear una nueva fila en la tabla
-    var newRow = tbody.insertRow();
+    // Si el código del trabajador no existe en la tabla, agregarlo
+    if (!existe) {
+        // Obtener la referencia al cuerpo de la tabla
+        var tbody = document.getElementById("tbody_registroPlanilla");
 
-    // Insertar celdas en la fila para cada dato
-    var codigoTrabajadorCell = newRow.insertCell(0);
-    var trabajadorCell = newRow.insertCell(1);
-    var sueldoBrutoCell = newRow.insertCell(2);
-    var bonificacionCell = newRow.insertCell(3);
-    var afpCell = newRow.insertCell(4);
-    var afpSeguroCell = newRow.insertCell(5);
-    var impuestoRentaCell = newRow.insertCell(6);
-    var sueldoNetoCell = newRow.insertCell(7);
-    var accionCell = newRow.insertCell(8);
+        // Crear una nueva fila en la tabla
+        var newRow = tbody.insertRow();
 
-    // Asignar los valores a las celdas
-    codigoTrabajadorCell.textContent = codTrabajador;
-    trabajadorCell.textContent = $("#txtTrabajadorDet").val();
-    sueldoBrutoCell.textContent = $("#txtSueldoBrutoDet").val();
-    bonificacionCell.textContent = $("#txtBonificacionDet").val();
-    afpCell.textContent = descuentoAFP;
-    afpSeguroCell.textContent = descuentoAFP_SEGURURO;
-    impuestoRentaCell.textContent = impuestoRenta;
-    sueldoNetoCell.textContent = sueldoNeto;
+        // Insertar celdas en la fila para cada dato
+        var codigoTrabajadorCell = newRow.insertCell(0);
+        var trabajadorCell = newRow.insertCell(1);
+        var sueldoBrutoCell = newRow.insertCell(2);
+        var bonificacionCell = newRow.insertCell(3);
+        var afpCell = newRow.insertCell(4);
+        var afpSeguroCell = newRow.insertCell(5);
+        var impuestoRentaCell = newRow.insertCell(6);
+        var sueldoNetoCell = newRow.insertCell(7);
+        var accionCell = newRow.insertCell(8);
 
-    montototal(sueldoNeto);
-    
-   
-    
+        // Asignar los valores a las celdas
+        codigoTrabajadorCell.textContent = codTrabajador;
+        trabajadorCell.textContent = $("#txtTrabajadorDet").val();
+        sueldoBrutoCell.textContent = $("#txtSueldoBrutoDet").val();
+        bonificacionCell.textContent = $("#txtBonificacionDet").val();
+        afpCell.textContent = descuentoAFP;
+        afpSeguroCell.textContent = descuentoAFP_SEGURURO;
+        impuestoRentaCell.textContent = impuestoRenta;
+        sueldoNetoCell.textContent = sueldoNeto;
 
-    accionCell.innerHTML = '<button class="btn btn-danger btn-eliminar">Eliminar</button>';
-    
+        montototal(sueldoNeto);
 
-    // Agregar evento click para eliminar la fila
-    accionCell.querySelector('.btn-eliminar').addEventListener('click', function() {
-        eliminarFila(this);
-    });
+        accionCell.innerHTML = '<button class="btn btn-danger btn-eliminar">Eliminar</button>';
+
+        // Agregar evento click para eliminar la fila
+        accionCell.querySelector('.btn-eliminar').addEventListener('click', function() {
+            eliminarFila(this);
+        });
+
+        // Limpiar los campos
+        limpiarCapos();
+    } else {
+	
+	  Swal.fire({
+  title: '¡Uy!',
+  text: 'El trabajador '  +$("#txtTrabajadorDet").val() +'con código ya está registrado en la tabla.',
+  icon: 'warning',
+  confirmButtonText: 'Cool',
+  backdrop: false
+})
+       
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -332,10 +332,22 @@ $("#selectMes option").each(function() {
 
    //
   // Función para obtener el nombre del mes a partir de su número (0 para enero, 1 para febrero, etc.)
+//FALTA
+function limpiarCapos(){
+	
+	  
 
+   $("#txtDniTrabajador").val("");
+    $("#txtTrabajadorDet").val("");
+     $("#txtBonificacionDet").val("");
+      $("#txtSueldoBrutoDet").val("");
+      
+    
+}
 
 function abrirModalDetalle() {
     $("#modalAgregarDetalle").modal("show");
+    
 }
 
 

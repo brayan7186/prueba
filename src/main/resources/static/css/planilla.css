@@ -1,3 +1,25 @@
 .vertical-line {
     border-left: 1px solid black; /* Agrega un borde izquierdo para crear la línea vertical */
 }
+
+ 
+ 
+  
+
+
+#tbody_registroPlanilla td {
+    border: none; /* Elimina los bordes de las celdas de datos */
+}
+
+
+
+
+ #centrado {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.color-gris {
+    background-color: #f0f0f0; /* Puedes cambiar este valor al color que desees */
+}

@@ -1,5 +1,6 @@
 package com.system.planilla.service;
 
+import java.io.Console;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -282,9 +283,17 @@ public class TrabajadorServiceImpl implements TrabajadorService {
 			dataTrabajadorContratoResponse.setNombreCompletoTrabajador(
 					trabajador.getNombre() + " " + trabajador.getApeMaterno() + " " + trabajador.getApePaterno());
 			
-			dataTrabajadorContratoResponse.setBonificacion(contrato.getBonificacion());
-			dataTrabajadorContratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()));
+			 if(contrato == null) {
+				 
+				 System.out.println("No se encontró contrato para el trabajador con DNI: " + dni);
+			       
+			 }else {
+				
+				 dataTrabajadorContratoResponse.setBonificacion(contrato.getBonificacion());
+					dataTrabajadorContratoResponse.setSueldoBruto(UtilLimitarDecimal.limitarDosDecimal(contrato.getSueldoBruto()));
 
+			 }
+			
 	
 
 		return dataTrabajadorContratoResponse;
