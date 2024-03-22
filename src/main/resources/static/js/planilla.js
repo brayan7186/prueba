@@ -145,7 +145,7 @@ function calcularDescuentos(sueldoBrutoBD,bonificacionBD) {
 
 
 
-    // Retornar los descuentos calculados
+     // Retornar los descuentos calculados
     /*return {
         descuentoAFP: descuentoAFP,
         descuentoAFP_SEGURURO: descuentoAFP_SEGURURO,
@@ -153,7 +153,7 @@ function calcularDescuentos(sueldoBrutoBD,bonificacionBD) {
     };*/
 }
 
-/** */
+/**  */
 var totalSueldosNetos = 0;
 
 
@@ -279,11 +279,59 @@ function montototal(sueldoNeto)
 	
 	
 	 
-
-function abrirModal() {
-    $("#modalAgregarPlanilla").modal("show");
+   function obtenerNombreMes(numeroMes) {
+		
+    var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    return meses[numeroMes];
 }
 
+	function mesActual(){
+		     
+      var mesActual = new Date().getMonth();
+
+// Obtener el nombre del mes actual
+var nombreMesActual = obtenerNombreMes(mesActual);
+
+// Iterar sobre las opciones del combo de selección de mes
+$("#selectMes option").each(function() {
+    // Comprobar si el valor de la opción coincide con el mes actual
+    if ($(this).val() === nombreMesActual) {
+        // Seleccionar esta opción si coincide con el mes actual
+        $(this).prop("selected", true);
+    }
+});
+
+		
+	} 
+	 
+	 
+	 function  obtenerAnioActual(){
+		
+		 var anioActual = new Date().getFullYear();
+
+       // Asignar el año actual al campo de entrada de texto
+     $("#txtAnio").val(anioActual);
+	}
+	 
+	 
+	 
+	 
+
+ function abrirModal() {
+	
+    $("#modalAgregarPlanilla").modal("show");
+         
+      
+      mesActual();
+ obtenerAnioActual();
+
+ 
+
+ }
+
+   //
+  // Función para obtener el nombre del mes a partir de su número (0 para enero, 1 para febrero, etc.)
 
 
 function abrirModalDetalle() {
@@ -305,6 +353,8 @@ function limpiarCampos() {
 }
 
 /* ******************************************** */
+
+
 function fn_registrarPlanilla() {
 	
      var rowCount = $("#tbody_registroPlanilla tr").length;
@@ -322,34 +372,40 @@ function fn_registrarPlanilla() {
     }
     
       
-     var anio = $("#selectAnio").val();
-    var mes = $("#selectMes").val();
-    var descripcion = $("#txtdescripcion").val();
+       var anio = $("#selectAnio").val();
+       var mes = $("#selectMes").val();
+         
+       var descripcion = $("#txtdescripcion").val();
     
    
-    var detallesPlanilla = [];
+     var detallesPlanilla = [];
 
 
-    // Iterar sobre las filas de la tabla y obtener los valores de cada detalle
+      //Básicamente, esta parte del código recorre cada fila de la tabla de registro de la planilla
+     //  (#tbody_registroPlanilla tr) y busca en cada fila el código del trabajador, 
+    //el sueldo bruto y la bonificación, extrayendo estos valores de las celdas correspondientes.
+   // Iterar sobre las filas de la tabla y obtener los valores de cada detalle
     $("#tbody_registroPlanilla tr").each(function() {
        
-         codTrabajador = $(this).find("td:eq(0)").text();
+        codTrabajador = $(this).find("td:eq(0)").text();
         var sueldoBruto = $(this).find("td:eq(2)").text();
         var bonificacion = $(this).find("td:eq(3)").text();
   
          
          //var montoTotal = $("#txtMontoTotalPlanilla").val();
-     // var bonificacion = $("#txtBonificacionDet").val();
-     // var sueldoBruto = $("#txtSueldoBrutoDet").val();
+        // var bonificacion = $("#txtBonificacionDet").val();
+       // var sueldoBruto = $("#txtSueldoBrutoDet").val();
   
-      //var cod =+codTrabajador ;
+     //var cod =+codTrabajador ;
       
-     // Crear un objeto con los datos del detalle de la planilla y agregarlo al array de detalles
+   // Crear un objeto con los datos del detalle de la planilla
         var detalle = {
-            sueldoBruto: parseFloat(sueldoBruto), // Convertir a número
+            sueldoBruto: parseFloat(sueldoBruto),    // Convertir a número
             bonificacion: parseFloat(bonificacion), // Convertir a número
             codTrabajador: parseInt(codTrabajador) // Convertir a número entero
         };
+         // se agrega al array de detallesPlanilla el  objeto detalle
+        // push : 	metodo que sirve para  agregar un objeto a un  array
         detallesPlanilla.push(detalle);
         
     });
@@ -382,10 +438,11 @@ function fn_registrarPlanilla() {
         },
         error: function() {
             console.error("No es posible completar la operación");
-            // Mostrar un mensaje de error al usuario
+             // Mostrar un mensaje de error al usuario
             alert('Se produjo un error al registrar la planilla. Por favor, inténtalo de nuevo.');
         }
     });
+    
 }
 
 
